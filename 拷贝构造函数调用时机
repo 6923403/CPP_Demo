@@ -1,0 +1,83 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+
+class person
+{
+public:
+	person()
+	{
+		cout << "默认构造函数" << endl;
+	}
+	person(int a) 
+	{
+		cout << "有参构造函数" << endl;
+	}
+	person(const person& p)
+	{
+		cout << "拷贝构造函数" << endl;
+	}
+	~person()
+	{
+		cout << "析构函数调用" << endl;
+	}
+	int m_age;
+
+};
+
+void test1()
+{
+	person p;
+	p.m_age = 10;
+
+	person p2(p);
+
+}
+
+//2.以值传递的方式给函数参数传值
+void dowork(person p1) //person p1 = person(p)
+{
+
+}
+
+void test2()
+{
+	person p1;
+	p1.m_age = 10;
+	dowork(p1);
+}
+
+//3.以值方式返回局部对象
+person dowork2()
+{
+	person p1;
+	return p1;
+}
+
+void test3()
+{
+	person p = dowork2();
+
+}
+
+//Release下优化
+/*
+person p; 不调用默认构造
+dowork2(p);
+
+void dowork2(person &p)
+{
+	person p1;//调用默认构造
+}
+*/
+
+
+int main()
+{
+	//test1();
+	//test2();
+
+	test3();
+	system("pause");
+	return EXIT_SUCCESS;
+}
