@@ -1,0 +1,60 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+
+class myclass
+{
+public:
+	myclass()
+	{
+		cout << " 默认构造函数"<< endl;
+	}
+	myclass(int a)
+	{
+		cout << "有参构造函数" << endl;
+	}
+
+	int ma;
+};
+
+//系统默认提供三个构造函数 默认构造、拷贝构造、析构函数
+//当我们提供了有参构造函数，那么系统就不会提供默认构造函数了
+//但系统还会提供默认拷贝构造函数
+void test1()
+{
+	myclass p1;
+	p1.ma = 10;
+	myclass p2(p1);
+	cout << p2.ma << endl;
+}
+
+//当我们提供了拷贝构造 那么系统就不会提供其他构造了
+class myclass2
+{
+public:
+	myclass2()
+	{
+		cout << " 默认构造函数"<< endl;
+	}
+	myclass2(int a)
+	{
+		cout << "有参构造函数" << endl;
+	}
+	myclass2(const myclass &m)
+	{
+
+	}
+	int ma;
+};
+
+void test2()
+{
+	myclass2 c1;
+}
+
+int main()
+{
+	test1();
+	system("pause");
+	return EXIT_SUCCESS;
+}
