@@ -1,0 +1,64 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+
+class person
+{
+public:
+
+	person()     //错误	没有合适的默认构造函数可用
+	{
+		cout << "默认构造调用" << endl;
+	}
+
+
+
+	person(int a)
+	{
+		cout << "有参构造调用" << endl;
+	}
+
+
+	~person()
+	{
+		cout << "析构函数调用" << endl;
+	}
+};
+
+void test1()
+{
+	//person p1; 栈区开辟
+	person *p2 = new person; //堆区开辟
+	//所以new出来的对象都会返回该类型出来的指针
+	//malloc 返回 void* 还要强转
+	//malloc 不会调用构造 new会调用构造
+	 //new 运算符  malloc 函数 delete运算符
+	//delete配合new  malloc配合free
+	delete p2; //释放堆区的空间
+	
+}
+
+void test2()
+{
+	void *p = new person;
+	//当用万能指针接受出new的指针 会出现释放的问题
+	delete p;
+	//无法释放p 所避免这种写法
+}
+
+void test3()
+{
+	//通过new开辟数组  一定会调用默认构造函数 所以一定提供默认构造 否则出错
+	person *p = new person[10]; //10次默认 释放数组 delete[] xx
+	delete [] p;
+	person parray[3] = { person(1), person(2) };//在栈上开辟数组可指定有参构造
+	 
+}
+
+int main()
+{
+	//test1();
+	test3();
+	system("pause");
+	return EXIT_SUCCESS;
+}
