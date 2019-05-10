@@ -1,0 +1,95 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string>
+using namespace std;
+
+class phone
+{
+public:
+	phone()
+	{
+		cout << "手机的默认构造函数调用" << endl;
+	}
+
+	phone(string name)
+	{
+		mphonename = name;
+	}
+
+	~phone()
+	{
+		cout << "手机的析构函数调用" << endl;
+	} 
+
+	string mphonename;
+
+};
+
+class game
+{
+public:
+	game()
+	{
+		cout << "游戏的默认构造函数调用" << endl;
+	}
+
+	game(string name)
+	{
+		mgamename = name;
+	}
+
+	~game()
+	{
+		cout << "游戏的析构函数调用" << endl;
+	}
+
+	string mgamename;
+};
+
+class person
+{
+public:
+	person()
+	{
+		cout << "R的默认构造函数调用" << endl;
+
+	}
+
+	~person()
+	{
+		cout << "R的析构函数调用" << endl;
+	}
+	
+	person(string name, string phonename, string gamename):m_name(name), m_phonename(phonename)
+	{
+		m_name = name;
+		m_gamename = gamename;
+		m_phonename = phonename;
+	}
+
+	void playgame()
+	{
+		cout << m_name << "拿着 " << m_phonename.mphonename << " 手机， 玩着" << m_gamename.mgamename << " 游戏" << endl;
+		cout << "person的有参构造调用" << endl;
+	}
+
+	string m_name;
+	phone m_phonename;
+	game m_gamename;
+
+};
+
+//类对象作为类成员的时候，构造顺序先将类对象一一构造，然后构造自己，析构的顺序是相反的
+void test1()
+{
+	person p("dalao", "iphone", "CFM");
+	p.playgame();
+}
+
+int main()
+{
+	test1();
+	system("pause");
+	return EXIT_SUCCESS;
+
+}
