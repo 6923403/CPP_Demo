@@ -1,0 +1,39 @@
+explicit关键字作用 ：禁止通过构造函数进行隐形的转换
+---**---
+class mystring
+
+{
+
+public:
+
+mystring(const char * str)
+
+{
+
+}
+
+explicit mystring(int a)    //关键字 防止隐式类型的转换
+
+{
+
+}
+
+char* str;
+
+};
+
+void test1()
+
+{
+
+mystring str = "sss";
+
+mystring str2(10);
+
+mystring str3 = 10; //str3 字符串为“10” 字符串长度10； 
+
+//错误： 不存在从 "int" 转换到 "mystring" 的适当构造函数
+
+//隐式类型转换 mystring str3 = mystring(10);
+
+}
