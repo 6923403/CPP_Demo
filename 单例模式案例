@@ -1,0 +1,123 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+using namespace std;
+
+//创建charman类
+
+//需求 单例模式 为了创建类中的对象，并且保证只有一个对象实例
+
+class charman
+
+{
+
+public:
+
+//static charman *singleman ;
+
+//提供get方法访问 类
+
+static charman *getinstance()
+
+{
+
+return singleman;
+
+}
+
+private:
+
+static charman *singleman ;
+
+charman()
+
+{
+
+cout << "创建国家charman " << endl;
+
+}
+
+//私有的拷贝构造
+
+charman(const charman&c)
+
+{
+
+}
+
+};
+
+charman	*charman::singleman = new charman;
+
+void test1()
+
+{
+
+/*charman c1;
+
+charman *c2 = new charman;
+
+charman *c3 = new charman;*/
+
+//charman::singleman;
+
+/*charman *cm = charman::singleman;
+
+charman *cm2 = charman::singleman;*/
+
+//charman::singleman = NULL;
+
+charman *cm1 = charman::getinstance();
+
+charman *cm2 = charman::getinstance();
+
+if( cm1 == cm2)
+
+{
+
+cout << "====" << endl;
+
+}
+
+else
+
+{
+
+cout << "XXXX" << endl;
+
+}
+
+/*charman *cm3 = new charman(*cm2);
+
+if(cm3 == cm2)
+
+{
+
+cout << "ddddd=" << endl;
+
+}
+
+else
+
+{
+
+cout << "xxxxXXX" << endl;
+
+}*/
+
+}
+
+int main()
+
+{
+
+//cout << "main调用" << endl; 类先调用 类创建在main之前
+
+test1();
+
+system("pause");
+
+return EXIT_SUCCESS;
+
+}
