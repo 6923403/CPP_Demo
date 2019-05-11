@@ -1,0 +1,57 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+using namespace std;
+
+//#pragma pack(1) //12
+
+class person
+
+{
+
+public:
+
+int m_A; //非静态成员变量 属于对象身上
+
+void func() // 非静态成员函数 不属于对象身上
+
+{
+
+};
+
+static int m_b; //静态成员变量 不属于对象身上
+
+static void func2() {}; //静态成员函数 不属于对象身上
+
+double m_c;
+
+};
+
+//结论： 非静态成员变量 才属于对象身上
+
+void test1()
+
+{
+
+// 6 0 4 1
+
+cout << "size of(person) " << sizeof(person) << endl;
+
+//空类大小为1 每个实例的对象 都有独一无二的地址 char维护这个地址
+
+//person p[10] p[0] p[1]
+
+}
+
+int main()
+
+{
+
+test1();
+
+system("pause");
+
+return EXIT_SUCCESS;
+
+}
