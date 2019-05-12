@@ -1,0 +1,45 @@
+class Building
+
+{
+
+friend void goodmm( Building * building);
+
+public:
+
+Building()
+
+{
+
+this -> m_sittingroom = "客厅";
+
+this -> m_bedroom = "卧室";
+
+}
+
+string m_sittingroom;
+
+private:
+
+string m_bedroom;
+
+};
+
+void goodmm( Building * building)
+
+{
+
+cout << "111 访问 "<< building -> m_sittingroom << endl;
+
+cout << "222 访问" << building -> m_bedroom << endl;
+
+}
+
+void test1()
+
+{
+
+Building * building = new Building;
+
+goodmm(building);
+
+}
