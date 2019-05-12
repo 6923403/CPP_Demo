@@ -1,0 +1,90 @@
+person.h
+
+#pragma once
+
+#include <iostream>
+
+using namespace std;
+
+class person
+
+{
+
+public:
+
+person();
+
+void  showinfo() const;
+
+void show2() const;
+
+int m_a;
+
+mutable int m_b; //执行要修改 加mutable
+
+};
+
+-------------------*
+person.cpp
+
+#include "person.h"
+
+#include <iostream>
+
+person::person()
+
+{
+
+//构造中修改属性
+
+//this 永远执行本体
+
+this -> m_a = 0;
+
+this -> m_b = 0;
+
+}
+
+void person::showinfo() const //const 常函数 不允许修改指针指向的值
+
+{
+
+this -> m_b = 1000;
+
+//const person * const this
+
+cout << " m_a = " << this -> m_a << endl;
+
+cout << " m_b = " << this -> m_b << endl;
+
+}
+
+void person::show2() const
+
+{
+
+//m_a = 100;
+
+}
+-----------------*
+
+main.cpp
+
+
+void test1()
+
+{
+
+person p1;
+
+p1.showinfo();
+
+const person p2;
+
+//cout << p2.m_a << endl;
+
+p2.show2(); //常对象 不可以调用普通的成员函数
+
+//常对象 可以调用常函数
+
+}
