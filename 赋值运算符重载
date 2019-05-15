@@ -1,0 +1,117 @@
+//一个类默认创建 默认构造、析构、拷贝构造、operator=赋值运算符进行简单的值传递
+
+class person
+
+{
+
+public:
+
+person(int a)
+
+{
+
+this -> m_a = a;
+
+}
+
+int m_a;
+
+};
+
+class person2
+
+{
+
+public:
+
+person2(char * name)
+
+{
+
+this -> pname = new char[strlen(name) + 1];
+
+strcpy(this -> pname, name);
+
+}
+
+//重载 =  赋值运算符
+
+person2 & operator= (const person2 & p)
+
+{
+
+//判断 若原来已经有堆区内容 先释放
+
+if(this -> pname != NULL)
+
+{
+
+delete[] this -> pname;
+
+this -> pname = NULL;
+
+}
+
+this -> pname = new char[strlen(p.pname) + 1];
+
+strcpy(this -> pname,p.pname);
+
+return * this;
+
+}
+
+~person2()
+
+{
+
+if(this -> pname != NULL)
+
+{
+
+delete[] this -> pname;
+
+this -> pname = NULL;
+
+}
+
+}
+
+char * pname;
+
+};
+
+//void test1()
+
+//{
+
+//	person p1(10);
+
+//	person p2(0);
+
+//
+
+//	p2 = p1;
+
+//
+
+//	cout << "p2 m_a = " << p2.pname << endl;
+
+//}
+
+void test2()
+
+{
+
+person2 p1("第一");
+
+person2 p2("第二");
+
+person2 p3("");
+
+p3 = p2 = p1;
+
+cout << p2.pname << endl;
+
+cout << p3.pname << endl;
+
+}
