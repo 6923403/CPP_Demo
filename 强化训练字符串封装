@@ -1,0 +1,99 @@
+mystring.h
+
+class mystring
+
+{
+
+friend ostream & operator << (ostream & cout, mystring &str);
+
+friend istream & operator >> (istream & cin, mystring & str);
+
+public:
+
+mystring(const char * str);
+
+mystring(const mystring & str);
+
+~mystring();
+
+private:
+
+char *	pstring; //执行堆区指针
+
+int m_size; // 字符串大小
+
+};
+
+-----------------*
+mystring.cpp
+
+#include "mystring.h"
+
+ostream & operator << (ostream & cout, mystring &str)
+
+{
+
+cout << str.pstring;
+
+return cout;
+
+}
+
+//右移运算符重载
+
+istream & operator >> (istream & cin, mystring & str)
+
+{
+
+if(str.pstring != NULL)
+
+{
+
+delete [] str.pstring ;
+
+str.pstring = NULL;
+
+}
+
+//让用户输入内容
+
+char buf[1024];
+
+cin >> buf;
+
+//把用户输入的字符串, 赋值给str.
+
+str.pstring = new char[strlen(buf) + 1];
+
+strcpy(str.pstring, buf);
+
+str.m_size = strlen(buf);
+
+return cin;
+
+}
+
+----------------*
+main.cpp
+
+void test1()
+
+{
+
+mystring str = "abc";
+
+    cout << str << endl;
+
+cout << "输入 str 新内容"  << endl;
+
+cin >> str;
+
+cout << "新内容为 " << str << endl;
+
+/*int a = 10;
+
+cin >> a;
+
+cout << " a = " << a << endl;*/
+
+}
