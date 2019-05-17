@@ -1,40 +1,57 @@
 class base
-
 {
-
 public:
-
-int m_a;
-
+	int m_a;
 protected:
-
-int m_b;
-
+	int m_b;
 private:
-
-int m_c;
+	int m_c;
 
 };
 
 //子类中 会继承父类的私有成员 只是被编译器给隐藏起来了 访问不到私有成员
 
 class son :public base
-
 {
-
 public:
-
-int m_d;
+	int m_d;
 
 };
 
 void test1()
-
 {
-
-cout << sizeof(son) << endl;
-
+	cout << sizeof(son) << endl;
 }
+
+class base2
+{
+public:
+	base2(int a)
+	{
+		this -> m_a = a;
+		cout << "有参构造函数调用" << endl;
+
+	}
+
+	int m_a;
+};
+
+class son2 :public base2
+{
+public:
+	//son2() :base2(6) //利用初始化列表方式 显示调用 有参构造
+	son2(int a) :base2(a) 
+	{
+		 
+	}
+};
+
+void test2()
+{
+	son2 s2(66);
+}
+
+------------*
 打开项目所在文件目录 
 
-输入：cl /d1 reportSingleClasslayoutson ttt.cpp
+输入：cl /d1 reportSingleClasslayoutson xxx.cpp
