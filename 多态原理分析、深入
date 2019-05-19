@@ -1,0 +1,21 @@
+https://upload-images.jianshu.io/upload_images/17208096-3941b6c299a0f9cb.png
+
+------------------
+
+void test2()
+
+{
+
+//父类指针指向子类对象 多态
+
+Animal * animal = new Cat;
+
+//animal-> speak
+
+((void (*)()) (*(int *)*(int *)animal))();
+
+//吃
+
+((void (*)()) (*(int *)*(int *)animal))();
+
+}
