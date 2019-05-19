@@ -1,0 +1,276 @@
+//抽象层
+
+//抽象的cpu
+
+class Cpu
+
+{
+
+public:
+
+virtual void calculator() = 0;
+
+};
+
+//抽象的显卡
+
+class Videocard
+
+{
+
+public:
+
+virtual void display() = 0;
+
+};
+
+//抽象的内存
+
+class Memory
+
+{
+
+public:
+
+virtual void storge() = 0;
+
+};
+
+//电脑类
+
+class computer
+
+{
+
+public:
+
+computer(Cpu * cpu, Videocard * card, Memory * memory)
+
+{
+
+this -> cpu = cpu;
+
+this -> card = card;
+
+this -> memory = memory;
+
+}
+
+//让电脑工作
+
+void dowork()
+
+{
+
+this -> cpu -> calculator();
+
+this -> card-> display();
+
+this -> memory -> storge();
+
+}
+
+~computer()
+
+{
+
+if(this -> cpu != NULL)
+
+{
+
+delete this -> cpu;
+
+this -> cpu = NULL;
+
+}
+
+if(this -> card != NULL)
+
+{
+
+delete this -> card;
+
+this -> card = NULL;
+
+}
+
+if(this -> memory != NULL)
+
+{
+
+delete this -> memory;
+
+this -> memory = NULL;
+
+}
+
+}
+
+public:
+
+Cpu * cpu;
+
+Videocard * card;
+
+Memory * memory;
+
+};
+
+//实现层
+
+//intel的CPU
+
+class intelcpu :public Cpu
+
+{
+
+public:
+
+virtual void calculator()
+
+{
+
+cout << "intel 开始计算" << endl;
+
+}
+
+};
+
+//intel的显卡
+
+class intelvideocard :public Videocard
+
+{
+
+public:
+
+virtual void display()
+
+{
+
+cout << "intel显卡图像显示" << endl;
+
+}
+
+};
+
+//intel内存
+
+class intelMemory :public Memory
+
+{
+
+public:
+
+virtual void storge()
+
+{
+
+cout << "intel 存储数据" << endl;
+
+}
+
+};
+
+//厂商零件
+
+//xx的CPU
+
+class xxcpu :public Cpu
+
+{
+
+public:
+
+virtual void calculator()
+
+{
+
+cout << "xxcpu 开始计算" << endl;
+
+}
+
+};
+
+//xx的显卡
+
+class xxvideocard :public Videocard
+
+{
+
+public:
+
+virtual void display()
+
+{
+
+cout << "xx 显卡图像显示" << endl;
+
+}
+
+};
+
+//xx内存
+
+class xxmemory :public Memory
+
+{
+
+public:
+
+virtual void storge()
+
+{
+
+cout << "xx  存储数据" << endl;
+
+}
+
+};
+
+void test1()
+
+{
+
+//第一台电脑组装
+
+Cpu * intel = new intelcpu;
+
+Videocard * card = new intelvideocard;
+
+Memory * storge = new intelMemory;
+
+computer * computer1 = new computer(intel, card, storge);
+
+computer1 -> dowork();
+
+//第二台电脑
+
+cout << "第二台" << endl;
+
+Cpu * intel2 = new xxcpu;
+
+Videocard * card2 = new xxvideocard;
+
+Memory * storge2 = new xxmemory;
+
+computer * computer2 = new computer(intel2, card2, storge2);
+
+computer2 -> dowork();
+
+//第三台电脑
+
+cout << "第三台" << endl;
+
+Cpu * intel3 = new intelcpu;
+
+Videocard * card3 = new intelvideocard;
+
+Memory * storge3 = new xxmemory;
+
+computer * computer3 = new computer(intel3, card3, storge3);
+
+computer3 -> dowork();
+
+}
+
