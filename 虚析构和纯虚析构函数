@@ -1,0 +1,217 @@
+class animal
+
+{
+
+public:
+
+virtual void speak()
+
+{
+
+cout << "动物在说话 " << endl;
+
+}
+
+//~animal()
+
+//{
+
+//	cout << " ~animal 调用" << endl;
+
+//}
+
+//普通析构 是不会调用子类的析构的 所以可能会导致释放不干净
+
+//利用虚析构来解决这个问题
+
+virtual ~animal()
+
+{
+
+cout << "~animal 调用" << endl;
+
+}
+
+};
+
+class Cat :public animal
+
+{
+
+public:
+
+Cat(const char * name)
+
+{
+
+this -> m_name = new char[strlen(name) + 1];
+
+strcpy(this -> m_name, name);
+
+}
+
+virtual void speak()
+
+{
+
+cout << "小猫在说话" << endl;
+
+}
+
+~Cat()
+
+{
+
+cout << " cat 调用" << endl;
+
+if(this -> m_name != NULL)
+
+{
+
+delete[] this -> m_name;
+
+this -> m_name = NULL;
+
+}
+
+}
+
+char * m_name;
+
+};
+
+void test1()
+
+{
+
+animal * animal = new Cat("cool");
+
+animal -> speak();
+
+delete animal;
+
+}
+-++++++++++++++++++++++
+
++++
+class animal
+
+{
+
+public:
+
+virtual void speak()
+
+{
+
+cout << "动物在说话 " << endl;
+
+}
+
+//~animal()
+
+//{
+
+//	cout << " ~animal 调用" << endl;
+
+//}
+
+//普通析构 是不会调用子类的析构的 所以可能会导致释放不干净
+
+//利用虚析构来解决这个问题
+
+//virtual ~animal()
+
+//{
+
+//	cout << "~animal 调用" << endl;
+
+//}
+
+//纯虚析构
+
+//如果函数中出现了纯虚析构函数 那么这个类也算抽象类
+
+//抽象类不可以实例化对象
+
+virtual ~animal() = 0;
+
+};
+
+//纯虚析构函数的实现
+
+animal::~animal()  //写法
+
+{
+
+cout << "~animal 纯虚析构调用" << endl;
+
+}
+
+//如果出现纯虚析构  类也算抽象类 不能实例化对象
+
+//void func()
+
+//{
+
+//	animal *  aanimal = new animal;
+
+//}
+
+class Cat :public animal
+
+{
+
+public:
+
+Cat(const char * name)
+
+{
+
+this -> m_name = new char[strlen(name) + 1];
+
+strcpy(this -> m_name, name);
+
+}
+
+virtual void speak()
+
+{
+
+cout << "小猫在说话" << endl;
+
+}
+
+~Cat()
+
+{
+
+cout << " cat 调用" << endl;
+
+if(this -> m_name != NULL)
+
+{
+
+delete[] this -> m_name;
+
+this -> m_name = NULL;
+
+}
+
+}
+
+char * m_name;
+
+};
+
+void test1()
+
+{
+
+animal * animal = new Cat("cool");
+
+animal -> speak();
+
+delete animal;
+
+}
