@@ -1,0 +1,86 @@
+class person
+
+{
+
+    public:
+
+    person(string name, int age)
+
+    {
+
+        this -> m_name = name;
+
+        this -> m_age = age;
+
+    }
+
+    string m_name;
+
+    int m_age;
+
+};
+
+template<class T>
+
+bool mycompare(T &a, T &b)
+
+{
+
+    if(a == b)
+
+    {
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+//通过具体化自定义数据类型，解决问题
+
+//如果具体化能够优先匹配 ，那么就选择具体化
+
+//语法 template<> 返回值 函数名<具体类型>(参数)
+
+template<> bool mycompare<person>(person &a, person &b)
+
+{
+
+    if(a.m_age = b.m_age)
+
+    {
+
+        return true;
+
+    }
+
+    return false;
+
+}
+
+void test1()
+
+{
+
+    int a = 10;
+
+    int b = 20;
+
+    int ret = mycompare(a, b);
+
+    cout << "ret = " << ret << endl;
+
+
+
+    person p1("ttt", 30);
+
+    person p2("ccc", 30);
+
+    int ret2 = mycompare(p1, p2);
+
+    cout << "ret2 = " << ret2 << endl;
+
+}
+
