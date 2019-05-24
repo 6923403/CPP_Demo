@@ -1,0 +1,52 @@
+template<class T>
+
+class base
+
+{
+
+    public:
+
+    T m_a; //double 类型
+
+};
+
+class child :public base<int> //报错 没有指定T的类型 + int (否则无法分配内存)
+
+{
+
+};
+
+//child2 也是模板类
+
+template<class T1, class T2>
+
+class child2 :public base<T2>
+
+{
+
+    public:
+
+    child2()
+
+    {
+
+        cout << typeid(T1).name() << endl;
+
+        cout << typeid(T2).name() << endl;
+
+    }
+
+    public:
+
+    T1 m_b;
+
+};
+
+void test1()
+
+{
+
+    child2<int, double>child;  //由用户指定类型
+
+}
+
