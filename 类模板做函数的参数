@@ -1,0 +1,63 @@
+template<class nametype, class agetype = int> //类模板可以有默认参数 
+class person
+{
+    public:
+    person(nametype name, agetype age)
+    {
+        this -> m_name = name;
+        this -> m_age = age;
+    }
+
+    void showperson()
+    {
+        cout << "姓名 " << this -> m_name << "  年龄 " << this -> m_age << endl;
+    }
+
+
+    nametype m_name;
+    agetype m_age;
+
+};
+
+//1.指定传入类型
+void dowork(person<string, int> &p)
+{
+    p.showperson();
+
+}
+
+void test1()
+{
+    person <string, int> p("ss", 10);
+    dowork(p);
+}
+
+//2.参数模板化
+template<class T1, class T2>
+void dowork2(person <T1, T2> &p)
+{
+    //如何查看类型、
+    cout << typeid(T1).name() << endl;
+    cout << typeid(T2).name() << endl;
+    p.showperson();
+}
+
+void test2()
+{
+    person<string, int> p("dd", 18);
+    dowork2(p);
+}
+
+//3.整体模板化
+template<class T>
+void dowork3(T & p)
+{
+    cout << typeid(T).name() << endl;
+    p.showperson();
+}
+
+void test3()
+{
+    person<string, int> p("xx", 16);
+    dowork3(p);
+}
