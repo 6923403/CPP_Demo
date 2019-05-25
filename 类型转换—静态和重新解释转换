@@ -1,0 +1,58 @@
+//常量转换(const_cast)
+
+void test1()
+
+{
+
+    const int * p = NULL;
+
+    //取出const
+
+    int * tmp = const_cast<int *>(p);
+
+    int * p2 = NULL;
+
+    const int * newp2 = const_cast<const int *>(p2);
+
+    //不能对非指针 或 非引用的变量进行转换
+
+    // const int a = 10;
+
+    // int b = const_cast<int>(a);
+
+    //引用
+
+    int num = 10;
+
+    int &numref = num;
+
+    const int &numref2 = static_cast<const int &>(numref);
+
+}
+
+--------------------
+//2.
+
+//重新解释转换
+
+class Base{};
+
+class Child :public Base {};
+
+class Other {};
+
+void test2()
+
+{
+
+    int a = 10;
+
+    int * p = reinterpret_cast<int *>(a);
+
+    Base * base = NULL;
+
+    Other * other = reinterpret_cast<Other *>(base);
+
+    //最不安全 不推荐
+
+}
