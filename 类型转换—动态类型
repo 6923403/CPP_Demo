@@ -1,0 +1,107 @@
+//静态转换
+
+//类型基础
+
+void test1()
+
+{
+
+    char a = 'a';
+
+    double d = static_cast<double>(a); //<转什么> (谁转)
+
+    cout << "d =  " << d << endl;
+
+}
+
+//父子类之间转换
+
+class Base{};
+
+class Child :public Base {};
+
+class Other {};
+
+void test2()  //子转父 安全  父转子 不安全
+
+{
+
+    Base * base = NULL;
+
+    Child * child = NULL;
+
+    //把base转换为child *类型 向下 不安全
+
+    //child * child2 = static_cast<child *>(base);
+
+
+
+    //把child转为base* 向上安全 
+
+    Base * base2 = static_cast<Base *>(child);
+
+
+
+    //转other类型 转换无效
+
+  //  other * other1 = static_cast<other *>(base);
+
+}
+
+//动态转换
+
+void test3()
+
+{
+
+    char c = 'a';
+
+    //dynamic_cast 非常严格，失去精度 或者不安全 都不可替换
+
+  // double d = dynamic_cast<double>(c);
+
+}
+
+class Base2
+
+{
+
+    virtual void func(){};
+
+};
+
+class Child2 :public Base2
+
+{
+
+    virtual void func(){};
+
+};
+
+class Other2 {};
+
+void test4()
+
+{
+
+    Base2 * base = NULL;
+
+    Child2 * child = NULL;
+
+    //child转base2 * 安全
+
+    Base2 * base2 = dynamic_cast<Base2 *>(child);
+
+    //base转child2 * 不安全
+
+  // Childe2 * child2 = dynamic_cast<child2 *>(base);
+
+  //发生多态情况
+
+  //dynamic_cast 如果发生了多态， 可以让基类转为派生类， 向下转换
+
+  Base2 * base3 = new Child2;
+
+  Child2 * child3 = dynamic_cast<Child2 *>(base3);
+
+}
