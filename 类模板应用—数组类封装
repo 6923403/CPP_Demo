@@ -169,6 +169,48 @@ void printfarray(myarray<int>& array)
 
 }
 
+class person
+
+{
+
+    public:
+
+    person(){};
+
+    person(string name, int age)
+
+    {
+
+        this -> m_name = name;
+
+        this -> m_age = age;
+
+    }
+
+    string m_name;
+
+    int m_age;
+
+};
+
+//输出person类型数组
+
+void printpersonarray( myarray<person> & array)
+
+{
+
+    for(int i = 0; i < array.getsize(); i++)
+
+    {
+
+        cout << "姓名  " << array[i].m_name << endl;
+
+        cout << "年龄  " << array[i].m_age << endl;
+
+    }
+
+}
+
 int main()
 
 {
@@ -184,6 +226,26 @@ int main()
     }
 
     printfarray(arr);
+
+    person p1("aa", 10);
+
+    person p2("bb", 20);
+
+    person p3("cc", 30);
+
+    person p4("dd", 10);
+
+    myarray<person>arr2(10);
+
+    arr2.push_back(p1);
+
+    arr2.push_back(p2);
+
+    arr2.push_back(p3);
+
+    arr2.push_back(p4);
+
+    printpersonarray(arr2);
 
     return EXIT_SUCCESS;
 
