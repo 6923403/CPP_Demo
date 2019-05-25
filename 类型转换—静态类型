@@ -1,0 +1,49 @@
+//静态转换
+
+//类型基础
+
+void test1()
+
+{
+
+    char a = 'a';
+
+    double d = static_cast<double>(a); //<转什么> (谁转)
+
+    cout << "d =  " << d << endl;
+
+}
+
+//父子类之间转换
+
+class base{};
+
+class child :public base {};
+
+class other {};
+
+void test2()  //子转父 安全  父转子 不安全
+
+{
+
+    base * cbase = NULL;
+
+    child * cchild = NULL;
+
+    //把base转换为child *类型 向下 不安全
+
+    child * child2 = static_cast<child *>(base);
+
+
+
+    //把child转为base* 向上安全 
+
+    base * base2 = static_cast<base *>(child);
+
+
+
+    //转other类型 转换无效
+
+    other * other1 = static_cast<other *>(base);
+
+}
