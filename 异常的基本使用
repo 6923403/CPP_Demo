@@ -1,0 +1,122 @@
+
+
+
+int mydevide(int a, int b)
+
+{
+
+    if(b == 0)
+
+    {
+
+      //  return -1;
+
+      //如果B是异常  抛出异常
+
+      //throw -1;
+
+      //throw 1; //抛出int类型
+
+      throw 1.6; //抛出一个double类型异常 出现异常必须处理 否则无法运行
+
+  //  throw 'l';
+
+    }
+
+    return a / b;
+
+}
+
+void test1()
+
+{
+
+    int a = 10;
+
+    int b = 0;
+
+  // int ret = mydevide(a, b);  //早期如果返回-1 无法区分结果还是异常
+
+
+
+  //C++中异常处理
+
+  try //
+
+  {
+
+      mydevide(a, b);
+
+  }
+
+  catch(int)//捕获int异常
+
+  {
+
+      cout << "int 类型 异常捕获" << endl;
+
+  }
+
+  catch(double) //捕获double
+
+  {
+
+      //如果不想处理这个异常 可以向上抛出
+
+      throw;
+
+      cout << "double 类型 异常捕获" << endl;
+
+  }
+
+  catch(...)
+
+  {
+
+      cout << "other 类型 异常捕获" << endl;
+
+  }
+
+
+
+}
+
+int main()
+
+{
+
+    // test1();
+
+
+
+    try
+
+    {
+
+        test1();
+
+    }
+
+    //catch(double) //捕获double
+
+    catch(char)// 如果异常没有处理 那么成员terminate函数 ， 使程序中断
+
+  {
+
+      cout << "main double 类型 异常捕获" << endl;
+
+  }
+
+  catch(...)
+
+  {
+
+      cout << "main other 类型 异常捕获" << endl;
+
+  }
+
+
+
+    return EXIT_SUCCESS;
+
+}
