@@ -1,0 +1,105 @@
+what()有个bug 不会改
+
+class myoutofrangeexception :public exception
+
+{
+
+    public:
+
+    myoutofrangeexception(const string error)
+
+    {
+
+        this -> m_error = error;
+
+    }
+
+    myoutofrangeexception(const char * error)
+
+    {
+
+        this -> m_error = string(error);
+
+    }
+
+    virtual ~myoutofrangeexception()
+
+    {
+
+
+
+    }
+
+
+
+  virtual const char * what() const
+
+    {
+
+        //返回错误信息
+
+        //string 转 char *
+
+        return this -> m_error.c_str();
+
+    }
+
+    string m_error;
+
+};
+
+class person
+
+{
+
+    public:
+
+    person(string name, int age)
+
+    {
+
+        this -> m_name = name;
+
+        if(age <= 0 || age > 130)
+
+        {
+
+            throw myoutofrangeexception(("异常"));
+
+        }
+
+
+
+    }
+
+
+
+    string m_name;
+
+    int m_age;
+
+};
+
+void test1()
+
+{
+
+    try
+
+    {
+
+        person p("张三", 322);
+
+    }
+
+    catch(myoutofrangeexception & e)
+
+    {
+
+        cout << e.what() << endl;
+
+    }
+
+
+
+}
