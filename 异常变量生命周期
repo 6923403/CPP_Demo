@@ -1,0 +1,78 @@
+
+class myException
+
+{
+
+    public:
+
+    myException()
+
+    {
+
+        cout << "exception默认构造" << endl;
+
+    }
+
+    myException(const myException & a)
+
+    {
+
+        cout << "exception拷贝构造" << endl;
+
+    }
+
+    ~myException()
+
+    {
+
+        cout << "exception析构函数" << endl;
+
+    }
+
+
+
+};
+
+void dowork()
+
+{
+
+    throw new myException();
+
+}
+
+void test1()
+
+{
+
+    try
+
+    {
+
+        dowork();
+
+    }
+
+    catch(myException & a) //myException a 会多开销一份数据
+
+    {
+
+        cout << "捕获异常" << endl;
+
+
+
+    }
+
+    catch(myException * a) //myException a 会多开销一份数据
+
+    {
+
+        cout << "捕获异常" << endl;
+
+        delete a; //自己释放
+
+    }
+
+
+
+}
