@@ -1,0 +1,56 @@
+#include "mainwindow.h"
+
+#include
+
+#include
+
+//异常的接口声明
+
+void func() throw(int) //throw(int) 只能抛出int类型// throw()不抛出任何类型异常
+
+{
+
+    throw 3.2;
+
+}
+
+int main(int argc, char *argv[])
+
+{
+
+    QApplication a(argc, argv);
+
+    MainWindow w;
+
+    w.show();
+
+    try
+
+    {
+
+        func();
+
+    }
+
+    catch(int)
+
+    {
+
+        qDebug() << "int 类型 ";
+
+    }
+
+    catch(...)
+
+    {
+
+        qDebug() << "other 类型";
+
+    }
+
+    return a.exec();
+
+}
+
+QT运行
+
