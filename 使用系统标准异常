@@ -1,0 +1,59 @@
+#include <stdexcept> //系统标准异常
+
+using namespace std;
+
+class person
+
+{
+
+    public:
+
+    person(string name, int age)
+
+    {
+
+        this -> m_name = name;
+
+        if(age < 0 || age > 130)
+
+        {
+
+            throw out_of_range("年龄越界了！");
+
+        }
+
+
+
+    }
+
+
+
+    string m_name;
+
+    int m_age;
+
+};
+
+void test1()
+
+{
+
+    try
+
+    {
+
+        person p("张三", 322);
+
+    }
+
+    catch(out_of_range & e)
+
+    {
+
+        cout << e.what() << endl;
+
+    }
+
+
+
+}
