@@ -1,0 +1,89 @@
+#include <fstream> //文件读写头文件
+
+void test1()
+
+{
+
+  // ofostream ofs("/home/then/test.txt", ios::out | ios::trunc),
+
+  ofstream ofs;
+
+  ofs.open("./test.txt", ios::out | ios::trunc);
+
+  //判断是否打开成功
+
+  if(!ofs.is_open())
+
+  {
+
+      cout << "打开失败" << endl;
+
+  }
+
+  ofs << "姓名： sss " << endl;
+
+  ofs << "年龄： 123 " << endl;
+
+  ofs << "性别： xxx " << endl;
+
+}
+
+// //读文件
+
+void test2()
+
+{
+
+    ifstream ifs;
+
+    ifs.open("./test.txt", ios::in);
+
+    //判断是否打开成功
+
+    if(!ifs.is_open())
+
+    {
+
+        cout << "打开失败" << endl;
+
+    }
+
+    //第一种方式  推荐
+
+    // char buf[1024];
+
+    // while(ifs >> buf)//按行读取
+
+    // {
+
+    //    cout << buf << endl;
+
+    // }
+
+    //第二种方式
+
+    // char buf2[1024];
+
+    // while(!ifs.eof()) //eof转到文件尾
+
+    // {
+
+    //    ifs.getline(buf2, sizeof(buf2));
+
+    //    cout << buf2 << endl;
+
+    // }
+
+    //第三种方式 不推荐 按单个字符读取
+
+    char c;
+
+    while((c = ifs.get()) != EOF) //EOF文件尾
+
+    {
+
+        cout << c ;
+
+    }
+
+}
