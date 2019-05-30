@@ -1,0 +1,97 @@
+#include <vector>
+
+using namespace std;
+
+void test1()
+
+{
+
+    vector<int> v;
+
+    for(int i = 0; i < 10; i++)
+
+    {
+
+        v.push_back(i);
+
+        cout << v.capacity() << endl; //v.capacity容器容量
+
+    }
+
+}
+
+void printvector(vector<int> & v)
+
+{
+
+    for(vector<int>:: iterator it = v.begin(); it != v.end(); it++)
+
+    {
+
+        cout << *it << " " << endl ;
+
+    }
+
+}
+
+void test2()
+
+{
+
+    vector<int> v;
+
+    int arr[] = {1, 5, 3, 2, 4};
+
+    vector<int> v1(arr, arr + sizeof(arr) / sizeof(int));
+
+    vector<int> v2(v1.begin(), v1.end());
+
+    printvector(v2);
+
+    vector<int> v3(10, 100);
+
+    printvector(v3);
+
+    //赋值使用
+
+    vector<int> v4;
+
+    v4.assign(v3.begin(),v3.end());
+
+    printvector(v4);
+
+    v4.swap(v2);
+
+    cout << "交换后的v4" << endl;
+
+    printvector(v4);
+
+    cout << "v4 容器大小 " << v4.size() << endl;
+
+    if(v4.empty())
+
+    {
+
+        cout << "v4 为空" ;
+
+    }
+
+    else
+
+    {
+
+        cout << "v4 不为空" ;
+
+    }
+
+
+
+    v4.resize(10); //重新指定大小 //第二个参数默认是0 输出 5个数 + 5个0
+
+    printvector(v4);
+
+    v4.resize(3);
+
+    printvector(v4);
+
+}
