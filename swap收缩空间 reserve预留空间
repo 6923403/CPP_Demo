@@ -1,0 +1,77 @@
+
+交换指向 当前行结束匿名对象回收
+
+
+//巧用swap收缩空间
+
+void test1()
+
+{
+
+    vector<int> v;
+
+    for(int i = 0; i < 10000; i++)
+
+    {
+
+        v.push_back(i);
+
+    }
+
+    cout << "v的容量" << v.capacity() <<endl;
+
+    cout << "v的大小" << v.size() <<endl;
+
+    v.resize(3);
+
+    cout << "v的容量" << v.capacity() <<endl;
+
+    cout << "v的大小" << v.size() <<endl;
+
+    //巧用swap
+
+    vector<int>(v).swap(v); //交换指向 匿名对象回收
+
+    cout << "v的容量" << v.capacity() <<endl;
+
+    cout << "v的大小" << v.size() <<endl;
+
+}
+
+void test1()
+
+{
+
+    vector<int>v;
+
+    //预先开辟空间
+
+    v.reserve(100000);
+
+    int * p = NULL;
+
+    int num = 0;
+
+    for(int i = 0; i < 100000; i++)
+
+    {
+
+        v.push_back(i);
+
+        if(p != & v[0])
+
+        {
+
+            p = &v[0];
+
+            num++;
+
+        }
+
+    }
+
+    cout << num << endl;
+
+    //开辟十万数据用了多少次 我linux18次 win 30
+
+}
