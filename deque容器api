@@ -1,0 +1,121 @@
+
+
+#include <deque>
+
+using namespace std;
+
+void printdeque(const deque<int> &d)
+
+{
+
+    //iterator 普通迭代器 reverse_iterator逆序迭代器 const_iterator 只读迭代器
+
+    for(deque<int>::const_iterator it = d.begin(); it != d.end(); it++)
+
+    {
+
+      // *it = 10000;
+
+        cout << *it << " " ;
+
+
+
+    }
+
+    cout << endl;
+
+}
+
+void test1()
+
+{
+
+    deque<int> d;
+
+    d.push_back(10);
+
+    d.push_back(20);
+
+    d.push_back(30);
+
+    d.push_back(40);
+
+    printdeque(d);
+
+    deque<int>d2(d.begin(), d.end());
+
+    d2.push_back(10000);
+
+    //交换
+
+    d.swap(d2);
+
+    printdeque(d);
+
+    if(d2.empty())
+
+    {
+
+        cout << "null" << endl;
+
+    }
+
+    else
+
+    {
+
+        cout << "Np null  size :" << d2.size() << endl;  //size 4
+
+    }
+
+
+
+}
+
+void test2()
+
+{
+
+    deque<int> d;
+
+    d.push_back(10);
+
+    d.push_back(20);
+
+    d.push_back(30);
+
+    d.push_back(40);
+
+    d.push_front(100);
+
+    d.push_front(200);
+
+    printdeque(d); //200 100 10 20 30 40
+
+    // 头删 / 尾删
+
+    d.pop_front();
+
+    d.pop_back();
+
+    printdeque(d); //  100 10 20 30
+
+    cout << "front" << d.front() << endl;
+
+    cout << "back" << d.back() << endl;
+
+
+
+    //插入
+
+    deque<int> d2;
+
+    d2.push_back(100);
+
+    d2.push_back(200);
+
+    d2.insert(d2.begin(), 3, 2);
+
+    printdeque(d2);
+
+}
