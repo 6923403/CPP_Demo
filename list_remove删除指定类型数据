@@ -1,0 +1,56 @@
+
+//重载 == 让remove 可以删除自定义的person类型
+
+    bool operator ==(const person & p)
+
+    {
+
+        if(this -> m_name == p.m_name && this -> m_age == p.m_age && this -> m_height == p.m_height)
+
+        {
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+
+
+void test4()
+
+{
+
+    list<person> k;
+
+    person p1("aaa", 10, 170);
+
+    person p2("bbb", 20, 175);
+
+    person p3("ccc", 20, 177);
+
+    person p4("ddd", 40, 199);
+
+    k.push_back(p1);
+
+    k.push_back(p2);
+
+    k.push_back(p3);
+
+    k.push_back(p4);
+
+k.remove(p2);
+
+    for(list<person> ::iterator it = k.begin(); it != k.end(); it++)
+
+    {
+
+        cout << "姓名： " << it -> m_name  << "年龄" << it -> m_age << endl;
+
+        cout << "身高： " << it -> m_height << endl;
+
+    }
+
+}
