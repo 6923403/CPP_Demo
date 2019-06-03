@@ -1,0 +1,157 @@
+void test1()
+{
+    map<int, int> k;
+    //插入值
+    //4种方式
+
+    //1.
+    k.insert(pair<int, int>(1, 10));
+
+    //2.
+    k.insert(make_pair(2, 20));
+
+    //3.  
+    k.insert(map<int, int>::value_type(3, 30));
+
+    //4.
+    k[4] = 10;
+
+    for(map<int, int>::iterator it = k.begin(); it != k.end(); it++)
+    {
+        cout << it -> first << endl;
+        cout << it -> second << endl;
+    }
+
+    cout << k[5] << endl;
+        for(map<int, int>::iterator it = k.begin(); it != k.end(); it++)
+    {
+        cout << it -> first << endl;
+        cout << it -> second << endl;
+    }
+
+    cout << k[4] << endl;
+
+    if(k.empty())
+    {
+        cout << "空" << endl;
+    }
+    else
+    {
+        cout << "seze： " << k.size() << endl;
+    }
+    
+
+}
+
+void test2()
+{
+        map<int, int> k;
+    //插入值
+    //4种方式
+
+    //1.
+    k.insert(pair<int, int>(1, 10));
+
+    //2.
+    k.insert(make_pair(2, 20));
+
+    //3.  
+    k.insert(map<int, int>::value_type(3, 30));
+
+    //4.
+    k[4] = 10;
+
+    k.erase(1);
+    
+    for(map<int, int>::iterator it = k.begin(); it != k.end(); it++)
+    {
+        cout << it -> first << endl;
+        cout << it -> second << endl;
+    }
+
+    map<int, int>::iterator pos = k.find(2);
+    if(pos != k.end())
+    {
+        cout << "key： " << pos -> first << "  value： " << pos -> second << endl;
+    }
+    else 
+    cout << "未找到" << endl;
+
+    int num = k.count(2);
+    cout << "num = " << num << endl; //只能为0 / 1
+
+    map<int, int>::iterator ret = k.lower_bound(2); //>=
+    if(ret != k.end())
+    {
+    cout << ret -> first << endl;
+    cout << ret -> second << endl;
+    }
+    else 
+    cout << "NULL" << endl;
+
+    map<int, int>::iterator ret2 = k.upper_bound(2); //>
+    if(ret != k.end())
+    {
+    cout << ret2 -> first << endl;
+    cout << ret2 -> second << endl;
+    }
+    else 
+    cout << "NULL" << endl;
+
+    pair<map<int, int>::iterator ,map<int, int>::iterator> ret3 = k.equal_range(3);
+
+    if(ret3.first != k.end())
+    {
+        cout << "找到了lower_bound key ： " << ret3.first -> first << endl;
+        cout << "  value : " << ret3.first -> second << endl;
+    }
+    else
+    {
+        cout << "未找到" << endl;
+    }    
+
+    if(ret3.second != k.end())
+    {
+        cout << "找到了lower_bound key ： " << ret3.second -> first << endl;
+        cout << "  value : " << ret3.second -> second << endl;
+    }
+    else
+    {
+        cout << "未找到" << endl;
+    }   
+
+
+}
+
+//-------------------
+class mycompare
+{
+    public:
+    bool operator()(int v1, int v2)
+    {
+        return v1 > v2;
+    }
+};
+
+void test3()
+{
+    map<int, int, mycompare> k;
+
+    //1.
+    k.insert(pair<int, int>(1, 10));
+
+    //2.
+    k.insert(make_pair(2, 20));
+
+    //3.  
+    k.insert(map<int, int>::value_type(3, 30));
+
+    //4.
+    k[4] = 10;
+
+    //从大到小
+    for(map<int, int, mycompare>::iterator it = k.begin(); it != k.end(); it++)
+    {
+        cout << "key： " << it -> first << "  valuse： " << it -> second << endl;
+    }
+}
