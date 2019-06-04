@@ -1,0 +1,163 @@
+
+
+#include <vector>
+
+#include <map>
+
+
+
+enum {RL, YANFA, ANQUAN};
+
+class worker
+
+{
+
+    public:
+
+    string m_name;
+
+    int m_money;
+
+
+
+};
+
+void createrworker(vector<worker> & c)
+
+{
+
+    string nameseed = "ABCDE" ;
+
+    for(int i = 0; i < 5; i++)
+
+    {
+
+        string name = "员工: ";
+
+        name += nameseed[i];
+
+
+
+        int money = rand() %10000 + 10000;
+
+        worker w;
+
+        w.m_name = name;
+
+        w.m_money = money;
+
+        c.push_back(w);
+
+    }
+
+}
+
+void setgroup(vector<worker> & c, multimap<int, worker> & m)
+
+{
+
+    for(vector<worker>::iterator it = c.begin(); it != c.end(); it++)
+
+    {
+
+        //随机产生部门编号
+
+        int partmentid = rand() % 3;
+
+        //将员工分配到multimap容器中
+
+        m.insert(make_pair(partmentid , *it));
+
+
+
+    }
+
+}
+
+void showgroup(multimap<int, worker> &m)
+
+{
+
+    cout << "RL ： " << endl;
+
+    multimap<int, worker>::iterator pos = m.find(RL);
+
+    int index = 0;
+
+    int num = m.count(RL);
+
+    for(; pos != m.end(), index < num; pos++, index++)
+
+    {
+
+        cout << "姓名：" << pos -> second.m_name << "  薪资： "<< pos -> second.m_money << endl;
+
+    }
+
+
+
+    cout << "2222" << endl;
+
+    pos = m.find(YANFA);
+
+    index = 0;
+
+    num = m.count(YANFA);
+
+    for(; pos != m.end(), index < num; pos++, index++)
+
+    {
+
+        cout << "姓名：" << pos -> second.m_name << "  薪资： "<< pos -> second.m_money << endl;
+
+    }
+
+    cout << "333" << endl;
+
+    pos = m.find(ANQUAN);
+
+    index = 0;
+
+    num = m.count(ANQUAN);
+
+    for(; pos != m.end(), index < num; pos++, index++)
+
+    {
+
+        cout << "姓名：" << pos -> second.m_name << "  薪资： "<< pos -> second.m_money << endl;
+
+    }
+
+}
+
+int main()
+
+{
+
+    //
+
+    vector<worker> c;
+
+    createrworker(c);
+
+    for(vector<worker>::iterator it = c.begin(); it != c.end(); it++)
+
+    {
+
+        cout << "姓名：" << it -> m_name << "  薪资： "<< it -> m_money << endl;
+
+    }
+
+    //设置分组
+
+    multimap<int, worker> m;
+
+    setgroup(c, m);
+
+    //分部门显示员工
+
+    showgroup(m);
+
+    return EXIT_SUCCESS;
+
+}
