@@ -1,0 +1,104 @@
+
+#include <vector>
+
+#include <algorithm>
+
+using namespace std;
+
+class mycompare
+
+{
+
+    public:
+
+    bool operator()(int num)
+
+    {
+
+        return num > 20;
+
+    }
+
+};
+
+void test1()
+
+{
+
+    vector<int> y;
+
+    y.push_back(10);
+
+    y.push_back(20);
+
+    y.push_back(30);
+
+    y.push_back(40);
+
+
+
+    //查找第一个大于20的数字
+
+    //第三个参数 函数对象 //也可以直接用别名 不加括号
+
+    vector<int>::iterator pos = find_if(y.begin(), y.end(), mycompare());
+
+    {
+
+        if(pos != y.end())
+
+        {
+
+            cout << "找到大于20的数字 " << *pos << endl;
+
+        }
+
+        else
+
+        cout << "WU" << endl;
+
+    }
+
+}
+
+class mycompare2
+
+{
+
+    public:
+
+    bool operator()(int v1, int v2)
+
+    {
+
+        return v1 > v2;
+
+    }
+
+};
+
+//二元谓词
+
+void test2()
+
+{
+
+    vector<int> y;
+
+    y.push_back(10);
+
+    y.push_back(20);
+
+    y.push_back(30);
+
+    y.push_back(40);
+
+    sort(y.begin(), y.end(), mycompare2());
+
+    //匿名函数 lambda[](){}
+
+    for_each(y.begin(), y.end(), [](int val){cout << val << "  " << endl ;});
+
+
+
+}
