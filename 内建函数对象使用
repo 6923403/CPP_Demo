@@ -1,0 +1,45 @@
+#include <vector>
+
+#include <algorithm>
+
+#include <functional> //内建函数对象头文件
+
+using namespace std;
+
+void test1()
+
+{
+
+    negate<int> n;
+
+    cout << n(10) << endl;
+
+
+
+    plus<int> n2;
+
+    cout << n2(1, 1) << endl;
+
+}
+
+void test2()
+
+{
+
+    vector<int> k;
+
+    k.push_back(10);
+
+    k.push_back(20);
+
+    k.push_back(30);
+
+    k.push_back(40);
+
+
+
+    sort(k.begin(), k.end(), greater<int>()); //
+
+    for_each(k.begin(), k.end(), [](int lk){cout << lk << endl;});
+
+}
