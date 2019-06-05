@@ -1,0 +1,294 @@
+
+#include <vector>
+
+#include <algorithm>
+
+#include <functional>
+
+using namespace std;
+
+void test1()
+
+{
+
+    vector<int> d;
+
+    for(int i = 0; i < 10; i++)
+
+    {
+
+        d.push_back(i);
+
+    }
+
+    vector<int>::iterator pos = find(d.begin(), d.end(), 5);
+
+    if(pos != d.end()){
+
+    cout << * pos << endl;
+
+    }
+
+    else
+
+    cout << "0" << endl;
+
+}
+
+class person
+
+{
+
+    public:
+
+    person(string name, int age)
+
+    {
+
+        this -> m_name = name;
+
+        this -> m_age = age;
+
+    }
+
+    bool operator==(const person & p)
+
+    {
+
+        if(this -> m_name == p.m_name && this -> m_age == p.m_age)
+
+        {
+
+            return true;
+
+        }
+
+        else
+
+        {
+
+            return false;
+
+        }
+
+
+
+    }
+
+    string m_name;
+
+    int m_age;
+
+};
+
+//利用find 查找自定义类型数据
+
+void test2()
+
+{
+
+    vector<person> s;
+
+    person p1("aaa", 10);
+
+    person p2("qqq", 40);
+
+    person p3("www", 30);
+
+    person p4("eee", 20);
+
+    s.push_back(p1);
+
+    s.push_back(p2);
+
+    s.push_back(p3);
+
+    s.push_back(p4);
+
+    vector<person>::iterator pos2 = find(s.begin(), s.end(), p2);
+
+    if(pos2 != s.end()){
+
+    cout << (* pos2).m_name << endl;
+
+    cout << pos2 ->m_age << endl;
+
+    }
+
+    else
+
+    cout << "0" << endl;
+
+}
+
+class compare1 :public binary_function<person *, person *, bool>
+
+{
+
+    public:
+
+    bool operator()(person * p1, person * p2) const
+
+    {
+
+        if(p1 -> m_name == p2 -> m_name && p1 -> m_age == p2 -> m_age)
+
+        {
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+};
+
+void test3() //条件查找
+
+{
+
+    vector<person *> f;
+
+    person p1("aaa", 10);
+
+    person p2("qqq", 40);
+
+    person p3("www", 30);
+
+    person p4("eee", 20);
+
+    f.push_back(&p1);
+
+    f.push_back(&p2);
+
+    f.push_back(&p3);
+
+    f.push_back(&p4);
+
+    person *p = new person("aaa", 10);
+
+    vector<person *> ::iterator pos = find_if(f.begin(), f.end(), bind2nd(compare1(), p));
+
+    if(pos != f.end()){
+
+    cout << (*pos) -> m_name << endl;
+
+    cout << (*pos) -> m_age << endl;
+
+    }
+
+    else
+
+    cout << "0" << endl;
+
+}
+
+void test4() //查找相邻重复元素
+
+{
+
+    vector<int> h;
+
+    h.push_back(10);
+
+    h.push_back(30);
+
+    h.push_back(40);
+
+    h.push_back(40);
+
+    h.push_back(10);
+
+    vector<int>::iterator pos = adjacent_find(h.begin(), h.end());
+
+    if(pos != h.end())
+
+    {
+
+        cout << "找到了" << *pos << endl;
+
+    }
+
+    else
+
+    {
+
+        cout << "0";
+
+    } 
+
+}
+
+void test5() //二分查找法
+
+{
+
+    vector<int> w;
+
+    for(int i = 0; i < 10; i++)
+
+    {
+
+        w.push_back(i);
+
+    }
+
+    bool ret = binary_search(w.begin(), w.end(), 4);
+
+    if(ret)
+
+    {
+
+        cout << "有" << endl;
+
+    }
+
+    else
+
+    cout << "0" << endl;
+
+}
+
+class greate4
+
+{
+
+    public:
+
+    bool operator()(int v)
+
+    {
+
+        return v > 10;
+
+    }
+
+};
+
+void test6() //统计元素出现次数
+
+{
+
+    vector<int> h;
+
+    h.push_back(10);
+
+    h.push_back(30);
+
+    h.push_back(40);
+
+    h.push_back(40);
+
+    h.push_back(10);
+
+    int num = count(h.begin(), h.end(), 40);
+
+    cout << num << endl;
+
+    int num2 = count_if(h.begin(), h.end(), greate4());
+
+    cout << num2 << endl;
+
+}
