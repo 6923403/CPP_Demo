@@ -1,0 +1,76 @@
+
+mybutton.h
+
+#ifndef MYBUTTON_H
+
+#define MYBUTTON_H
+
+#include
+
+#include
+
+class mybutton : public QPushButton
+
+{
+
+    Q_OBJECT
+
+public:
+
+    explicit mybutton(QWidget *parent = nullptr);
+
+    ~mybutton();
+
+signals:
+
+public slots:
+
+};
+
+#endif // MYBUTTON_H
+
+------------------------
+mybutton.cpp
+
+#include "mybutton.h"
+
+#include
+
+mybutton::mybutton(QWidget *parent) : QPushButton(parent)
+
+{
+
+}
+
+mybutton::~mybutton()
+
+{
+
+    qDebug() << "mybutton的析构";
+
+}
+------------------
+
+mywidght.cpp
+
+//一定程度上简化了内存回收机制
+
+    //创建自己的按钮
+
+    mybutton * mybtn = new mybutton;
+
+    mybtn -> setText("wd");
+
+    mybtn -> move(200, 200);
+
+    mybtn -> setParent(this);
+
+}
+
+myWidget::~myWidget()
+
+{
+
+    qDebug() << "mywidght析构了";
+
+}
