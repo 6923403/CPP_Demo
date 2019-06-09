@@ -1,0 +1,20 @@
+#include "mywidget.h"
+
+#include  <QApplication>  //包含头文件 应用程序头文件
+
+int main(int argc, char *argv[]) //程序入口
+
+//argc命令行变量数量  argv命令行变量数组
+
+{
+
+    QApplication a(argc, argv); //应用程序对象 a QT中有且仅有一个应用程序对象
+
+    myWidget w; //创建mywidget对象 w  mywidget基类 Qwidget
+
+    w.show(); //窗口默认不会弹出 如果想弹出 调用show方法
+
+    return a.exec(); //进入消息循环机制
+
+}
+
