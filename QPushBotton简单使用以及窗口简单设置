@@ -1,0 +1,39 @@
+myWidget::myWidget(QWidget *parent)
+
+    : QWidget(parent) //初始化列表
+
+{
+
+    QPushButton * btn = new QPushButton;
+
+  // btn -> show(); //show用顶层方式弹出 如果想在mywidget窗口中显示就需要依赖 mywidget窗口
+
+    btn -> setParent(this);
+
+    btn -> setText ("111"); //将char * 隐式类型转换为Qstring
+
+    //创建按钮的第二种方式 窗口会按照btn2窗口大小显示
+
+    QPushButton * btn2 = new QPushButton("第二个按钮", this);
+
+    //重置窗口大小
+
+    this -> resize(568, 520);
+
+    //移动第二个按钮
+
+    btn2 -> move(100, 100);
+
+    //重置按钮大小
+
+    btn2 -> resize(50, 50);
+
+    //重置窗口标题
+
+    setWindowTitle("nihao");
+
+    //设置固定窗口大小
+
+    setFixedSize(610, 420);
+
+}
