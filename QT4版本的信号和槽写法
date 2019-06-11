@@ -1,0 +1,9 @@
+//QT4b版本 不推荐 类型匹配不检测
+
+ //优点 参数类型比较直观 发生重载也不用写函数指针
+
+//不检测原因 SIGNAL 和SLOT下 会把代码作为字符串处理
+
+    connect(zt, SIGNAL(teach(QSTRING)), st, SLOT(study(QString)));
+
+    classover();
