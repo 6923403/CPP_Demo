@@ -1,0 +1,27 @@
+#include <QLabel>
+#include <QStatusBar>
+#include <QDockWidget>
+#include <QTextEdit>
+
+
+    //状态栏
+    QStatusBar * stBar = statusBar();
+    setStatusBar(stBar);
+    QLabel * label = new  QLabel("提示信息", this); //
+    stBar -> addWidget(label); //添加到左侧
+
+    QLabel * label2 = new  QLabel("提示信息2", this);
+    stBar -> addPermanentWidget(label2); //右侧
+
+    //铆接部件 浮动窗口 可以有多个
+    QDockWidget * dock = new QDockWidget;
+
+    //添加铆接部件到窗口中
+    addDockWidget(Qt::BottomDockWidgetArea, dock);
+
+    //设置停靠范围
+    dock -> setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+
+    //核心部件 只能有一个
+    QTextEdit * edit = new QTextEdit; //文本编辑框
+    setCentralWidget(edit);
