@@ -1,0 +1,70 @@
+#include <QDebug>       
+
+#include <QDialog>
+
+#include <QMessageBox>
+
+//点击新建菜单 弹出对话框
+
+    connect(ui->actionnew, & QAction::triggered, this, [=]()
+
+                {
+
+            //        //两种 模态对话框(不可以对其他窗口类型操作) 非模态对话框(可以对其他窗口操作)
+
+            //        //模态
+
+            ////        QDialog dig(this);
+
+            ////        dig.resize(200, 100);
+
+            ////        dig.exec(); //阻塞
+
+            ////        qDebug() << "弹出对话框";
+
+            //        //非模态
+
+            //    //  QDialog dig2(this); //创建到栈上 一闪而过
+
+            //        QDialog * dig2 = new QDialog(this);
+
+            //        dig2 -> resize(200, 100);
+
+            //        dig2 -> show();
+
+            //        //需要设置属性 dig2
+
+            //        dig2 ->setAttribute(Qt::WA_DeleteOnClose); //关闭后 释放指针
+
+      //  QMessageBox::critical(this, "错误", "critical");
+
+        //信息对话框
+
+        //QMessageBox::information(this, "信息", "info");
+
+        //询问对话框
+
+        //1.父类 2.标题 3.提示内容 4.按键类型 5.对应按键获取焦点
+
+//        if(QMessageBox::Save == QMessageBox::question(this, "问题", "question", QMessageBox::Save | QMessageBox::Cancel))
+
+//        {
+
+//            qDebug() << "点击的是保存";
+
+//        }
+
+//        else
+
+//        {
+
+//            qDebug() << "点击的是取消";
+
+//        }
+
+        //警告对话框
+
+        QMessageBox::warning(this, "警告！", "warning");
+
+});
+
