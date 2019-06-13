@@ -1,0 +1,26 @@
+//单选按钮默认选中1
+
+    ui -> rBtn1 -> setChecked(true);
+
+    //点击2 输出 已选中
+
+    connect(ui -> rBtn2, &QRadioButton::clicked, [=]()
+
+    {
+
+        qDebug() << "已选中";
+
+    });
+
+    //多选框选中后 打印内容
+
+    //选中 2 未选中 0  tristate半选中 1
+
+    connect(ui -> checkBox, &QCheckBox::stateChanged, [=](int state)
+
+    {
+
+      qDebug() << state;
+
+    });
+
