@@ -1,0 +1,72 @@
+//TreeWidget控件使用
+
+    ui -> treeWidget -> setHeaderLabels(QStringList() << "英雄名 " << "详细介绍");
+
+    //添加项目
+
+    QTreeWidgetItem * litem = new QTreeWidgetItem(QStringList() << "力量");
+
+    QTreeWidgetItem * minitem = new QTreeWidgetItem(QStringList() << "敏捷");
+
+    QTreeWidgetItem * zhiitem = new QTreeWidgetItem(QStringList() << "智慧");
+
+    //添加顶层项目
+
+    ui -> treeWidget -> addTopLevelItem(litem);
+
+    ui -> treeWidget -> addTopLevelItem(minitem);
+
+    ui -> treeWidget -> addTopLevelItem(zhiitem);
+
+    //内容测试
+
+    QStringList hero1;
+
+    hero1 << "A1" << "www";
+
+    QStringList hero2;
+
+    hero2 << "A2" << "dddd";
+
+    QStringList far1;
+
+    far1 << "b1" << "qqq";
+
+    QStringList far2;
+
+    far2 << "b2" << "rrr";
+
+    QStringList smart1;
+
+    smart1 << "c1" << "ppp";
+
+    QStringList smart2;
+
+    smart2 << "c2" << "xxx";
+
+    //追加子项目 子项也是QTreeWidgetItem
+
+    QTreeWidgetItem * li1 = new QTreeWidgetItem(hero1);
+
+    litem -> addChild(li1);
+
+    QTreeWidgetItem * li2 = new QTreeWidgetItem(hero2);
+
+    litem -> addChild(li2);
+
+    QTreeWidgetItem * min1 = new QTreeWidgetItem(far1);
+
+    minitem -> addChild(min1);
+
+    QTreeWidgetItem * min2 = new QTreeWidgetItem(far2);
+
+    minitem -> addChild(min2);
+
+    QTreeWidgetItem * zhi1 = new QTreeWidgetItem(smart1);
+
+    zhiitem -> addChild(zhi1);
+
+    QTreeWidgetItem * zhi2 = new QTreeWidgetItem(smart2);
+
+    zhiitem -> addChild(zhi2);
+
