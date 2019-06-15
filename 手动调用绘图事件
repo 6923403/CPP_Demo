@@ -1,0 +1,53 @@
+    posx = 10;
+
+    //移动画出的图片
+
+    connect(ui -> pushButton, &QPushButton::clicked, [=]()
+
+    {
+
+        posx += 10;
+
+        //手动调用绘图事件
+
+        update();
+
+    });
+
+    QTimer * timer1 = new QTimer(this);
+
+    timer1 -> start(500);
+
+    connect(timer1, &QTimer::timeout, [=]()
+
+    {
+
+        posx += 10;
+
+        update();
+
+    });
+
+
+---------------------------------
+void Widget::paintEvent(QPaintEvent *)
+
+{
+
+
+
+        //画图片
+
+        painter.drawPixmap(posx, 100, QPixmap(":/333.png"));
+
+        //如果超出屏幕 复位
+
+        if(posx > this -> width())
+
+        {
+
+            posx = 10;
+
+        }
+
+}
