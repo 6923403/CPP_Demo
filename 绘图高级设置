@@ -1,0 +1,38 @@
+
+
+
+//创建画家
+
+    QPainter painter(this);
+
+    painter.drawEllipse( QPoint(100, 100), 50, 50);
+
+    //高级设置
+
+    //设置抗锯齿  效率低
+
+  //  painter.setRenderHint(QPainter::Antialiasing);
+
+  //  painter.drawEllipse( QPoint(200, 100), 50, 50);
+
+    //矩形
+
+    painter.drawRect(QRect(20, 20, 50, 50));
+
+    //移动画家
+
+    painter.translate(QPoint(100, 10));
+
+    //保存状态
+
+    painter.save();
+
+    painter.drawRect(QRect(20, 20, 50, 50));
+
+    painter.translate(QPoint(100, 10));
+
+    //取出状态
+
+    painter.restore();
+
+    painter.drawRect(QRect(20, 20, 50, 50));
