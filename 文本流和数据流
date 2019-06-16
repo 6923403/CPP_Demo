@@ -1,0 +1,54 @@
+#include <QTextStream>        
+
+   //文件流读写文件
+
+    //分类 ：文本流(基础数据类型) 和 数据流(大型数据)
+
+    //文本流
+
+    QFile file("aaa.txt");
+
+    file.open(QFileDevice::WriteOnly);
+
+    QTextStream stream(&file);
+
+    stream << QString("1111") << 123456 ;
+
+    file.close();
+
+    //读取
+
+    file.open(QFileDevice::ReadOnly);
+
+    QString str;
+
+  // stream >> str; //读取空格结束
+
+    str = stream.readAll();
+
+    qDebug() << str;
+
+
+//数据流 二进制
+
+    QFile file("ccc.txt");
+
+    file.open(QFileDevice::WriteOnly);
+
+    QDataStream stream(&file);
+
+    stream << QString("kkk") << 12345;
+
+    file.close();
+
+    //读数据
+
+    file.open(QFileDevice::ReadOnly);
+
+    QString str;
+
+    int num;
+
+    stream >> str >> num;
+
+    qDebug() << str << num;
