@@ -1,0 +1,99 @@
+#include <QPainter>
+
+ #include <QPicture>
+
+
+
+// //QPixmap做绘图设备 对不同平台显示做了优化
+
+//    QPixmap pix(300, 300); //指定一张纸的大小
+
+//    //设置默认填充色
+
+//    pix.fill(Qt::white);
+
+//    QPainter painter( &pix);
+
+//    painter.setPen(QPen(Qt::red));
+
+//    painter.drawRect(QRect(150, 150, 50, 50));
+
+//    //保存
+
+//    pix.save("/home/then/下载/3.png");
+
+    //QImage 做绘图设备  对像素级访问进行了优化
+
+//    QImage img(300, 300, QImage::Format_RGB32);
+
+//    img.fill(Qt::white);
+
+//    QPainter painter(&img);
+
+//    painter.setPen(QPen(Qt::red));
+
+//    painter.drawRect(QRect(100, 100, 100, 100));
+
+//    img.save("/home/then/下载/3.png");
+
+    //QPicture 绘图设备
+
+    QPicture pic; //用来重新 记录绘图指令
+
+    QPainter painter;
+
+    painter.begin(&pic);
+
+    painter.setPen(QPen(Qt::cyan));
+
+    painter.drawRect(QRect(100, 100, 100, 100));
+
+    painter.end();
+
+    //保存
+
+    pic.save("/home/then/下载/3.zt");
+
+
+
+----------------------------
+
+void Widget::paintEvent(QPaintEvent *)
+
+//QImage 可以修改像素
+
+//    QImage img;
+
+//    img.load(":/333.png");
+
+//    for(int i = 50; i < 100; i++)
+
+//    {
+
+//        for(int j = 50; j < 100; j++)
+
+//        {
+
+//            QRgb value = qRgb(255, 0, 0);
+
+//            //设置像素点
+
+//            img.setPixel(i, j, value);
+
+//        }
+
+//    }
+
+//    QPainter painter(this);
+
+//    painter.drawImage(QPoint(0, 0), img);
+
+    //重现绘图指令 QPicture
+
+    QPicture pic;
+
+    pic.load("/home/then/下载/3.zt");
+
+    QPainter painter(this);
+
+    painter.drawPicture(0, 0, pic);
