@@ -1,0 +1,15 @@
+#include <QDebug>
+
+ #include <QDateTime>      
+
+ //通过QFileInfo读取文件信息
+
+            QFileInfo info(path);
+
+            qDebug() << info.filePath() << info.fileName() << info.size() << info.suffix();
+
+            //创建日期 修改日期
+
+            qDebug() << "创建日期" << info.created().toString("yyyy-MM-dd  hh::mm::ss");
+
+            qDebug() << "修改日期" << info.lastModified().toString("yyyy/MM/dd  hh::mm::ss");
