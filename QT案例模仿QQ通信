@@ -1,0 +1,497 @@
+dialoglist.h
+----
+#ifndef DIALOGLIST_H
+#define DIALOGLIST_H
+
+#include <QWidget>
+
+
+namespace Ui {
+class DialogList;
+}
+
+class DialogList : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit DialogList(QWidget *parent = nullptr);
+    ~DialogList();
+
+
+private:
+    Ui::DialogList *ui;
+
+
+    QVector<bool> isShow;
+};
+
+#endif // DIALOGLIST_H
+---------------------------
+
+widget.h
+--
+#ifndef WIDGET_H
+#define WIDGET_H
+
+#include <QWidget>
+#include <QUdpSocket>
+
+namespace Ui {
+class Widget;
+}
+
+class Widget : public QWidget
+{
+
+    enum MsgType{Msg, UsrEnter, UsrLeft};
+    Q_OBJECT
+
+public:
+    explicit Widget(QWidget *parent , QString name);
+    ~Widget();
+
+private:
+    Ui::Widget *ui;
+
+signals:
+    //关闭窗口发送关闭信息
+    void closeWidget();
+
+public:
+    //关闭事件
+    void closeEvent(QCloseEvent *);
+
+
+public:
+    void sndMsg(MsgType type); //广播 UDP 消息
+    void usrEnter(QString username);//处理新用户加入
+    void usrLeft(QString usrname,QString time); //处理用户离开
+    QString getUsr(); //获取用户名
+    QString getMsg(); //获取聊天信息
+
+
+    QUdpSocket * udpSocket; //udp 套接字
+    qint16 port; //端口
+    QString uName; //用户名
+    void ReceiveMessage(); //接受 UDP 消息
+};
+
+#endif // WIDGET_H
+
+------------------
+dialoglist.cpp
+--
+#include "dialoglist.h"
+#include "ui_dialoglist.h"
+#include "widget.h"
+#include <iostream>
+#include <QToolButton>
+#include <QMessageBox>
+
+DialogList::DialogList(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::DialogList)
+{
+    ui->setupUi(this);
+   // QVector<bool> isShow;
+    //设置标题
+    setWindowTitle("Mycheat");
+
+    //设置图标
+    setWindowIcon(QPixmap(":/1/icon.png"));
+
+    //准备图标 ID
+    QList<QString> nameList;
+    nameList << "凉生初雨" <<"惟欲睡" << "青青浅吟年华未央" << "你不再回头づ" << "谁是谁的谁丶" << "清风南趋" << "青黛" << "情为何物i" << "海映蓝了天";
+
+    //图标资源列表
+    QStringList iconNameList;
+    iconNameList << "1" << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9";
+
+    QVector<QToolButton *> vToolBtn;
+
+
+    for(int i = 0; i < 9; i++)
+    {
+
+    //设置头像
+    QToolButton * btn = new QToolButton;
+
+    //设置文字
+    btn -> setText(nameList[i]);
+
+    //设置头像
+    QString str = QString(":/1/%1.jpeg").arg(iconNameList.at(i));
+    btn -> setIcon(QPixmap(str));
+
+    //设置头像大小
+   // btn -> setIconSize(QPixmap(str).size());
+     btn -> setIconSize(QSize(200, 100));
+
+    //设置按钮风格 透明
+    btn -> setAutoRaise(true);
+
+    //设置文字图片一起显示
+    btn -> setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
+    //加到垂直布局之中
+    ui -> vLayout -> addWidget(btn);
+
+    //容器保存住9个按钮 方便以后再次操作
+    vToolBtn.push_back(btn);
+    //9个标示默认初始化
+    isShow.push_back(false);
+
+    }
+
+    //对9个按钮 进行添加信号槽
+    for(int i = 0; i < vToolBtn.size(); i++)
+    {
+        connect(vToolBtn[i], &QToolButton::clicked, [=]()
+        {
+            //判断是否被打开
+            if(isShow[i])
+            {
+                return;
+
+            }
+
+            isShow[i] = true;
+
+            //弹出聊天对话框
+            //构建聊天窗口的时候 告诉这个窗口他的名字  参数1 顶层方式弹出  参数2 告诉窗口名字
+            Widget * widget = new Widget(0, vToolBtn[i] -> text());
+
+            //设置窗口标题
+            widget -> setWindowTitle(vToolBtn[i] -> text());
+            widget -> setWindowIcon(vToolBtn[i] -> icon());
+            widget -> show();
+
+            connect(widget, &Widget::closeWidget, [=]()
+            {
+                isShow[i] = false;
+            });
+
+        });
+    }
+
+}
+
+DialogList::~DialogList()
+{
+    delete ui;
+}
+---------------------
+
+main.cpp
+--
+#include "widget.h"
+#include <QApplication>
+#include <dialoglist.h>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+//    Widget w;
+//    w.show();
+    DialogList list;
+    list.show();
+
+
+    return a.exec();
+}
+-------------------
+
+widget.cpp
+--
+#include "widget.h"
+#include "ui_widget.h"
+#include <QDataStream>
+#include <QMessageBox>
+#include <QDateTime>
+#include <QLabel>
+#include <QColorDialog>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+
+Widget::Widget(QWidget *parent, QString name) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+{
+    ui->setupUi(this);
+
+    //初始化操作
+    udpSocket = new QUdpSocket(this);
+    //用户名获取
+    uName = name;
+    //端口号
+    this -> port = 9999;
+
+    //绑定端口号  绑定模式 共享地址 断线重连
+    udpSocket -> bind(this -> port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+
+    //发送新用户进入
+    sndMsg(UsrEnter);
+
+    //点击发送按钮发送消息
+    connect(ui -> sendBtn, &QPushButton::clicked, [=]()
+    {
+        sndMsg(Msg);
+    });
+
+    //点击退出 关闭窗口
+    connect(ui -> exitBtn, &QPushButton::clicked, [=]()
+    {
+        this -> close();
+    });
+
+    //监听别人发送的数据
+    connect(udpSocket, &QUdpSocket::readyRead, this, &Widget::ReceiveMessage);
+
+
+    /***************/
+    //字体
+    connect(ui -> fontCbx, &QFontComboBox::currentFontChanged, [=](const QFont &font)
+    {
+        ui -> msgTxtEdit -> setCurrentFont(font);
+        ui -> msgTxtEdit -> setFocus();
+
+    });
+
+    //字号
+    void(QComboBox:: * cbxsignal)(const QString &text) = &QComboBox::currentTextChanged;
+    connect(ui -> sizeCBx, cbxsignal, [=](const QString &text)
+    {
+        ui -> msgTxtEdit -> setFontPointSize(text.toDouble());
+        ui -> msgTxtEdit -> setFocus();
+    });
+
+    //加粗
+    connect(ui -> boldTbtn, &QPushButton::clicked, [=](bool ischeck){
+        if(ischeck)
+        {
+            ui -> msgTxtEdit -> setFontWeight(QFont::Bold);
+        }
+        else
+            ui -> msgTxtEdit -> setFontWeight(QFont::Normal);
+    });
+
+    //倾斜
+    connect(ui -> italictBtn, &QToolButton::clicked, [=](bool check)
+    {
+        ui -> msgTxtEdit -> setFontItalic(check);
+    });
+
+    //下划线
+    connect(ui -> underlineBtn, &QToolButton::clicked, [=](bool check2)
+    {
+        ui -> msgTxtEdit -> setFontUnderline(check2);
+    });
+
+    //字体颜色
+    connect(ui -> colorBtn, &QToolButton::clicked, [=]()
+    {
+        QColor color = QColorDialog::getColor(Qt::red);
+        ui -> msgTxtEdit -> setTextColor(color);
+    });
+
+    //清空聊天记录
+    connect(ui -> clearBtn, &QToolButton::clicked, [=](bool check)
+    {
+        ui -> msgBrowser -> clear();
+    });
+
+    //保存聊天记录
+    connect(ui -> fileBtn, &QToolButton::clicked, [=]()
+    {
+
+
+        if(ui -> msgBrowser -> document() -> isEmpty())
+        {
+            QMessageBox::warning(this, "警告", "路径 | 聊天内容为空");
+            return;
+        }
+
+        else
+        {
+            QString path = QFileDialog::getSaveFileName(this, "保存记录", " 聊天记录", "(*.txt)");
+            QFile file(path);
+            //打开模式加换行操作
+
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
+            QTextStream stream(&file);
+            stream << ui -> msgBrowser -> toPlainText();
+            file.close();
+        }
+    });
+
+}
+
+void Widget::ReceiveMessage() //接收UDP消息
+{
+    //拿到数据
+    //获取长度
+    qint64 size = udpSocket -> pendingDatagramSize();
+
+    QByteArray array = QByteArray(10000, 0);
+    udpSocket -> readDatagram(array.data(), size);
+
+    //分析数据  第一段类型 第二段用户名 第三段数据
+    QDataStream stream(&array, QIODevice::ReadOnly);
+
+    int msgType; //读取到类型
+    QString usrName;
+    QString msg;
+
+    //获取当前时间
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    QString time = current_date_time.toString("yyyy.MM.dd hh:mm:ss");
+
+    stream >> msgType;
+
+    switch(msgType)
+    {
+    case Msg: //普通聊天
+        stream >> usrName >> msg;
+
+        //追加聊天记录
+        ui -> msgBrowser -> setTextColor(Qt::blue);
+        ui -> msgBrowser -> append("[" + usrName +"]"+ time);
+        ui -> msgBrowser -> append(msg);
+        break;
+
+    case UsrEnter: //新用户进入信息
+        //更新右侧table
+        stream >> usrName;
+        usrEnter(usrName);
+
+        break;
+    case UsrLeft:
+        stream >> usrName;
+        usrLeft(usrName, time);
+        break;
+
+
+    }
+}
+
+void Widget::usrEnter(QString username)//处理新用户加入
+{
+
+    bool isEmpty = ui -> usrTblWidget -> findItems(username, Qt::MatchExactly).isEmpty();
+    if(isEmpty)
+    {
+        QTableWidgetItem * usr = new QTableWidgetItem(username);
+
+        //插入行
+        ui -> usrTblWidget -> insertRow(0);
+        ui -> usrTblWidget -> setItem(0, 0, usr);
+
+        //追加聊天记录
+        ui -> msgBrowser -> setTextColor(Qt::gray);
+        ui -> msgBrowser -> append( QString("%1 上线了").arg(username));
+
+        //在线人数更新
+        ui -> usrNumLbl -> setText(QString("在线用户 %1人").arg(ui -> usrTblWidget -> rowCount()));
+
+        //把自身信息广播出去
+        sndMsg(UsrEnter);
+
+
+    }
+}
+
+void Widget::usrLeft(QString usrname,QString time) //处理用户离开
+{
+    //更新右侧tableWidght
+    bool isEmpty2 =  ui -> usrTblWidget -> findItems(usrname, Qt::MatchExactly).isEmpty();
+    if(!isEmpty2)
+    {
+        int row = ui -> usrTblWidget -> findItems(usrname, Qt::MatchExactly).first() -> row();
+        ui -> usrTblWidget -> removeRow(row);
+        //追加聊天记录
+        ui -> msgBrowser -> setTextColor(Qt::gray);
+        ui -> msgBrowser -> append(QString("%1 离开了聊天室 %2 ").arg(usrname).arg(time));
+
+        //在线人数更新
+        ui -> usrNumLbl -> setText(QString("在线用户 %1").arg(ui -> usrTblWidget -> rowCount()));
+
+    }
+}
+
+QString Widget::getUsr() //获取用户名
+{
+    return this -> uName;
+}
+
+//关闭事件
+void Widget::closeEvent(QCloseEvent * e)
+{
+    emit this -> closeWidget();
+    sndMsg(UsrLeft);
+
+    //断开套接字
+    udpSocket -> close();
+    udpSocket -> destroyed();
+    QWidget::closeEvent(e);
+}
+
+void Widget::sndMsg(MsgType type) //广播 UDP 消息
+{
+    //发送的消息分为三类
+    //发送的数据作分段处理  第一段 类型 第二段 具体内容
+    QByteArray array;
+    QDataStream stream(&array, QIODevice::WriteOnly);
+
+
+    stream << type << getUsr(); //第一段内容添加到流中 第二段用户名
+    switch(type)
+    {
+    case Msg:
+        if(ui -> msgTxtEdit -> toPlainText() == "" ) //判断消息发送是否成功
+        {
+            QMessageBox::warning(this, "警告", "发送内容不能为空");
+            return;
+
+        }
+        //第三段数据， 具体说的话
+        stream << getMsg();
+        break;
+
+    case UsrEnter: //新用户进入信息
+        break;
+
+    case UsrLeft: //用户离开信息
+
+        break;
+
+
+    }
+
+    //书写报文  广播发送
+    udpSocket -> writeDatagram(array, QHostAddress::Broadcast, port);
+
+}
+
+QString Widget::getMsg()
+{
+    QString str = ui -> msgTxtEdit -> toHtml();
+
+    //清空输入框
+    ui -> msgTxtEdit -> clear();
+    ui -> msgTxtEdit -> setFocus();
+    return str;
+}
+
+
+Widget::~Widget()
+{
+    delete ui;
+}
+
+-------------------
+
+
+
