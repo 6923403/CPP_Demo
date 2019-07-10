@@ -1,0 +1,49 @@
+#include <iostream>
+//#include <>
+using namespace std;
+
+void reset(int *p)
+{
+    *p = 0;
+    p = 0;
+}
+
+void test2()
+{
+    int i = 50;
+    reset( &i);
+    cout << i;
+
+}
+
+void test1()
+{
+    int i = 0, n = 42;
+    int *p = &i;
+    int *q = &n;
+    *p = 42;
+    p = q;
+    cout << i << " " << n;
+
+}
+
+void change1(int *a, int *b)
+{
+    int d = *a;
+    *a = *b;
+    *b = d;
+    return;
+}
+
+void test3()
+{
+    int a = 52, b = 23;
+    change1(&a, &b);
+    cout << a << " " << b << endl;
+}
+
+int main(int argvc, char **argv)
+{
+    test3(); // test1, 2, 3 指针形参
+
+}
