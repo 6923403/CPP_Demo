@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int add(int *p, int length)
+{
+  int sum2 = 0;
+  for(int i = 0; i < length; i++)
+  {
+    sum2 += *p++;
+  }
+  return sum2;
+}
+
+int main(int argc, char **argv)
+{
+  int a[] = {1, 5, 2, 3, 6};
+  int len = end(a) - begin(a); // sizeof(a) / sizeof(a[0]);
+  int sum = add(a, len);
+  int temp = (len + 1 ) * (len + 2) / 2 - sum; // 2.  N * (N + 1) / 2
+  cout << temp << endl;
+ 
+  
+}
