@@ -1,0 +1,19 @@
+
+int a;
+
+int jc(int s)
+{
+    if( s <= 1)
+    return 1;
+    else
+    a = s * jc(s - 1);
+    return a ;
+}
+
+void test2()
+{
+    int a;
+    cin >> a;
+    int num = jc(a);
+    cout << num << endl;
+}
