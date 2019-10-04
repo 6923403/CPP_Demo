@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include<numeric>
+using namespace std;
+using placeholders::_1;
+
+
+bool check_size(const string &s1, string::size_type sz)
+{
+    return s1.size() <= sz;
+}
+
+void test5()
+{
+    //10.22
+    vector<string> op;
+    string s;
+    while(cin >> s && s!= "000")
+    {
+        op.push_back(s);
+    }
+    auto check6 = bind(check_size, _1, 6);
+    auto compare1 = count_if(op.begin(), op.end(), bind(check_size, _1, 6));
+ 
+    cout << compare1 << endl; 
+
+}
+
+int main(int argc, char **argv)
+{
+    test5();
+}
