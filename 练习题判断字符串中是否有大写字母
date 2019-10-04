@@ -1,0 +1,17 @@
+bool judge(const string &s1)
+{
+    for (auto i : s1) //遍历
+    {
+        if (i >= 'A' && i <= 'Z')
+            return true;
+    }   
+        return false;
+    
+}
+
+void test1()
+{
+    string s1;
+    cin >> s1;
+    cout << judge(s1);
+}
