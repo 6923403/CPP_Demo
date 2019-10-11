@@ -1,0 +1,74 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+using namespace std;
+
+int main(int argc, char **argv)
+{
+    int flag = 0;
+    vector<string> pngv;
+    auto it1 = pngstr.begin();
+    auto it2 = pngstr.end();
+    string infile = "123.txt";
+
+    ifstream in(file); //读文件
+    
+    ofstream out.open("1.txt"); //写文件
+    string filename = file + ".jpg";
+
+//    ofstream out; //输出流文件未关联到任何文件
+//    out.open(ifile + ".http"); //打开指定文件
+    string pngstr;
+    string word = ".jpg";
+    string word2 = "--boundary";
+    if(in) //检测是否读取成功
+    {
+    while(getline(in, pngstr))
+    {
+        if(!find(it1, it2, word))
+        {
+            pngstr = NULL;
+//            cerr << ""
+            break;
+        }
+        else
+        {
+            pngstr = NULL;
+            flag = 1;
+            break;
+        }
+
+        while(flag)
+        {
+            if(find(it1, it2, word2))
+            {
+                pngstr = NULL;
+                flag = -1;
+
+                cout << "一个图片读取完毕" << endl;
+                break;
+            }
+            else
+            {
+                pngv.push_back(pngstr); //读取完写入TXT TXT改png
+                pngstr = NULL;
+            }
+                            
+        }
+
+        for(auto const &s : pngv)
+        {
+            out << s ;
+        }
+        
+    }
+    in.close();
+    out.close();
+
+    cout << " 文件读取完毕" << endl;
+    }
+    else
+        cerr << "打开文件失败";
+}
