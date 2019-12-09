@@ -1,0 +1,8 @@
+                                                                   
+  #<domain>      <type>  <item>         <value>
+ 
+   *       soft    nofile      65536 
+   *       hard    nofile      65536
+   *       soft    core            unlimited
+   *       hard    core        unlimited
+ 
