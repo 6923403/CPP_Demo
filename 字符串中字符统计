@@ -1,9 +1,0 @@
-string s1;
-    cin >> s1;
-    
-    for(auto &i :s1) //遍历 auto C++11
-    { 
-    if((i >= 'a' && i <= 'z') || (i <= 'Z' && i >= 'A'))
-    int num++;
-    }
-    cout << num << endl;
