@@ -9,10 +9,10 @@ void test1()
     cout << "Length of line: " << h_line.getlen() << endl;
 
     h_line.length = 20.6;
-    cout << "Length of line" << h_line.length << endl;
+    cout << "Length of line: " << h_line.length << endl;
 }
 
-int main(int argc, char *argv)
+int main(int argc, char **argv)
 {
     test1();
 }
