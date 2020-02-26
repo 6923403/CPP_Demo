@@ -14,7 +14,8 @@ class Box
         void setlen(double len);
         void sethei(double hei);
         void setbre(double bre);
-}
+
+};
 
 #endif
 

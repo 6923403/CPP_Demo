@@ -23,7 +23,6 @@ void Box::setbre(double bre)
 
 void Box::showre(double re)
 {
-    result = re;
-    return length * breadth * height;
+    cout << "result: " << length * breadth * height << endl; 
 }
 
