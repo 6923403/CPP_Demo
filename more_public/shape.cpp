@@ -1,5 +1,5 @@
 #include <iostream>
-#include <shape.h>
+#include "shape.h"
 using namespace std;
 
 Shape::Shape(int a = 0, int b = 0)
@@ -14,7 +14,7 @@ int Shape::area()
     return 0;
 }
 
-Rectangle Rectangle::Rectangle(int a = 0, int b = 0):Shape(a, b)
+Rectangle::Rectangle(int a = 0, int b = 0):Shape(a, b)
 {
 }
 
@@ -24,9 +24,8 @@ int Rectangle::area()
     return (width * height);
 }
 
-Triangle Triangle::Triangle(int a = 0, int b = 0):Sape(a, b)
+Triangle::Triangle(int a = 0, int b = 0):Shape(a, b)
 {
-
 }
 
 int Shape::area()
