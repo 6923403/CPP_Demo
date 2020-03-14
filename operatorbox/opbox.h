@@ -1,5 +1,5 @@
-#ifndef OP_BOX_H
-#define OP_BOX_H
+#ifndef OPBOX_H
+#define OPBOX_H
 
 class Box
 {
