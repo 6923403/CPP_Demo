@@ -10,9 +10,15 @@ void test1()
 
     h_line.length = 20.6;
     cout << "Length of line: " << h_line.length << endl;
+
+    int k;
+    cin >> k;
+
 }
 
 int main(int argc, char **argv)
 {
     test1();
+
+    return 0;
 }
