@@ -7,10 +7,10 @@
 //2048 == win
 //countiue?
 //
+#define max_x 8
+#define max_y 4
+extern bool flag_move;
 
-#define rows 4
-#define cols 4
-#define L 6
 int get_map_size();
 
 class Game
@@ -18,14 +18,23 @@ class Game
 
 public:
 
+    Game() = default;
     Game(int p1, int p2);
+    
 
 public:
     void Game_set_map();
     void Game_set_randnum();
-    void Game_set_move();
+    bool Game_set_move(char move);
+    bool Game_set_move_down(char move);
+    bool Game_set_move_up(char move);
+    bool Game_set_move_right(char move);
+    bool Game_set_move_left(char move);
+    void Game_draw_line();
 
-    int map_size[rows][cols];
+private:
+    int map_size[max_x][max_y];
+
 };
 
 #endif

@@ -24,28 +24,19 @@ int main(int argc, char **argv) //6*6
         cout << "Bye~" << endl;
         exit(-1);
     }
-    else if(start == 'Y')
+    else if(start == 'Y') //main
     {
         cout << "loading----------" << endl;
-        Game User(0, 13);
-        //int size = get_map_size();
+        Game User;
         User.Game_set_map(); //框架图
-
-        bool lis = true;
-        char mv;
-        while(lis)
+        bool flag_move = true;
+        while(flag_move)
         {
             User.Game_set_randnum();
-            cin >> mv;
-            if(mv == 'q')
-            {
-                break;
-                lis = false;
-            }
-
-            User.Game_set_map(); //框架图
+            char move;
+            cin >> move;
+            flag = User.Game_set_move(move);
         }
-
     }
     else
     {
