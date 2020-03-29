@@ -50,7 +50,7 @@ void ine(string &m, string &z1, string &z2)
     int ms = m.size();
 
     for(it1; it1 <= (ms - zs1); it1++)
-    if(m.substr(it1, zs1) == z1)
+    if(m.substr(it1, it1 + zs1) == z1)
     {
         m.erase(it1, zs1);
         m.insert(it1, 0, z2);
