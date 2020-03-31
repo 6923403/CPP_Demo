@@ -48,7 +48,24 @@ void test2()
     cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer" <<  endl;
 }
 
+void test3()
+{
+    vector<string> word = {"asdz", "vdqvv", "zxcgbf", "tbggfdd"};
+    int sz = 5;
+    auto wc = find_if(word.begin(), word.end(), [sz](const string &q)
+            {
+                return q.size() > sz;
+            });
+
+    for_each(wc, word.end(), [](const string &s)
+            {
+                cout << s << "  ";
+            });
+
+    cout << endl;
+}
+
 int main(int argc, char **argv)
 {
-    test2();
+    test3();
 }
