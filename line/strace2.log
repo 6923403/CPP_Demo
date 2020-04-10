@@ -1,0 +1,13 @@
+4833  10:01:25.676260 execve("./line", ["./line"], 0x7ffcae782d68 /* 56 vars */) = 0 <0.000270>
+4833  10:01:25.676938 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory) <0.000029>
+4833  10:01:25.677053 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory) <0.000025>
+4833  10:01:25.677126 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3 <0.000018>
+4833  10:01:25.677268 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory) <0.000014>
+4833  10:01:25.677322 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libstdc++.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000016>
+4833  10:01:25.677757 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory) <0.000021>
+4833  10:01:25.677840 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000023>
+4833  10:01:25.678183 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory) <0.000020>
+4833  10:01:25.678264 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3 <0.000022>
+4833  10:01:25.678613 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory) <0.000018>
+4833  10:01:25.678683 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3 <0.000021>
+4833  10:01:27.595964 +++ exited with 0 +++
