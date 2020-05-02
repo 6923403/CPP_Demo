@@ -1,71 +1,53 @@
 #include <iostream>
-#include <vector>
-#include <stdlib.h>
 #include <string>
-#include <stdexcept>
+#include <vector>
 using namespace std;
 
-template<class T>
-class Stack{
-    private:
-        vector<T> elems;
-
+template<typename T>
+class Bolb
+{
     public:
-        void push(T const&);
-        void pop();
-        T top() const;
-        bool empty() const
+        typedef T value_type;
+        typedef typename vector<T>::size_type size_type;
+
+        Blob();
+        Blob(initializer_list<T> il);
+
+        size_type size() const 
         {
-            return elems.empty();
+            return data->size();
         }
 
+        bool empty() const
+        {
+            return data->empty();
+        }
+
+        void push_back(const T &t)
+        {
+            data->push_back(t);
+        }
+
+        void push_back(T &&t)
+        {
+            data->push_back(move(t));
+        }
+
+        void pop_back();
+        T& back();
+        T &operator[](size_type i);
+
+    private:
+        shared_ptr<vector<T>> data;
+        void check(size_type i, const string &msg) const;
 };
 
-template<class T>
-void Stack<T>::push(T const &elem)
+int main(int argc, char **argv)
 {
-    elems.push_back(elem);
+    Blob<int> ia;
+    Blob<int> ia2 = {0, 1, 2, 3, 4};
+    Blob<string> ia3;
+    Blob<double> ia4;
+
+    return 0;
 }
-
-template<class T>
-void Stack<T>::pop()
-{
-    if(elems.empty())
-    {
-        throw out_of_range("Stack<>::pop(): empty stack");
-    }
-
-    elems.pop_back();
-}
-
-template<class T>
-T Stack<T>::top() const
-{
-    if(elems.empty())
-    {
-        throw out_of_range("Stack<>""top:empty stack");
-    }
-    return elems.back();
-}
-
-int main()
-{
-    try{
-        Stack<int> intStack;
-        Stack<string> stringStack;
-        intStack.push(7);
-        cout << intStack.top() << endl;
-
-        stringStack.push("hello");
-        cout << stringStack.top() << endl;
-        stringStack.pop();
-        stringStack.pop();
-    }
-    catch(exception const &ex)
-    {
-        cerr << "Exception: " << ex.what() << endl;
-        return -1;
-    }
-
-}
-    
