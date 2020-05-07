@@ -22,7 +22,7 @@ void test2()
         ivec.push_back(i);
         ivec.push_back(i);
     }
-
+  
     set<int> iset(ivec.begin(), ivec.end());
     multiset<int> miset(ivec.cbegin(), ivec.cend());
     cout << ivec.size() << endl;
