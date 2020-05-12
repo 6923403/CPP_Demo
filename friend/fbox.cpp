@@ -1,6 +1,4 @@
-#include <iostream>
 #include "fbox.h"
-using namespace std;
 
 void Box::setwidth(double wid)
 {
