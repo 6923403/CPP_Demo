@@ -1,6 +1,6 @@
 APP = Screen
 main: main.o screen.o
-	g++ -c main.o screen.o -o screen
+	g++ main.o screen.o -o screen
 main.o: main.cpp screen.h
 	g++ -c main.cpp -o main.o
 screen.o: screen.cpp screen.h
