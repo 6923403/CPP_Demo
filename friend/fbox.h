@@ -1,12 +1,14 @@
 #ifndef FBOX_H
 #define FBOX_H
 
+#include <iostream>
+using namespace std;
 
 class Box
 {
+    friend void printwidth(Box box);
     double width;
     public:
-    friend void printwidth(Box box);
     void setwidth(double wid);
 
 };
