@@ -1,3 +1,0 @@
-N:/codes/c++/jsonc11-master/cmake-build-debug/CMakeFiles/jsonc11.dir
-N:/codes/c++/jsonc11-master/cmake-build-debug/CMakeFiles/edit_cache.dir
-N:/codes/c++/jsonc11-master/cmake-build-debug/CMakeFiles/rebuild_cache.dir

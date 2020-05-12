@@ -1,3 +1,0 @@
-"N:\CLion\CLion 2019.3.1\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\jsonc11.dir/objects.a
-N:\mingw64\bin\ar.exe cr CMakeFiles\jsonc11.dir/objects.a @CMakeFiles\jsonc11.dir\objects1.rsp
-N:\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\jsonc11.dir/objects.a -Wl,--no-whole-archive  -o jsonc11.exe -Wl,--out-implib,libjsonc11.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\jsonc11.dir\linklibs.rsp
