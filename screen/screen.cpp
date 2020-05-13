@@ -10,12 +10,14 @@ Screen &Screen::move(int a, int b)
 Screen &Screen::set(char c)
 {
     contents[pa + pb] = c;
+    cout << contents << endl;
     return *this;
 }
 
 Screen &Screen::set(int a, int b, char c)
 {
     contents[a + b] = c;
+    cout << contents << endl;
 }
 
 Screen &Screen::display(ostream &os)
