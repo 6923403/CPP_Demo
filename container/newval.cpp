@@ -6,19 +6,20 @@ using namespace std;
 
 string rep(string &s, string oldval, string newval)
 {
-    //string s = "thototho";
-    //s = thoughtothough
+    //string s = "thoto";
+    //s = thoughto
+    int size1 = oldval.size();
     auto it1 = s.begin();
     auto it2 = newval.begin();
     auto it3 = newval.end();
-    for(it1; it1 != s.end(); ++it1)
+    for(it1; it1 <= (s.end() - 2); ++it1)
     {
-        s,substr(it1, 3);
+        s.substr(it1 - s.begin(), size1);
         if(s == oldval)
         {
-            it1 = s.erase(it1, 3);
-            it1 = s.insert(it1, it2, it3);
-            advance(it1, 3);
+            it1 = s.erase(it1, it1 + size1);
+            s.insert(it1, it2, it3);
+            advance(it1, 2);
         }
     }
 
@@ -27,12 +28,12 @@ string rep(string &s, string oldval, string newval)
 
 void te1()
 {
-    string s = "thototho";
+    string s = "thoto";
     string oldval = "tho";
     string newval = "through";
 
-    string qq = rep(s, oldval, newval);
-    cout << qq << endl;
+    rep(s, oldval, newval);
+    cout << s << endl;
 
 }
 
