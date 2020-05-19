@@ -16,14 +16,24 @@ void te2()
 {
     string nval = "dfpglkqh";
     string s = "asdqwfdphinriskal";
-
-    auto it1 = s.begin();
-    for(it1; it1 != s.end(); ++it1)
+    int q;
+#if 0
+    for(q = 0; q < s.size(); q++)
     {
-        string tmp = (); 
-        if(tmp.find_first_not_of(nval))
-            cout << tmp << " "; 
+        q = s.find_first_of(nval);
+        if(q)
+        {
+            s.substr(0, q);
+            cout << s << endl;
+        }
+        else
+        {
+            cout << s << endl;
+            q = s.size() + 1;
+        }
     }
+#endif
+
 }
 
 int main(int argc, char **argv)
