@@ -18,7 +18,7 @@ string rep(string &s, string oldval, string newval)
         if(s == oldval)
         {
             it1 = s.erase(it1, it1 + size1);
-            s.insert(it1, it2, it3);
+            s.insert(it1, newval);
             advance(it1, 2);
         }
     }
