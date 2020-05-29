@@ -18,7 +18,7 @@ void AcctABC::Deposit(double amt)
         balance += amt;
 }
 
-void AcctABC:;Withdraw(double amt)
+void AcctABC::Withdraw(double amt)
 {
     balance -= amt;
 }
