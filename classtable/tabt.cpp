@@ -10,11 +10,12 @@ TableTennisPlayer::TableTennisPlayer(const string & fn, const string & ln,
 
 void TableTennisPlayer::Name() const
 {
+    using std::cout;
     cout << lastname << ", " << firstname;
 }
 
 RatedPlayer::RatedPlayer(unsigned int r, const string & fn, 
-        const string & ln, bool ht) : TableTennisPlayer(fn, ln, ht);
+        const string & ln, bool ht) : TableTennisPlayer(fn, ln, ht)
 {
     rating = r;
 }
