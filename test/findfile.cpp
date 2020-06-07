@@ -1,5 +1,5 @@
-//#include <sys/types.h>
-//#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <iostream>
 #include <unistd.h>
 #include <dirent.h>
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 {
     using namespace std;
 
-    string path = "/root/git/Cplusplus/test";
+    string path = "/root/git/Cplusplus/test/";
     vector<string> vec;
 
     getFiles(path, vec);
