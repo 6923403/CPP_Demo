@@ -1,0 +1,14 @@
+class student
+姓名 学号 性别
+
+class subject
+学科 各科成绩
+
+class show
+开始菜单
+所有学生 总分排名 
+所有科目 单科成绩排名
+单独学生 单独科目 单独总分 单独科目分数
+
+class control
+信息修改 插入
