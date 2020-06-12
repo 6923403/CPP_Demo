@@ -21,6 +21,7 @@ int main(int argc, char **argv)
         switch(k)
         {
             case 1: 
+                Stu.Stu_os();
                 break;
             case 6:
                 exit(-1);
