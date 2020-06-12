@@ -4,13 +4,10 @@ CC = g++
 OBJECTS = main.o student.o stushow.o
 
 Student: $(OBJECTS)
-	$(CC) -Wall -O2 -g2 $(OBJECTS) -o $(APP)
+	$(CC) -Wall -O2 $(OBJECTS) -o $(APP)
 
 #main.o: Console.h
-objects:= $(patsubst %.c, %.o, $(wildcard *.c))
-
-stu: $(objects)
-	$(CC) $(objects) 
+objects:= $(patsubst %.c, %.o, $(wildcard -g *.c))
 
 .PHONY: clean
 clean:
