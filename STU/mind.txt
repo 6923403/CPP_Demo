@@ -1,8 +1,6 @@
 class student
 姓名 学号 性别
-
-#class subject
-#学科 各科成绩
+学科 各科成绩
 
 class show
 开始菜单
