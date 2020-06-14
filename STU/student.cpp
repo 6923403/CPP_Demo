@@ -5,10 +5,10 @@ using namespace std;
 
 Student::Student()
 {
-    //grade = 0;
     Stu_id = 0;
-    Stu_sex = 1;
-    name[0] = '\0';
+    Stu_sex = "";
+    Stu_name = "";
+    Stu_object = "";
 }
 
 Student::~Student()
@@ -27,6 +27,9 @@ void Student::Menu()
     cout << " * 6. 程序退出 " << endl;
 }
 
+/*
+ * 输入信息
+ */
 void Student::Stu_os()
 {
     string name;
@@ -46,9 +49,23 @@ void Student::Stu_os()
     Stu_set(name, sex, stuid);
 }
 
+/*
+ * 设置姓名 性别
+ */
 void Student::Stu_set(const string &name, const int &sex, const int &stuid)
 {
-    Stu_name.push_back(name);
-    Stu_sex = sexs(sex);
-    Stu_id = stuid;
+    Stu_name[name] = name;
+    Stu_name[name]->Stu_sex = sexs(sex);
+    Stu_name[name]->Stu_id = stuid;
+}
+
+/*
+ * 设置学科 成绩
+ */
+void Student::Stu_set(const Student &Stu_name, const int &grade)
+{
+    for(int i = 0; i < sizeof(Stu_object) / sizeof(Stu_object[1]); i++)
+    {
+        Stu_name[]
+    }
 }
