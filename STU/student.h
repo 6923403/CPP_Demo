@@ -1,7 +1,7 @@
 #ifndef _STUDENT_H_
 #define _STUDENT_H_
 
-#include <vector>
+//#include <vector>
 #include <string>
 using std::string;
 
@@ -9,9 +9,12 @@ class Student
 {
     private:
         int Stu_id;
-        int Stu_sex;
-        std::vector<string> Stu_name;
-        char name[3];
+        string Stu_sex;
+//        std::vector<string> Stu_name;
+//        char Stu_name[max_size];
+        char * Stu_name[256];
+        char * Stu_object[10] = {"语文", "数学", "英语", "地理", "物理"};
+        int grades;
         enum sexs {man = 1, woman = 2};
         
     public:
@@ -21,16 +24,7 @@ class Student
         void Menu();
         void Stu_os();
         void Stu_set(const string &, const int &, const int &);
-};
-
-class Control : public Student
-{
-    public:
-        Control();
-        ~Control();
-
-        void changeStu_info();
-        void changeStu_grade();
+        void Stu_set(const string &, const int &);
 };
 
 #endif
