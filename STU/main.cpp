@@ -1,6 +1,7 @@
 #include <iostream>
 #include "student.h"
 #include "stushow.h"
+#include "control.h"
 
 int main(int argc, char **argv)
 {
@@ -22,6 +23,9 @@ int main(int argc, char **argv)
         {
             case 1: 
                 Stu.Stu_os();
+                break;
+            case 2:
+//                Show_Menu();
                 break;
             case 6:
                 exit(-1);
