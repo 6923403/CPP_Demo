@@ -25,20 +25,20 @@ typedef struct LNode {
     struct LNode *next;
 } LNode, *LinkList; 
 
-Status InitList_L(LinkList &L);
-Status DestroyList_L(LinkList &L);
-Status ClearList_L(LinkList &L);
-Status ListEmpty_L(LinkList L);
+int InitList_L(LinkList &L);
+int DestroyList_L(LinkList &L);
+int ClearList_L(LinkList &L);
+int ListEmpty_L(LinkList L);
 int ListLength_L(LinkList L);
 LNode* Search_L(LinkList L, ElemType e);
 LNode* NextElem_L(LNode *p);
-Status InsertAfter_L(LNode *p, LNode *q);
-Status DeleteAfter_L(LNode *p, ElemType &e);
-void ListTraverse_L(LinkList L, Status(*visit)(ElemType e));
+int InsertAfter_L(LNode *p, LNode *q);
+int DeleteAfter_L(LNode *p, ElemType &e);
+void ListTraverse_L(LinkList L, int(*visit)(ElemType e));
 
 
 //创建包含n个元素的链表L，元素值存储在data数组中
-Status create(LinkList &L, ElemType *data, int n) {
+int create(LinkList &L, ElemType *data, int n) {
     LNode *p, *q;
     int i;
     if (n < 0) return ERROR;
@@ -58,7 +58,7 @@ Status create(LinkList &L, ElemType *data, int n) {
 }
 
 //e从链表末尾入链表
-Status EnQueue_LQ(LinkList &L, ElemType &e) {
+int EnQueue_LQ(LinkList &L, ElemType &e) {
     LinkList p, q;
 
     if (NULL == (q = (LNode *)malloc(sizeof(LNode)))) return OVERFLOW;
@@ -79,7 +79,7 @@ Status EnQueue_LQ(LinkList &L, ElemType &e) {
 
 
 //从链表头节点出链表到e
-Status DeQueue_LQ(LinkList &L, ElemType &e) {
+int DeQueue_LQ(LinkList &L, int &e) {
     if (NULL == L) return ERROR;
     LinkList p;
     p = L;
@@ -90,13 +90,13 @@ Status DeQueue_LQ(LinkList &L, ElemType &e) {
 }
 
 //遍历调用
-Status visit(ElemType e) {
+int visit(ElemType e) {
     printf("%d   ", e);
     return 1;
 }
 
 //遍历单链表
-void ListTraverse_L(LinkList L, Status(*visit)(ElemType e))
+void ListTraverse_L(LinkList L, int(*visit)(ElemType e))
 {
     if (NULL == L) return;
     for (LinkList p = L; p != nullptr; p = p -> next) {
@@ -107,7 +107,7 @@ void ListTraverse_L(LinkList L, Status(*visit)(ElemType e))
 int main(int argc, char **argv) {
     int i;
     const int a_size = 10;
-    ElemType e, data[a_size] = { 1, 2, 3, 4, 5 };
+    ElemType e, data[a_size] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     LinkList L;
 
     //显示测试值
@@ -130,11 +130,11 @@ int main(int argc, char **argv) {
     ListTraverse_L(L, visit);
     cout << endl;
 
-#if 0
     //从链表头节点出链表到e
     printf("\n出链表到e\n");
     DeQueue_LQ(L, e);
     printf("出链表的元素为：%d\n", e);
+#if 0
     printf("此时链表中元素为：\n");
     //遍历单链表
     ListTraverse_L(L, visit);
