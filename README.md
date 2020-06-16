@@ -1,5 +1,5 @@
 # C/C++
-![OS](https://img.shields.io/badge/platform-linux--64%20-%23373737)   ![IDE](https://img.shields.io/badge/GCC-v9.3.0-%23373737) 
+![Ubuntu](https://github.com/nlohmann/json/workflows/Ubuntu/badge.svg)  ![IDE](https://img.shields.io/badge/GCC-v9.3.0-%23373737) 
 
 
 
