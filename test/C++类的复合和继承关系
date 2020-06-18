@@ -1,0 +1,22 @@
+**正确的写法应该是为“狗”类设一个“主人”类的指针成员变量，为“主人”类设一个“狗”类的对象数组。**
+```
+class CMaster;
+classCDog
+{
+    CMaster* pm;
+};
+class CMaster
+{
+    CDog dogs[10];
+    int dogNum;
+};
+```
+**这样，主人相同的多个 CDog 对象，其 pm 指针都指向同一个 CMaster 对象。**
+
+**实际上，每个主人未必都养 10 条狗，因此出于节省空间的目的，在 CMaster 类中设置 CDog 类对象的指针数组，而不是对象数组，也是一种好的写法。**
+```
+class CMaster
+{
+    CDog* dogs[10];
+    int dogNum;
+};
