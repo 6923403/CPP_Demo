@@ -14,4 +14,4 @@ Student.o: Student.cpp Student.h
 
 .PHONY: clean
 clean:
-	rm Student $(OBJECTS)
+	rm Student $(OBJECT)
