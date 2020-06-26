@@ -34,10 +34,14 @@ int main()
      */
     serv_addr.sin_port = htons(1234);
 
+    /*
+     * serv_sock与指定IP Port绑定 保存在sockaddr_in结构体中
+     */
     bind(serv_sock, (struct sockaddr*) &serv_addr, sizeof(serv_addr));
 
     /*
      * 进入监听状态 等待用户发起请求
+     * 被动监听
      */
     listen(serv_sock, 20);
 
@@ -46,12 +50,19 @@ int main()
      */
     struct sockaddr_in clnt_addr;
     socklen_t clnt_addr_size = sizeof(clnt_addr);
+    /*
+     * 客户端发起请求前 暂停运行到本函数
+     */
     int clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_addr, &clnt_addr_size);
 
     /*
      * 向客户端发送数据
      */
     char str[] = "Hello World!";
+
+    /*
+     * 向客户端发送数据
+     */
     write(clnt_sock, str, sizeof(str));
 
     /*
