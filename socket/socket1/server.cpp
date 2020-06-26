@@ -10,6 +10,7 @@ int main()
 {
     /*
      * 创建套接字
+     * int socket(int af, int type, int protocol);
      */
     int serv_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
@@ -17,18 +18,22 @@ int main()
      * 将套接字、ip、端口绑定
      */
     struct sockaddr_in serv_addr;
+
     /*
      * 每个字节用0填充
      */
     memset(&serv_addr, 0, sizeof(serv_addr));
+
     /*
      * 使用IPV4
      */
     serv_addr.sin_family = AF_INET;
+
     /*
      * 具体的ip地址
      */
     serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+
     /*
      * 端口号
      */
