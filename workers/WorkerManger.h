@@ -1,5 +1,5 @@
-#ifndef _WORKERS_WORKMANGER_H
-#define _WORKERS_WORKMANGER_H
+#ifndef _WORKERS_WORKERMANGER_H
+#define _WORKERS_WORKERMANGER_H
 
 #include "Commpany.h"
 
@@ -17,4 +17,4 @@ private:
 };
 
 
-#endif //_WORKERS_WORKMANGER_H
+#endif //_WORKERS_WORKERMANGER_H
