@@ -1,4 +1,4 @@
-#include "WorkManger.h"
+#include "WorkerManger.h"
 
 WorkerManger::WorkerManger()
 {
