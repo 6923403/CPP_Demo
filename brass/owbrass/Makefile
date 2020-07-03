@@ -6,7 +6,7 @@ OBJECTS = main.o brass.o
 all: main.o brass.o brass
 
 main.o: main.cpp brass.h
-	$(CC) -c main.cpp -o maim.o
+	$(CC) -c main.cpp -o main.o
 
 brass.o: brass.cpp brass.h
 	$(CC) -c brass.cpp -o brass.o 
