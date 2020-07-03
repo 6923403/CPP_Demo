@@ -19,7 +19,9 @@ class Brass
         void setAccount();
         virtual void Deposit();
         virtual void DrawMoney();
+        virtual void DrawMoney(double drawtmp);
         virtual void Show() const;
+        double getBalance() const;
 };
 
 class BrassPlus : public Brass
@@ -33,11 +35,13 @@ class BrassPlus : public Brass
 
     public:
 //        BrassPlus(cosnt string & name, double NumCard = -1, double balance = 0.0, double rate = 0, double BeyondBalance = 0.0, double CurrentBeyond = 0.0, bool Debt) : Brass(name, NumCard, Balance);
+        BrassPlus(const string & name, long numcard, double balance);
         ~BrassPlus();
 
         virtual void Show() const;
         virtual void Deposit();
         virtual void DrawMoney();
+        virtual void DrawMoney(double drawtmp);
 };
 
 #endif
