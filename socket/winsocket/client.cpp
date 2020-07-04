@@ -8,7 +8,10 @@ int main(){
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
-    //创建套接字
+    /*
+     * 创建套接字
+     * SOCKET socket(int af, int type, int protocol);
+     */
     SOCKET sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     //向服务器发起请求
