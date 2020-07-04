@@ -67,12 +67,10 @@ double Brass::getBalance() const
 /*
  * Brass Plus
  */
-BrassPlus::BrassPlus(const string & name, long numcard, double balance)
-                     : Brass(name, numcard, balance)
+BrassPlus::BrassPlus(const string & name, long numcard, double balance, double BeyondBalance, double CurrentBeyond)
+    : Brass(name, numcard, balance), BeyondBalance(BeyondBalance), CurrentBeyond(CurrentBeyond)
 {
     rate = 0.11125;
-    BeyondBalance = 0.0;
-    CurrentBeyond = 0.0;
     Debt = false;
 }
 
@@ -93,11 +91,13 @@ void BrassPlus::Deposit()
             return m_rate = m_debt * this->rate;
         } << endl;
         */
+        /*
+         * lambda用的不熟练 今晚复习下 本功能先暂停
+         */
 
         cout << "You return after ." << endl;
         Brass::Show();
-//        cout << "Current Balance: " << br->Balance << endl;
-        cout << "Current BeyondBalancei: " << CurrentBeyond << endl;
+        cout << "Current BeyondBalance: " << CurrentBeyond << endl;
     }
     else
     {
@@ -126,6 +126,10 @@ void BrassPlus::DrawMoney()
             Brass::DrawMoney(batmp);
             DrawMoney(drawtmp);
         }
+    }
+    else
+    {
+        cout << "Sorry, You Balance No enough ." << endl;
     }
 }
 
