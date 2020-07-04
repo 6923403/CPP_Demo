@@ -35,7 +35,7 @@ class BrassPlus : public Brass
 
     public:
 //        BrassPlus(cosnt string & name, double NumCard = -1, double balance = 0.0, double rate = 0, double BeyondBalance = 0.0, double CurrentBeyond = 0.0, bool Debt) : Brass(name, NumCard, Balance);
-        BrassPlus(const string & name, long numcard, double balance);
+        BrassPlus(const string & name, long numcard, double balance, double BeyondBalance, double CurrentBeyond);
         ~BrassPlus();
 
         virtual void Show() const;
