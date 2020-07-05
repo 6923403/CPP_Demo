@@ -1,4 +1,5 @@
-#####WorkerManger OS
+- WorkerManger OS
 
-** This version with my thinking compare not same; **
-** And this dir is use backups files; **
+__This version with my thinking compare not same;__
+
+__And this dir is  backups files;__
