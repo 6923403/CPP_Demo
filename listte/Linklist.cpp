@@ -34,6 +34,8 @@ Link * creatlist()
     return head;
 }
 
+void showlist(Link *li);
+
 int searchlist(Link * head, int a)
 {
     Link * p;
@@ -87,9 +89,12 @@ void test3() //add list
     val->next = p->next;
     p->next = val;
     
+    showlist(list3);
+}
 
+void showlist(Link * li) {
     Link *sh;
-    sh = head;
+    sh = li;
     while(sh->next != NULL)
     {
         sh = sh->next;
@@ -97,9 +102,25 @@ void test3() //add list
     }
 }
 
+void test4() //remove list
+{
+    Link *list4 = creatlist();
+    Link *head;
+    head = list4;
+    for(int i = 0; i < 2; ++i)
+    {
+        head = head->next;
+    }
+    Link *del = head->next;
+    head->next = del->next;
+    delete del;
+
+    showlist(list4);
+}
+
 int main(int argc, char **argv)
 {
-    test3();
+    test4();
 
     return 0;
 }
