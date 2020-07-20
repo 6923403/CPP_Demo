@@ -13,7 +13,7 @@ class Link
         ElemType data;
         Link * next;
         Link * Node;
-}* Linklist;
+} *Linklist;
 
 Link * creatlist()
 {
@@ -39,16 +39,19 @@ int searchlist(Link * head, int a)
     Link * q, * p;
     p = head->next;
 
-    int num;
+    int num = 0;
     while(p != NULL)
     {
         if(p->data == a)
-            num++;
+            return num;
+        num++;
         p = p->next;
     }
+
+    cout << "NUll data same" << endl;
 }
 
-int main(int argc, char **argv)
+void test1()
 {
     //create list
     Link *list = creatlist();
@@ -59,10 +62,20 @@ int main(int argc, char **argv)
         cout << "List " << list->data << endl;
         list = list->next;
     }
+}
 
+void test2()
+{
+    Link *list2 = creatlist();
     //search list
     int a = 3;
-    searchlist(list, a);
+    int aa = searchlist(list2, a);
+    cout << aa << endl;
+}
+
+int main(int argc, char **argv)
+{
+    test2();
 
     return 0;
 }
