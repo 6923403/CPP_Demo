@@ -17,7 +17,7 @@ class Link
 
 Link * creatlist()
 {
-    Link *head, *q, *p, *pre;
+    Link *head, *p, *pre;
     head = new Link;
     head->next = nullptr;
     pre = head;
@@ -36,7 +36,7 @@ Link * creatlist()
 
 int searchlist(Link * head, int a)
 {
-    Link * q, * p;
+    Link * p;
     p = head->next;
 
     int num = 0;
@@ -73,9 +73,33 @@ void test2()
     cout << aa << endl;
 }
 
+void test3() //add list
+{
+    Link *list3 = creatlist();
+    Link *head, *p;
+    head = list3;
+    p = head;
+
+    for(int i = 0; i < 3; i++)
+        p = p->next;
+    Link * val = new Link;
+    val->data = 51;
+    val->next = p->next;
+    p->next = val;
+    
+
+    Link *sh;
+    sh = head;
+    while(sh->next != NULL)
+    {
+        sh = sh->next;
+        cout << sh->data << endl;
+    }
+}
+
 int main(int argc, char **argv)
 {
-    test2();
+    test3();
 
     return 0;
 }
