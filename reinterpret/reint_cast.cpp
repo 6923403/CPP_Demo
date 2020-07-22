@@ -26,9 +26,9 @@ int main(int argc, char **argv)
     }
 
     error = 3;
-    cout << header[0] << endl;
-    cout << header[1] << endl;
-    cout << header[2] << endl;
+    cout << header[5] << endl;
+    Byte vbanks = header[5];
+    cout << "8KB CHR-ROM Banks: " << +vbanks << endl;
 
     cout << endl;
     error = 4;
