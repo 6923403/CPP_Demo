@@ -26,8 +26,22 @@ stable_sort(words.begin(), words.end(),
     }
 }
 
+void test2()
+{
+    vector<string> words = {"qwex", "fcsaaaa", "asz", "rfs", "kjfa", "oue", "pks", "qww", "jjf", "suj"};
+    string sz = "aaa";
+    auto wc = find_if(words.begin(), words.end(), 
+            [sz](const string &a)
+            {
+                return a.size() > sz.size();
+            });
+    auto count = words.end() - wc;
+    cout << "count = " << count << " " <<" words, "
+        << "sz = " << sz << endl;
+}
+
 int main()
 {
-    test1();
+    test2();
     return 0;
 }
