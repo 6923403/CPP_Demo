@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
-#define Max_size 20
+#define MAX_SIZE 20
 
 typedef struct
 {
-    int data[Max_size];
+    int data[MAX_SIZE];
     int top;
 }Sqtack;
 
