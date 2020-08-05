@@ -9,6 +9,7 @@ namespace Is {
 
     class Img
     {
+        Img();
 
     };
 }
