@@ -13,6 +13,7 @@ int main()
 
     auto lambda1 = [=]{
         all_num = 10;
+       // num1 = 100; Local value
         cout << num1 << " " << num2 << " " << num3 << " \n"; 
         cout << all_num << endl;
     };
