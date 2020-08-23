@@ -30,9 +30,8 @@ void getPacket(u_char * arg, const struct pcap_pkthdr * pkthdr, const u_char * p
      pcap_if_t *allDev,*selectDev;
      int iNum,i;
 
-    /**
+    /*
      * @brief 获取网络设备名称
-     * 
      */
     if(pcap_findalldevs(&allDev,errBuf) == -1)
     {
