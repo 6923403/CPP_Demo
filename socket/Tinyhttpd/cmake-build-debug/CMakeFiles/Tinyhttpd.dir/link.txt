@@ -1,0 +1,1 @@
+/usr/bin/cc  -pthread -g   CMakeFiles/Tinyhttpd.dir/httpd.c.o  -o Tinyhttpd 

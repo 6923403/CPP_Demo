@@ -1,0 +1,3 @@
+/root/git/see/Tinyhttpd/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/root/git/see/Tinyhttpd/cmake-build-debug/CMakeFiles/Tinyhttpd.dir
+/root/git/see/Tinyhttpd/cmake-build-debug/CMakeFiles/edit_cache.dir

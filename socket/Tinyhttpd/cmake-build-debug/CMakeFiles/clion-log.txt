@@ -1,0 +1,4 @@
+/root/IDE/CLion-2019.3.5/clion-2019.3.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /root/git/see/Tinyhttpd
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /root/git/see/Tinyhttpd/cmake-build-debug
