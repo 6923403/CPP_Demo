@@ -12,7 +12,7 @@ void fun2(int x)
 	std::cout << "task " << x << " working in thread " << std::this_thread::get_id() << std::endl;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
 	ThreadPool thread_pool(3);
 	thread_pool.start();
