@@ -43,18 +43,13 @@ ListNode * twosum(ListNode * l1, ListNode * l2)
         sum += ten;
         ten = 0;
 
-        if(l1 && l2)
-        {
-            sum += l1->val + l2->val;
-            l1 = l1->next;
-            l2 = l2->next;
-        }
-        else if(l1)
+        if(l1)
         {
             sum += l1->val;
             l1 = l1->next;
         }
-        else if(l2)
+
+        if(l2)
         {
             sum += l2->val;
             l2 = l2->next;
@@ -93,7 +88,9 @@ int main()
 
     cout << "create list2" << endl;
     ListNode *l2 = createlist();
+
     rec = twosum(l1, l2);
-    cout << "show list1" << endl;
-    showlist(l1);
+
+    cout << "show rec" << endl;
+    showlist(rec);
 }
