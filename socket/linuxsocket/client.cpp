@@ -19,7 +19,7 @@ int main()
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    serv_addr.sin_port = htons(1234);
+    serv_addr.sin_port = htons(20999);
 
     /*
      * 本函数向服务ip发起请求 服务器ip port 保存在sockaddr_in中

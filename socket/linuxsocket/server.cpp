@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include <arpa/inet.h> //ip地址转换函数
+#include <sys/socket.h> //提供socket函数及数据结构
+#include <netinet/in.h> //定义数据结构sockaddr_in
 
 int main()
 {
@@ -34,12 +34,12 @@ int main()
     /*
      * 具体的ip地址
      */
-    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serv_addr.sin_addr.s_addr = inet_addr("127,0,0,1");
 
     /*
      * 端口号
      */
-    serv_addr.sin_port = htons(1234);
+    serv_addr.sin_port = htons(80);
 
     /*
      * serv_sock与指定IP Port绑定 保存在sockaddr_in结构体中
