@@ -1,3 +1,6 @@
+//递归方法
+
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -14,7 +17,7 @@ class Solution {
         vector<int> preorderTraversal(TreeNode* root) {
 
             vector<int> res;
-            tree(root, res);
+            tree(root, res); //递归方法
 
             return res; //Happy AC
         }
