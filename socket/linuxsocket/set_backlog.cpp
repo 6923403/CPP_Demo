@@ -7,6 +7,7 @@
 #include <string.h>
 #include <assert.h>
 
+
 static bool stop = false;
 
 static void handle_term(int sig)
