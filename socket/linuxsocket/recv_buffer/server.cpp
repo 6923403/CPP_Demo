@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const int BUFFER_SIZE = 512;
+const int BUFFER_SIZE = 1024;
 
 int main(int argc, char **argv)
 {
@@ -34,6 +34,7 @@ int main(int argc, char **argv)
     int recvbuf = atoi(argv[3]);
     int len = sizeof(recvbuf);
 
+    cout << "setsockopt" << endl;
     setsockopt(sock, SOL_SOCKET, SO_RCVBUF, &recvbuf, sizeof(recvbuf));
     getsockopt(sock, SOL_SOCKET, SO_RCVBUF, &recvbuf, (socklen_t *) &len);
 
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
 
     struct sockaddr_in client;
     socklen_t client_addrlen;
-    int connfd = accept(sock, (struct sockaddr *) & client, &client_addrlen);
+    int connfd = accept(sock, (struct sockaddr *) &client, &client_addrlen);
     if(connfd < 0)
     {
         cout << "errno is: " << errno << endl;
