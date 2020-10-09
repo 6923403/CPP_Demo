@@ -13,10 +13,9 @@ int main(int argc ,char **argv)
     char *host = argv[1];
     
     struct hostent * hostinfo = gethostbyname(host);
-    cout << *hostinfo << endl;
     assert(hostinfo);
 
-    struct servent * servinfo = getservbyname("datime", "tcp");
+    struct servent * servinfo = getservbyname("daytime", "tcp");
     cout << "port = " << ntohs(servinfo->s_port) << endl;
 
     struct sockaddr_in address;
