@@ -55,12 +55,12 @@ int main(int argc, char **argv)
     }
     else
     {
-        char header_buf[BUFFER_SIZE];
+        char header_buf[BUFFER_SIZE]; //保存http应答
         memset(header_buf, '\0', sizeof(BUFFER_SIZE));
 
-        char * file_buf;
-        struct stat file_stat;
-        bool valid = true;
+        char * file_buf; //目标文件缓存
+        struct stat file_stat; //获取目标文件属性
+        bool valid = true; //记录文件是否是有效文件
         int len = 0;
         if(stat(file_name, &file_stat) < 0)
         {
@@ -97,9 +97,9 @@ int main(int argc, char **argv)
             iv[0].iov_len = strlen(header_buf);
             iv[1].iov_base = file_buf;
             iv[1].iov_len = file_stat.st_size;
-            ret = writev(connfd, iv, 2);
+            ret = writev(connfd, iv, 2); //将内容一并写出
         }
-        else
+        else //如果目标文件无效 返回错误500
         {
             ret = snprintf(header_buf, BUFFER_SIZE - 1, "%s %s\r\n", "HTTP/1.1", status_line[1]);
 
