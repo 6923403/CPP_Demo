@@ -27,8 +27,34 @@ ListNode * removeElements(ListNode* head, int val) {
             cur = cur->next;
         }
     }
-    return head;
 
+    return head;
+}
+
+//不清理内存
+ListNode* removeElements(ListNode* head, int val) {
+        while(head != NULL && head->val == val)
+        {
+            //ListNode *tmp = head;
+            head = head->next;
+            //delete tmp;
+        }
+
+        ListNode *p = head;
+
+        while(head != NULL && head->next != NULL)
+        {
+            if(head->next->val == val)
+            {
+               //ListNode *tmp = head->next;
+                head->next = head->next->next;
+                //delete tmp;
+            }
+            else
+                head = head->next;
+        }
+
+        return p;
 }
 
 void createlist(ListNode * node, char s[7])
