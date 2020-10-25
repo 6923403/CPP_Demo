@@ -10,6 +10,7 @@ int main ()
    ret = strchr((char *)str, ch);
 
    //printf("|%c| 之后的字符串是 - |%s|\n", ch, ret);
+   ///root/git/CPP_Demo/function
    printf("%s  \n", ret);
    
    return(0);
