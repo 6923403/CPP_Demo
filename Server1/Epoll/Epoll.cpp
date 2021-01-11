@@ -1,4 +1,5 @@
 /*
+ * https://blog.csdn.net/men_wen/article/details/53456491
  * epoll_create()系统调用。此调用返回一个句柄，之后所有的使用都依靠这个句柄来标识
  * epoll_ctl()系统调用。通过此调用向epoll对象中添加、删除、修改感兴趣的事件，返回0标识成功，返回-1表示失败
  * epoll_wait()系统调用。通过此调用收集收集在epoll监控中已经发生的事件。
@@ -151,8 +152,8 @@ int main(int argc, char **argv)
             std::cout << "epoll failure" << std::endl;
             break;
         }
-        lt(events, ret, m_epollfd, listenfd);//lt模式
-        //et(events, ret, epollfd, listenfd);//et模式
+        //lt(events, ret, m_epollfd, listenfd);//lt模式
+        et(events, ret, m_epollfd, listenfd);//et模式
     }
 
     close(listenfd);
