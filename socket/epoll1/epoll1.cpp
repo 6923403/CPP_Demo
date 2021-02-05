@@ -1,15 +1,19 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <cstdlib>
 #include <cassert>
 #include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <pthread.h>
 
-const Max_event_num = 1024;
-const Buffer_size = 1024;
+const int Max_event_num = 1024;
+const int Buffer_size = 1024;
 
 struct fds
 {
@@ -34,7 +38,7 @@ void addfd(int epollfd, int fd, bool oneshot)
     {
         event.events |= EPOLLONESHOT;
     }
-    epoll_ctl(epollfd, EPOLL_CTL_ADDR, fd, &event);
+    epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
     setnonblocking(fd);
 }
 
@@ -113,6 +117,7 @@ int main(int argc, char** argv)
 
     while(true)
     {
+        std::cout << "epoll_wait " << std::endl;
         int ret = epoll_wait(epollfd, events, Max_event_num, -1);
         if(ret < 0)
         {
@@ -132,10 +137,10 @@ int main(int argc, char** argv)
             else if(events[i].events & EPOLLIN)
             {
                 pthread_t thread;
-                fds fds_for_new__worker;
-                fds_for_new_worker.epollfd = epollfd;
-                fds_for_new_work.sockfd = sockfd;
-                pthread_create(&thread, NULL, worker, (void *) &fds_for_new_worker);
+                fds f_worker;
+                f_worker.epollfd = epollfd;
+                f_worker.sockfd = sockfd;
+                pthread_create(&thread, NULL, worker, (void *) &f_worker);
             }
             else
             {
