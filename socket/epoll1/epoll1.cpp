@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>
 #include <cassert>
+#include <unistd.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <arpa/inet.h>
@@ -15,6 +16,69 @@ struct fds
     int epollfd;
     int sockfd;
 };
+
+int setnonblocking(int fd)
+{
+    int old_option = fcntl(fd, F_GETFL);
+    int new_option = old_option | O_NONBLOCK;
+    fcntl(fd, F_SETFL, new_option);
+    return old_option;
+}
+
+void addfd(int epollfd, int fd, bool oneshot)
+{
+    epoll_event event;
+    event.data.fd = fd;
+    event.events = EPOLLIN | EPOLLET;
+    if(oneshot)
+    {
+        event.events |= EPOLLONESHOT;
+    }
+    epoll_ctl(epollfd, EPOLL_CTL_ADDR, fd, &event);
+    setnonblocking(fd);
+}
+
+void reset_oneshot(int epollfd, int fd)
+{
+    epoll_event event;
+    event.data.fd = fd;
+    event.events = EPOLLIN | EPOLLET | EPOLLONESHOT;
+    epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &event);
+}
+
+void* worker(void* arg)
+{
+    int sockfd = ((fds* ) arg)->sockfd;
+    int epollfd = ((fds* ) arg)->epollfd;
+    std::cout << "start new thread to receive data on fd: " << sockfd << std::endl;
+    char buf[Buffer_size];
+    memset(buf, '\0', Buffer_size);
+    while(true)
+    {
+        int ret = recv(sockfd, buf, Buffer_size - 1, 0);
+        if(ret == 0)
+        {
+            close(sockfd);
+            std::cout << "foreiner closed the connection " << std::endl;
+            break;
+        }
+        else if(ret < 0)
+        {
+            if(errno == EAGAIN)
+            {
+                reset_oneshot(epollfd, sockfd);
+                std::cout << "read later " << std::endl;
+                break;
+            }
+        }
+        else
+        {
+            std::cout << "get content: " << buf << std::endl;
+            sleep(5);
+        }
+    }
+    std::cout << "end thread receiving data on fd: " << sockfd << std::endl;
+}
 
 int main(int argc, char** argv)
 {
@@ -62,11 +126,24 @@ int main(int argc, char** argv)
             {
                 struct sockaddr_in client_addr;
                 socklen_t client_addr_len = sizeof(client_addr);
-
-
+                int connfd = accept(listenfd, (struct sockaddr* ) &client_addr, &client_addr_len);
+                addfd(epollfd, connfd, true);
+            }
+            else if(events[i].events & EPOLLIN)
+            {
+                pthread_t thread;
+                fds fds_for_new__worker;
+                fds_for_new_worker.epollfd = epollfd;
+                fds_for_new_work.sockfd = sockfd;
+                pthread_create(&thread, NULL, worker, (void *) &fds_for_new_worker);
+            }
+            else
+            {
+                std::cout << "something else happend \n" << std::endl;
             }
         }
     }
 
+    close(listenfd);
     return 0;
 }
