@@ -140,6 +140,44 @@ private:
      */
     int m_write_idx;
 
+    CHECK_STATE m_check_state;
+    METHOD m_method;
+
+    /*
+     * 请求目标文件完整路径
+     */
+    char m_real_file[FILE_LEN];
+    char* m_url;
+
+    /*
+     * HTTP/1.1
+     */
+    char* m_version;
+
+    char* m_host;
+    int m_content_length;
+
+    /*
+     * HTTP请求是否要求保持连接
+     */
+    bool m_linger;
+
+    /*
+     * 客户请求的目标文件被mmap到内存中的起始位置
+     */
+    char* m_file_address;
+
+    /*
+     * 目标文件的状态。可以判断文件是否存在、是否为目录、是否可读，并获取文件大小等
+     */
+    struct stat m_file_stat;
+
+    /*
+     * 采用writev来执行写操作，所以定义下面两个成员，其中m_iv_count表示被写内存块的数量*/
+     */
+     struct iovec m_iv[2];
+     int m_iv_count;
+
 };
 
 #endif //HTTP_CONN_H
