@@ -4,10 +4,12 @@ Pool::Pool()
 {
     pthread_mutex_init(&m_mutex, NULL);
     pthread_cond_init(&m_cond, NULL);
+    destroy_all = false;
 }
 
-Pool::~Pool() {
-
+Pool::~Pool()
+{
+    destroy_pool();
 }
 
 void Pool::init(int max_thread_num)
@@ -29,20 +31,19 @@ void Pool::init(int max_thread_num)
             delete[] m_threads;
             exit(-1);
         }
-
-        if(pthread_join(m_threads[i], NULL) != 0)
-        {
-            std::cout << "pthread_join error" << std::endl;
-            delete[] m_threads;
-            exit(-1);
-        }
     }
-    std::cout << "pool init1" << std::endl;
+}
+
+void Pool::add_pool(Task* work)
+{
+    pthread_mutex_lock(&m_mutex);
+    Task_pool.push_back(work);
+    pthread_cond_signal(&m_cond);
+    pthread_mutex_unlock(&m_mutex);
 }
 
 void* Pool::worker(void *arg)
 {
-    std::cout << "pool init2" << std::endl;
     if(arg == nullptr)
     {
         std::cout << "arg == null" << std::endl;
@@ -55,22 +56,17 @@ void* Pool::worker(void *arg)
 
 void Pool::run()
 {
-    std::cout << "pool init3" << std::endl;
     Task* task = nullptr;
     pthread_mutex_lock(&m_mutex);
-    std::cout << "pool init4" << std::endl;
 
     while (true)
     {
         if(Task_pool.empty())
         {
-            std::cout << "pool init5" << std::endl;
             pthread_cond_wait(&m_cond, &m_mutex);
         }
 
-        std::cout << "pool init6" << std::endl;
-
-        Task* task = Task_pool.front();
+        task = Task_pool.front();
         Task_pool.pop_front();
         pthread_mutex_unlock(&m_mutex);
         if(task == nullptr)
@@ -79,5 +75,55 @@ void Pool::run()
             exit(-1);
         }
 
+        task->run();
+
+        // 线程池销毁判断，收到销毁信息退出线程
+        if (destroy_all && Task_pool.empty())
+        {
+            std::cout << "Thread exited" << std::endl;
+            pthread_exit(NULL);
+            break;
+        }
+
     }
+}
+
+void Pool::destroy_pool()
+{
+    if(!destroy_all)
+    {
+        pthread_cond_broadcast(&m_cond);
+        for(int i = 0; i < sizeof(m_threads); i++)
+        {
+            if(pthread_join(m_threads[i], NULL) != 0)
+            {
+                std::cout << "pthread_join error" << std::endl;
+                delete[] m_threads;
+                exit(-1);
+            }
+        }
+        destroy_all = true;
+
+        delete[] m_threads;
+        pthread_cond_destroy(&m_cond);
+        pthread_mutex_destroy(&m_mutex);
+    }
+}
+
+bool Pool::back_destroy()
+{
+    return destroy_all;
+}
+
+Task::Task()
+{
+    i = 0;
+}
+
+Task::~Task()
+{}
+
+void Task::run()
+{
+    std::cout << "i = " << i++ << std::endl;
 }
