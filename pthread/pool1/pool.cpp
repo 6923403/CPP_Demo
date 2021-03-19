@@ -14,6 +14,7 @@ Pool::~Pool()
 
 void Pool::init(int max_thread_num)
 {
+    std::cout << max_thread_num << std::endl;
     int ret;
     m_threads = new pthread_t[max_thread_num];
     m_thread_num = max_thread_num;
@@ -52,6 +53,7 @@ void* Pool::worker(void *arg)
 
     Pool* pool = (Pool *)arg;
     pool->run();
+    return pool;
 }
 
 void Pool::run()
@@ -92,7 +94,10 @@ void Pool::destroy_pool()
 {
     if(!destroy_all)
     {
+        std::cout << "destroy_pool " << std::endl;
         pthread_cond_broadcast(&m_cond);
+        destroy_all = true;
+
         for(int i = 0; i < sizeof(m_threads); i++)
         {
             if(pthread_join(m_threads[i], NULL) != 0)
@@ -102,7 +107,6 @@ void Pool::destroy_pool()
                 exit(-1);
             }
         }
-        destroy_all = true;
 
         delete[] m_threads;
         pthread_cond_destroy(&m_cond);
