@@ -183,5 +183,7 @@ void sort_timer_list::add_timer(Timer* timer, Timer* head)
     {
         prev->next = timer;
         timer->prev = prev;
+        timer->next = nullptr;
+        tail = timer;
     }
 }
