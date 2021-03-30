@@ -169,9 +169,19 @@ void sort_timer_list::add_timer(Timer* timer, Timer* head)
     {
         if(timer->expire < tmp->expire)
         {
-
+            prev->next = timer;
+            timer->next = tmp;
+            tmp->prev = timer;
+            timer->prev = prev;
+            break;
         }
+        prev = tmp;
+        tmp = tmp->next;
+    }
+
+    if(!tmp)
+    {
+        prev->next = timer;
+        timer->prev = prev;
     }
 }
-
-
