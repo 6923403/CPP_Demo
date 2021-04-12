@@ -44,14 +44,33 @@ void sort()
     reverse(vec2.begin(), vec2.end());
 
     sort(vec3.rbegin(), vec3.rend());
-    show(vec3);
 }
 
+void assign()
+{
+    auto print_vector = [&](){
+        for (auto &c : vec)
+            std::cout << c << ' ';
+        std::cout << '\n';
+    };
+    print_vector();
+
+    vec.assign(5, 100);
+    print_vector();
+
+    std::vector<int > vec3 = {1111, 222, 33, 4};
+    vec.assign(vec3.begin(), vec3.end());
+    print_vector();
+
+    vec3.assign({0, 9, 1, 8, 2, 7});
+    show(vec3);
+}
 int main(int argc, char** argv)
 {
     add();
     insert();
     m_delete();
     sort();
+    assign();
     return 0;
 }
