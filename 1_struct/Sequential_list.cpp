@@ -3,6 +3,7 @@
 
 using namespace std;
 const int Max_size = 100;
+const int N = 8;
 
 typedef struct Sequential_list
 {
@@ -114,8 +115,43 @@ void reverse(Sqlist* list)
     }
     show(list);
 }
+void show2(Sqlist& list2)
+{
+    for(int k = 0; k < N; k++)
+    {
+        std::cout << list2.data[k] << " ";
+    }
+    std::cout << std::endl;
+}
 
-int main(int argc, char** argv)
+void CycleLeft(Sqlist& list2)
+{
+    //n(n>1)个整数放到一维数组R中，将R中保存的顺序序列循环左移p(0<p<n)个位置，
+    //即R中数据由(X0,X1...Xn-1)变换为(Xp,Xp+1...Xn-1,X0,...Xp-1)
+    const int p = 4;
+    int t = 1;
+    for(int i = 0; i < N; i++)
+    {
+        list2.data[i] = t;
+        t++;
+    }
+
+    //12345678
+    //56781234
+    int data2[p] = {0};
+    int temp = 0;
+    for(int k = 0; k < p; k++)
+    {
+        temp = list2.data[k];
+        list2.data[k] = list2.data[k + p];
+        list2.data[k + p] = temp;
+    }
+
+    show2(list2);
+
+}
+
+void test()
 {
     Sqlist* list = new Sqlist();
     init(list);
@@ -128,4 +164,19 @@ int main(int argc, char** argv)
 
     delete list->data;
     delete list;
+}
+
+void test2() {
+    Sqlist list2;
+    list2.data = new int(N);
+    CycleLeft(list2);
+
+    delete list2.data;
+}
+
+int main()
+{
+    test2();
+
+    return 0;
 }
