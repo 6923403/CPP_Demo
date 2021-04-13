@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 
-using namespace std;
 const int Max_size = 100;
 const int N = 8;
 
@@ -138,7 +137,6 @@ void CycleLeft(Sqlist& list2)
 
     //12345678
     //56781234
-    int data2[p] = {0};
     int temp = 0;
     for(int k = 0; k < p; k++)
     {
