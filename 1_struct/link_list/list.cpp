@@ -6,7 +6,7 @@ List::List() : head(new LNode), len(0)
 
 List::~List()
 {
-    LNode* p = head->next;
+    LNode* p = head;
     LNode* temp;
     while(p != nullptr)
     {
