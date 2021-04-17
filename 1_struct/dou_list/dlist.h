@@ -10,6 +10,7 @@ struct DNode
     int data;
 };
 
+//非循环
 class Dlist {
 public:
     Dlist();

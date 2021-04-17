@@ -7,6 +7,14 @@ Dlist::Dlist() : list(new DNode)
 
 Dlist::~Dlist()
 {
+    DNode* p = list->next;
+    DNode* temp = nullptr;
+    for(p != nullptr)
+    {
+        temp = p;
+        p = p->next;
+        delete temp;
+    }
     delete list;
 }
 
