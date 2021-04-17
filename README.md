@@ -8,7 +8,7 @@
 
 # 环境
 
-os: win7、win10、ubuntu18\20、macos15.6
+os: Win7\Win10、Ubuntu18\Ubuntu20、Macos15.6
 
 ide: 早期代码vs2015 后期为CLion
 
