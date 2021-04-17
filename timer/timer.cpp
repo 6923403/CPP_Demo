@@ -6,7 +6,14 @@ Timer::Timer() : m_expired(true), m_try_to_expire(false)
 
 Timer::~Timer()
 {
-    stop();
+    Timer* tmp = nullptr;
+    tmp = head;
+    while(tmp)
+    {
+        head = tmp->next;
+        delete tmp;
+        tmp = head;
+    }
 }
 
 Timer::Timer(const Timer& timer)
