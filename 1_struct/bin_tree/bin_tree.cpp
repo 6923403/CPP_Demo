@@ -67,18 +67,20 @@ void PostOrder(BTNode* tree)
 #include <queue>
 void LevelOrder(BTNode* tree)
 {
-    queue<BTNode> q;//借助队列
+    std::queue<BTNode> q;//借助队列
     if(tree != NULL)
     {
         BTNode temp;//暂存要出队的结点
-        q.push(*T);//根结点入队
+        q.push(*tree);//根结点入队
         while (!q.empty())//队列非空
         {
             temp = q.front();
             q.pop();
-            printf("%d ", temp.data);
-            if (temp.lchild != NULL) q.push(*temp.lchild);//队列先进先出，先入左孩子
-            if (temp.rchild != NULL) q.push(*temp.rchild);
+            std::cout << "tree->data: " << temp.data << std::endl;
+            if(temp.lchild != NULL)
+                q.push(*temp.lchild);//队列先进先出，先入左孩子
+            if(temp.rchild != NULL)
+                q.push(*temp.rchild);
         }
     }
 }
