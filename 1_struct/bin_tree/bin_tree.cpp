@@ -64,6 +64,25 @@ void PostOrder(BTNode* tree)
     }
 }
 
+#include <queue>
+void LevelOrder(BTNode* tree)
+{
+    queue<BTNode> q;//借助队列
+    if(tree != NULL)
+    {
+        BTNode temp;//暂存要出队的结点
+        q.push(*T);//根结点入队
+        while (!q.empty())//队列非空
+        {
+            temp = q.front();
+            q.pop();
+            printf("%d ", temp.data);
+            if (temp.lchild != NULL) q.push(*temp.lchild);//队列先进先出，先入左孩子
+            if (temp.rchild != NULL) q.push(*temp.rchild);
+        }
+    }
+}
+
 void test1()
 {
     BTNode* tree;
@@ -74,6 +93,8 @@ void test1()
     InOrder(tree);
     std::cout << "后序遍历" << std::endl;
     PostOrder(tree);
+    std::cout << "层序遍历" << std::endl;
+    LevelOrder(tree);
 }
 
 int main(int argc, char** argv)
