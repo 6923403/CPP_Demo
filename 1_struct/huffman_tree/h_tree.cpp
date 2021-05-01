@@ -1,5 +1,6 @@
 //https://www.cnblogs.com/msymm/p/9756298.html
 //https://blog.csdn.net/lady_killer9/article/details/86762495
+//https://blog.csdn.net/wp1603710463/article/details/50933102
 
 #include<cstdio>
 #include<cstdlib>
@@ -47,20 +48,37 @@ Hcnode HC[MAX];//哈夫曼编码数组
 minnodes Select(int max)
 {
     double min = MAXW;
-    minnodes mins;
-    mins.m2 = -1;
+    minnodes mins = {-1, -1, false};
     //查找第一个最小权值的结点下标
     for (int i = 0; i < max; i++)
     {
         if (!flag[i] && HT[i].weight < min)//未加入哈夫曼树,权值更小
         {
+            if(mins.m2 == -1 || min < HT[mins.m2].weight)
+            {
+                mins.m2 = mins.m1;
+            }
             min = HT[i].weight;//更新最小权值
             mins.m1 = i;
         }
+        else if(!flag[i] && (mins.m2 == -1 || HT[i].weight < HT[mins.m2].weight ))
+        {
+            mins.m2 = i;
+        }
+
     }
     flag[mins.m1] = true;//将结点加入哈夫曼树
     min = MAXW;
+    if(!(mins.m2 < 0))
+    {
+        mins.flag = true;
+    }
+    else
+        mins.flag = false;
+    flag[mins.m2] = true;
+
     //查找第二个最小权值结点下标，可能不存在
+    /*
     for (int i = 0; i < max; i++)
     {
         if (!flag[i] && HT[i].weight < min)//未加入哈夫曼树,权值更小
@@ -78,6 +96,7 @@ minnodes Select(int max)
     {
         mins.flag = true;
     }
+     */
     return mins;
 }
 //打印哈夫曼树
@@ -100,24 +119,31 @@ void PrintHC(int n)
 //创建哈夫曼树
 void CreateHT()
 {
-    int n;//字符个数，即哈夫曼树叶节点个数
-    minnodes mins;
-    cout << "请输入字符个数：" << endl;
-    cin >> n;
+    int n = 6;//字符个数，即哈夫曼树叶节点个数
+    int a[] = {45, 13, 12, 16, 9, 5};
+    char b[] = {'a', 'b', 'c', 'd', 'e', 'f', 'e'};
 
-    cout << "请输入字符及权值：" << endl;
+    minnodes mins;
+    //cout << "请输入字符个数：" << endl;
+    //cin >> n;
+
+    //cout << "请输入字符及权值：" << endl;
     for (int i = 0; i < n; i++)
     {
-        cin >> HT[i].data >> HT[i].weight;
+
+        HT[i].data = b[i];
+        HT[i].weight = a[i];
         HT[i].lchild = -1; HT[i].rchild = -1;
     }
+
     /*
     HT[0].data = 'a';HT[0].weight = 45;HT[0].lchild = -1;HT[0].rchild = -1;
     HT[1].data = 'b';HT[1].weight = 13;HT[1].lchild = -1;HT[1].rchild = -1;
     HT[2].data = 'c';HT[2].weight = 12;HT[2].lchild = -1;HT[2].rchild = -1;
     HT[3].data = 'd';HT[3].weight = 16;HT[3].lchild = -1;HT[3].rchild = -1;
     HT[4].data = 'e';HT[4].weight = 9; HT[4].lchild = -1;HT[4].rchild = -1;
-    HT[5].data = 'f';HT[5].weight = 5; HT[5].lchild = -1;HT[5].rchild = -1;*/
+    HT[5].data = 'f';HT[5].weight = 5; HT[5].lchild = -1;HT[5].rchild = -1;
+     */
     int i = n;
     for (;; i++)
     {
