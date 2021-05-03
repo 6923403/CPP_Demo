@@ -1,9 +1,5 @@
-#include<cstdio>
-#include<cstring>
-#include<set>
-#include<list>
-#include<queue>
 #include<iostream>
+#include<queue>
 
 const int MaxVerNum = 100; //顶点最大数目值
 using namespace std;
