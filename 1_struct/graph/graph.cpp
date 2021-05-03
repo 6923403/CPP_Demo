@@ -1,8 +1,8 @@
 #include<iostream>
 #include<queue>
 
-const int MaxVerNum = 100; //顶点最大数目值
 using namespace std;
+const int MaxVerNum = 100; //顶点最大数目值
 
 //图的数据结构
 struct Graph
