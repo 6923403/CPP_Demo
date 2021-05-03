@@ -54,7 +54,6 @@ void InsertE(Graph& graph, char b, char c)
         graph.Edge[p2][p1] = 1;
         graph.e_num++;
     }
-
 }
 
 void Create(Graph& graph)
@@ -104,8 +103,9 @@ void test()
     Graph graph;
     Init(graph);
     Create(graph);
-
     Show(graph);
+    //DFS(graph);
+    //BFS(graph);
 }
 
 int main(int argc, char** argv)
