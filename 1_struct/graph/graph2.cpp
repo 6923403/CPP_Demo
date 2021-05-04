@@ -98,13 +98,18 @@ void Show(Graph& graph)
     }
 }
 
+void DFS(Graph& graph)
+{
+
+}
+
 void test()
 {
     Graph graph;
     Init(graph);
     Create(graph);
     Show(graph);
-    //DFS(graph);
+    DFS(graph);
     //BFS(graph);
 }
 
