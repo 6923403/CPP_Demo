@@ -130,7 +130,7 @@ void PrintVex(Graph G)
 }
 
 //xmind
-
+o
 //打印图的边矩阵
 void PrintEdge(Graph G)
 {
