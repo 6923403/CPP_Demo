@@ -129,7 +129,6 @@ void PrintVex(Graph G)
     cout << endl;
 }
 
-//xmind
 //打印图的边矩阵
 void PrintEdge(Graph G)
 {
