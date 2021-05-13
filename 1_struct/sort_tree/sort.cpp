@@ -49,20 +49,20 @@ void tree_delete(BiTNode **tree, int key) //只有叶子
         {
             if((*tree)->lchild == nullptr)
             {
-                deleer();
+                deleer(&(*tree));
             }
             else if((*tree)->rchild == nullptr)
             {
-                deletel();
+                deletel(&(*tree));
             }
             else
             {
-                deletep();
+                deletep(&(*tree));
             }
         }
         else
         {
-            deleteleaf();
+            deleteleaf(&(*tree));
         }
     }
     else if((*tree)->data > key)
@@ -77,7 +77,7 @@ void tree_delete(BiTNode **tree, int key) //只有叶子
 int main(int argc, char** argv)
 {
     BiTNode* tree = nullptr;
-    int a[] = {62,88,58,47,35,73,51,99,37,93};
+    int a[] = { 62, 88, 58, 47, 35, 73, 51, 99, 37, 93};
     int asize = sizeof(a) / sizeof(a[0]);
     for(int i = 0; i < asize; i++)
     {
@@ -85,7 +85,6 @@ int main(int argc, char** argv)
     }
 
     show(tree);
-
 
     tree_delete(&tree, 47);
     return 0;
