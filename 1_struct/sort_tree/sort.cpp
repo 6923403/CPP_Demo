@@ -1,4 +1,6 @@
 #include <iostream>
+//https://www.jianshu.com/p/c6cb2c1460d0
+//https://blog.csdn.net/isunbin/article/details/81703762
 
 typedef struct BiTNode {
     /* 结点数据 */
