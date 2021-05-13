@@ -157,7 +157,7 @@ void CreateHT()
         HT[i].data = ' ';
         HT[mins.m1].parent = i;                                //两个权值最小结点双亲为新加入结点
         HT[mins.m2].parent = i;
-        HT[i].lchild = mins.m1;//左小又大
+        HT[i].lchild = mins.m1;//左小右大
         HT[i].rchild = mins.m2;
     }
     PrintHT(i);//打印哈夫曼树
