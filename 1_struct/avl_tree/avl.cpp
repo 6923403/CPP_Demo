@@ -3,6 +3,7 @@
 #include <vector>
 //https://blog.csdn.net/isunbin/article/details/81707606
 //https://www.jianshu.com/p/fdb3c8c331f1
+//https://www.jianshu.com/p/655d83f9ba7b
 
 struct BNode
 {
