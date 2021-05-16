@@ -11,12 +11,13 @@ typedef struct BiTNode {
 
 void insert(BiTNode **tree, int key)
 {
-    BiTNode* node = new BiTNode;
-    node->data = key;
-    node->lchild = nullptr;
-    node->rchild = nullptr;
+
     if(*tree == nullptr)
     {
+        BiTNode* node = new BiTNode;
+        node->data = key;
+        node->lchild = nullptr;
+        node->rchild = nullptr;
         *tree = node;
     }
     else if((*tree)->data > key)
