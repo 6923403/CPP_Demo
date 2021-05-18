@@ -27,28 +27,35 @@ int getBalance(BNode* tree)
     }
     else
     {
-        return get_height(tree->lchild) - get_height(tree->rchild);
+        return get_height(tree->lchild) - get_height(tree->rchild); //左树减右树
     }
 }
 
 void ll_rotate(BNode** tree)
 {
-    BNode *x = (*tree)->lchild;
-    (*tree)->lchild = x->rchild;
-    x->rchild = (*tree);
+    BNode *p = *tree;
+    BNode *x = new BNode;
+    x = p->lchild;
+    p->lchild = x->rchild;
+    x->rchild = p;
 
-    (*tree)->height = std::max(get_height((*tree)->lchild), get_height((*tree)->rchild)) + 1;
+    (*tree)->height = std::max(get_height(p->lchild), get_height(p->rchild)) + 1;
     x->height = std::max(get_height(x->lchild), get_height(x->rchild)) + 1;
+
+    *tree = x;
 }
 
 void rr_rotate(BNode** tree)
 {
-    BNode *x = (*tree)->rchild;
-    (*tree)->rchild = x->lchild;
-    x->lchild = *tree;
+    BNode *p = *tree;
+    BNode *x = new BNode;
+    x = p->rchild;
+    p->rchild = x->lchild;
+    x->lchild = p;
 
-    (*tree)->height = std::max(get_height((*tree)->lchild), get_height((*tree)->rchild)) + 1;
+    (*tree)->height = std::max(get_height(p->lchild), get_height(p->rchild)) + 1;
     x->height = std::max(get_height(x->lchild), get_height(x->rchild)) + 1;
+    *tree = x;
 }
 
 void insert(BNode **tree, int key)
@@ -72,8 +79,11 @@ void insert(BNode **tree, int key)
         insert(&(*tree)->rchild, key);
     }
 
-    (*tree)->height = 1 + std::max(get_height((*tree)->lchild), get_height((*tree)->rchild));
-    int balance = getBalance(*tree);
+    (*tree)->height = 1 + std::max(get_height((*tree)->lchild), get_height((*tree)->rchild)); //计算height
+    int balance = getBalance(*tree); //计算平衡因子
+    /*
+     * balance大于1 是L  key小于左LL key大于左LR
+     */
     if (balance > 1 && key < (*tree)->lchild->data) //LL型
     {
         ll_rotate(&(*tree));
@@ -108,14 +118,15 @@ void show(BNode* tree)
 int main(int argc, char** argv)
 {
     BNode* tree = nullptr;
-    std::vector<int > a = {3,2,1,4,5,6,7,10,9,8};
-    int sizea = a.size();
+    int a[] = {3,2,1,4,5,6,7,10,9,8};
+    int sizea = sizeof(a) / sizeof(a[0]);
     for(int i = 0; i < sizea; i++)
     {
         insert(&tree, a[i]);
     }
+    std::cout << "show " << std::endl;
 
-    show(tree);
+    show(tree); //4 2 1 3 7 6 5 9 8 10
 
     return 0;
 }
