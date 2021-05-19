@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 //https://blog.csdn.net/isunbin/article/details/81707606
 //https://www.jianshu.com/p/fdb3c8c331f1
 //https://www.jianshu.com/p/655d83f9ba7b
@@ -115,6 +114,83 @@ void show(BNode* tree)
     show(tree->rchild);
 }
 
+BNode* minValue(BNode* tree)
+{
+    BNode* temp = tree;
+    while(temp->lchild != nullptr)
+    {
+        temp = temp->lchild;
+    }
+
+    return temp;
+}
+
+void delete_node(BNode** tree, int key)
+{
+    if(*tree == nullptr)
+    {
+        return;
+    }
+    if((*tree)->data < key)
+    {
+        delete_node(&(*tree)->rchild, key);
+    }
+    else if((*tree)->data > key)
+    {
+        delete_node(&(*tree)->lchild, key);
+    }
+    else
+    {
+        if(((*tree)->lchild == nullptr) || ((*tree)->rchild == nullptr))
+        {
+            BNode* temp = nullptr;
+            if((*tree)->lchild == nullptr && (*tree)->rchild == nullptr)
+            {
+                temp = *tree;
+                *tree = nullptr;
+            }
+            else {
+                temp = (*tree)->lchild ? (*tree)->lchild : (*tree)->rchild;
+                *tree = temp;
+            }
+            delete temp;
+        }
+        else
+        {
+            BNode* temp = minValue(*tree);
+            (*tree)->data = temp->data;
+            delete_node(&(*tree)->rchild, temp->data);
+        }
+    }
+
+    if(*tree == nullptr)
+    {
+        return;
+    }
+
+    (*tree)->height = 1 + std::max(get_height((*tree)->lchild), get_height((*tree)->rchild));
+    int balance = getBalance(*tree);
+
+    if (balance > 1 && (*tree)->lchild->data >= 0) //LL型
+    {
+        ll_rotate(&(*tree));
+    }
+    else if (balance < -1 && (*tree)->rchild->data <= 0) //RR型
+    {
+        rr_rotate(&(*tree));
+    }
+    else if (balance > 1 && (*tree)->lchild->data < 0) //LR型
+    {
+        rr_rotate(&(*tree)->lchild);
+        ll_rotate(&(*tree));
+    }
+    else if (balance < -1 && (*tree)->rchild->data > 0) //RL型
+    {
+        ll_rotate(&(*tree)->rchild);
+        rr_rotate(&(*tree));
+    }
+}
+
 int main(int argc, char** argv)
 {
     BNode* tree = nullptr;
@@ -126,7 +202,10 @@ int main(int argc, char** argv)
     }
     std::cout << "show " << std::endl;
 
-    show(tree); //4 2 1 3 7 6 5 9 8 10
+    //show(tree); //4 2 1 3 7 6 5 9 8 10
+    int key = 5;
+    delete_node(&tree, key);
+    show(tree); //4 2 1 3 7 6 9 8 10
 
     return 0;
 }
