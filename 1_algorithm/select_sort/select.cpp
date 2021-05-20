@@ -51,6 +51,46 @@ void show(List list)
     std::cout << std::endl;
 }
 
+bool Insert(List& list, int index, int key)
+{
+    if(index < 1 || index > list.len + 1) //判断位置是否有效
+    {
+        return false;
+    }
+    if(list.len >= Max_size)//判断存储空间是否已满
+    {
+        return false;
+    }
+
+    for(int j = list.len; j >= index; j--)//位置i及之后元素后移
+    {
+        list.data[j] = list.data[j - 1];
+    }
+
+    list.data[index - 1] = key;
+    list.len++;
+
+    return true;
+}
+
+bool Deletelist(List& list, int key)
+{
+    for(int i = 0; i < list.len; i++)
+    {
+        if(list.data[i] == key)
+        {
+            for(int j = i; j < list.len - 1; j++)
+            {
+                list.data[j] = list.data[j + 1];
+            }
+            list.len--;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int main()
 {
     List list;
@@ -65,6 +105,16 @@ int main()
 
     SelectSort(list);
 
+    show(list);
+    if(!Insert(list, 5, 40))
+    {
+        std::cout << "插入值失败" << std::endl;
+    }
+    show(list);
+    if(!Deletelist(list, 40))
+    {
+        std::cout << "删除值失败" << std::endl;
+    }
     show(list);
     return 0;
 }
