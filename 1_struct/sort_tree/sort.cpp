@@ -11,7 +11,6 @@ typedef struct BiTNode {
 
 void insert(BiTNode **tree, int key)
 {
-
     if(*tree == nullptr)
     {
         BiTNode* node = new BiTNode;
