@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+//https://www.jianshu.com/p/d730ae586cf3
+
 void show(std::vector<int> a)
 {
     for(auto &s : a)
