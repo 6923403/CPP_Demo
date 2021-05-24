@@ -13,10 +13,6 @@
  * 每个节点都存有索引和数据，也就是对应的key和value。
  */
 
-//https://www.yiibai.com/data_structure/b-tree.html
-//https://www.cs.usfca.edu/~galles/visualization/BTree.html
-//https://blog.csdn.net/geek_jerome/article/details/78895289
-
 const int m = 4; //4阶
 const int m_max = m - 1; //key 最大
 const int m_min = (m - 1) / 2; //key 最小
@@ -27,14 +23,14 @@ public:
     BTree();
     ~BTree();
 
-    void create_tree(int key);
+    void insert_tree(int key);
 
 private:
     BTree* tree;
     BTree* parent;
 
     int key2[m_max];
-    std::vector<int> key;
+    std::vector<int> data;
     std::vector<BTree>* ptr;
 };
 
