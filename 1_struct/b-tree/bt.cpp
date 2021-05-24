@@ -10,16 +10,17 @@ BTree::~BTree()
 
 }
 
-void BTree::create_tree(int key2)
+void BTree::insert_tree(int key)
 {
-    BTree* node = nullptr;
     if(tree == nullptr)
     {
-        int t_size = key.size();
-        if(t_size < m_max)
+        tree = new BTree;
+        int data_s = data.size();
+        if(data_s < m_max)
         {
-            key.push_back(key2);
+            tree->data.push_back(key);
         }
     }
+
 }
 
