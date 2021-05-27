@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+//https://zhuanlan.zhihu.com/p/126116878
 int v_size;
 
 void show(std::vector<int> re)
@@ -28,47 +29,44 @@ int f_max(std::vector<int> a)
     return index;
 }
 
-std::vector<int> sort(std::vector<int> a)
+void sort(std::vector<int> a, std::vector<int> &re)
 {
     int max_index = f_max(a);
-    std::vector<int> re(v_size, 0);
 
     int j, k;
-    int base = 10;
+    int base = 1;
+    std::vector<int> count(10, 0);
     while(max_index--)
     {
-        std::vector<int> count(v_size, 0);
-        for(int i = 1; i < v_size; i++)
+        for(int i = 0; i < v_size; i++)
         {
             int index = a[i] / base % 10;
             count[index]++;
         }
 
         std::vector<int> start(v_size, 0);
-        for(int i = 1; i < v_size; i++)
+        for(j = 1; j < 10; j++)
         {
-            start[i] = count[i - 1] + start[i - 1];
+            count[j] = count[j - 1] + count[j];
         }
 
-        for(int j = 0; j < v_size; j++)
+        for(k = 0; k < v_size; k++)
         {
-            int index = a[j] / base % 10;
-            re[start[index]++] = a[j];
+            int index = a[k] / base % 10;
+            re[start[index]++] = a[k];
         }
 
         base *= 10;
-        show(re);
     }
 
-    return re;
 }
 
 int main(int argc, char** argv)
 {
-    std::vector<int> a = {2, 12, 30, 9, 50, 82, 28, 77, 12};
-    std::vector<int > re = {};
+    std::vector<int> a = {2, 12, 30, 9, 50, 82, 28, 77, 120};
+    std::vector<int > re(10, 0);
     v_size = a.size();
-    re = sort(a);
+    sort(a, re);
     show(re);
     return 0;
 }
