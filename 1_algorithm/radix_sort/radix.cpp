@@ -13,60 +13,69 @@ void show(std::vector<int> re)
     std::cout << std::endl;
 }
 
-int f_max(std::vector<int> a)
+int maxbit(std::vector<int> a, int n) //辅助函数，求数据的最大位数
 {
-    int index = 0;
-    int base = 10;
-    for(int i = 0; i < v_size; i++)
+    int maxData = a[0];              ///< 最大数
+    /// 先求出最大数，再求其位数，这样有原先依次每个数判断其位数，稍微优化点。
+    for (int i = 1; i < n; ++i)
     {
-        while(a[i] > base)
-        {
-            index++;
-            base *= 10;
-        }
+        if (maxData < a[i])
+            maxData = a[i];
+    }
+    int d = 1;
+    int p = 10;
+    while (maxData >= p)
+    {
+        //p *= 10; // Maybe overflow
+        maxData /= 10;
+        ++d;
     }
 
-    return index;
+    return d;
 }
-
-void sort(std::vector<int> a, std::vector<int> &re)
+std::vector<int> sort(std::vector<int> a, int n) //基数排序
 {
-    int max_index = f_max(a);
+    int d = maxbit(a, n);
 
-    int j, k;
-    int base = 1;
-    std::vector<int> count(10, 0);
-    while(max_index--)
+    std::vector<int> tmp(n, 0);
+
+    int i, j, k;
+    int radix = 1;
+
+    for(i = 1; i <= d; i++) //进行d次排序
     {
-        for(int i = 0; i < v_size; i++)
+        std::vector<int> count(10, 0);
+        for(j = 0; j < n; j++)
         {
-            int index = a[i] / base % 10;
-            count[index]++;
+            k = (a[j] / radix) % 10; //统计每个桶中的记录数
+            count[k]++;
         }
-
-        std::vector<int> start(v_size, 0);
         for(j = 1; j < 10; j++)
         {
-            count[j] = count[j - 1] + count[j];
+            count[j] = count[j - 1] + count[j]; //将tmp中的位置依次分配给每个桶
         }
+        show(count);
 
-        for(k = 0; k < v_size; k++)
+        for(j = n - 1; j >= 0; j--) //将所有桶中记录依次收集到tmp中
         {
-            int index = a[k] / base % 10;
-            re[start[index]++] = a[k];
+            k = (a[j] / radix) % 10;
+            tmp[count[k] - 1] = a[j];
+            count[k]--;
         }
-
-        base *= 10;
+        for(j = 0; j < n; j++) //将临时数组的内容复制到data中
+            a[j] = tmp[j];
+        radix = radix * 10;
     }
 
+    return a;
 }
 
 int main(int argc, char** argv)
 {
-    std::vector<int> a = {2, 12, 30, 9, 50, 82, 28, 77, 120};
-    std::vector<int > re(10, 0);
+    std::vector<int> a = {3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48};
     v_size = a.size();
-    sort(a, re);
+    std::vector<int> re(v_size, 0);
+    re = sort(a, v_size);
     show(re);
     return 0;
 }
