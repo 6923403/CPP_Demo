@@ -71,10 +71,19 @@ int main(int argc, char** argv)
         std::cout << "连接数据库出错" << std::endl;
     }
 
-//    std::vector<std::string> v_name;
-//    std::vector<std::string> v_password;
     std::map<std::string, std::string> m_user;
-    sql.insert_data(m_user);
+    std::string n, q;
+    std::cout << "用户名+密码";
+    std::cin >> n >> q;
+    m_user.insert(std::pair<std::string, std::string>(q, n));
+    if(sql.insert_data(m_user))
+    {
+        std::cout << "数据插入" << std::endl;
+    }
+    else
+    {
+        std::cout << __LINE__ << " " << " insert error" << std::endl;
+    }
 
     return 0;
 }
