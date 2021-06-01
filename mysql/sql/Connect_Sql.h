@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <vector>
 #include <map>
+#include <algorithm>
+#include <chrono>
+#include <time.h>
 #include <mysql/mysql.h>
 
 class Connect_Sql
