@@ -94,16 +94,15 @@ bool Connect_Sql::show_information(MYSQL_RES *res, MYSQL *mysql)
     fields = mysql_fetch_fields(res);
 
     if(row) {
-        for (int i = 0; i < un_sqlnum; i++) {
+        for (int i = 0; i < un_sqlnum; i++)
+        {
             std::cout << fields[i].name << std::endl;
         }
+
         return true;
     }
     else
         return false;
-
-
-
 }
 
 bool Connect_Sql::search_data()
