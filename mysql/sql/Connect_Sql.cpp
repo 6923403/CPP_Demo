@@ -72,3 +72,73 @@ bool Connect_Sql::delete_data(std::string data) {
 
     return true;
 }
+
+bool Connect_Sql::show_information(MYSQL_RES *res, MYSQL *mysql)
+{
+    MYSQL_ROW row;
+    MYSQL_FIELD *fields;
+    unsigned long *un_sqllen;
+    unsigned un_sqlnum = -1;
+
+    row = mysql_fetch_row(res);
+
+    //unsigned int mysql_num_fields(MYSQL_RES *result) 数据长度
+    un_sqlnum = mysql_num_fields(res);
+    if(un_sqlnum == -1)
+        return false;
+    std::cout << "sql_num = " << un_sqlnum << std::endl;
+
+    //unsigned long * mysql_fetch_lengths(MYSQL_RES *result) 列长
+    un_sqllen = mysql_fetch_lengths(res);
+
+    fields = mysql_fetch_fields(res);
+
+    if(row) {
+        for (int i = 0; i < un_sqlnum; i++) {
+            std::cout << fields[i].name << std::endl;
+        }
+        return true;
+    }
+    else
+        return false;
+
+
+
+}
+
+bool Connect_Sql::search_data()
+{
+    char str_sql[512] = "SELECT * FROM user;";
+    if(mysql_real_query(mysql, str_sql, sizeof(str_sql)))
+    {
+        return false;
+    }
+
+    MYSQL_RES* res;
+    int status = mysql_store_result_nonblocking(mysql, &res);
+    if(status != 0)
+    {
+        std::string st;
+        switch (status) {
+            case '1':
+                st = "NET_ASYNC_NOT_READY";
+                break;
+            case 2:
+                st = "NET_ASYNC_ERROR";
+                break;
+            case '3':
+                st = "NET_ASYNC_COMPLETE_NO_MORE_RESULTS";
+                std::cout << st << std::endl;
+        }
+        return false;
+    }
+
+    if(show_information(res, mysql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
