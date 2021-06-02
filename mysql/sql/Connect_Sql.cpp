@@ -47,7 +47,7 @@ bool Connect_Sql::insert_data(std::map<std::string, std::string> m_user)
         char re_time[256] = {0};
         std::strftime(re_time, sizeof(re_time), "%Y-%m-%d %X", std::localtime(&now));
 
-        char sql_str[512];
+        char sql_str[512] = {'\0'};
         snprintf(sql_str, sizeof(sql_str), "%s('%s','%s','%s');", "INSERT INTO user (username, password, registration_time) VALUES", username.c_str(), password.c_str(), re_time);
         int flag = mysql_real_query(mysql, sql_str, sizeof(sql_str));
         if(flag)
@@ -56,6 +56,19 @@ bool Connect_Sql::insert_data(std::map<std::string, std::string> m_user)
         }
 
         return true;
-
     }
+}
+
+bool Connect_Sql::delete_data(std::string data) {
+    char sql_str[512] = {'\0'};
+    snprintf(sql_str, sizeof(sql_str), "%s'%s';", "DELETE FROM user WHERE username = ", data.c_str());
+    std::cout << sql_str << std::endl;
+    int flag = mysql_real_query(mysql, sql_str, sizeof(sql_str));
+
+    if(flag)
+    {
+       return false;
+    }
+
+    return true;
 }
