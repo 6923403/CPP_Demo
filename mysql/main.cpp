@@ -71,28 +71,28 @@ int main(int argc, char** argv)
         std::cout << "连接数据库出错" << std::endl;
     }
 
-//    std::map<std::string, std::string> m_user;
-//    std::string n, q;
-//    std::cout << "用户名+密码" << std::endl;
-//    std::cin >> n >> q;
-//    m_user.insert(std::pair<std::string, std::string>(n, q));
-//
-//    if(sql.insert_data(m_user))
-//    {
-//        std::cout << "数据插入" << std::endl;
-//    }
-//    else
-//    {
-//        std::cout << __LINE__ << " " << " insert error" << std::endl;
-//    }
-//
-//    std::string data_username;
-//    std::cout << "输入要删除的用户" << std::endl;
-//    std::cin >> data_username;
-//    if(sql.delete_data(data_username))
-//    {
-//        std::cout << "删除用户: " << data_username << " 成功" << std::endl;
-//    }
+    std::map<std::string, std::string> m_user;
+    std::string n, q;
+    std::cout << "用户名+密码" << std::endl;
+    std::cin >> n >> q;
+    m_user.insert(std::pair<std::string, std::string>(n, q));
+
+    if(sql.insert_data(m_user))
+    {
+        std::cout << "数据插入" << std::endl;
+    }
+    else
+    {
+        std::cout << __LINE__ << " " << " insert error" << std::endl;
+    }
+
+    std::string data_username;
+    std::cout << "输入要删除的用户" << std::endl;
+    std::cin >> data_username;
+    if(sql.delete_data(data_username))
+    {
+        std::cout << "删除用户: " << data_username << " 成功" << std::endl;
+    }
 
     if(!sql.search_data())
     {
