@@ -2,6 +2,7 @@
 #include <getopt.h>
 
 #include "sql/Connect_Sql.h"
+INITIALIZE_EASYLOGGINGPP
 
 void usage()
 {
@@ -61,28 +62,39 @@ int main(int argc, char** argv)
         }
     }
 
+
+//    LOG(TRACE)   << "***** trace log  *****";
+//    LOG(DEBUG)   << "***** debug log  *****";
+//    LOG(ERROR)   << "***** error log  *****";
+//    LOG(WARNING) << "***** warning log  *****";
+//    LOG(INFO)    << "***** info log  *****";
+
     Connect_Sql sql;
     if(sql.connect_mysql(ip_addr, db_name, username, password, port))
     {
+        LOG(INFO) << "连接数据库成功";
         std::cout << "连接数据库" << std::endl;
     }
     else
     {
+        LOG(ERROR) << "连接数据库失败";
         std::cout << "连接数据库出错" << std::endl;
     }
 
     std::map<std::string, std::string> m_user;
     std::string n, q;
-    std::cout << "用户名+密码" << std::endl;
+    std::cout << "输入用户名+密码" << std::endl;
     std::cin >> n >> q;
     m_user.insert(std::pair<std::string, std::string>(n, q));
 
     if(sql.insert_data(m_user))
     {
+        LOG(INFO) << "数据插入完成";
         std::cout << "数据插入" << std::endl;
     }
     else
     {
+        LOG(ERROR) << "数据插入错误";
         std::cout << __LINE__ << " " << " insert error" << std::endl;
     }
 
@@ -91,11 +103,13 @@ int main(int argc, char** argv)
     std::cin >> data_username;
     if(sql.delete_data(data_username))
     {
+        LOG(INFO) << "删除用户: " << data_username << "成功";
         std::cout << "删除用户: " << data_username << " 成功" << std::endl;
     }
 
     if(!sql.search_data())
     {
+        LOG(ERROR) << "查询失败";
         std::cout << "查询失败" << std::endl;
     }
 
