@@ -11,6 +11,8 @@
 #include <time.h>
 #include <mysql/mysql.h>
 
+#include "../log/easylogging.h"
+
 class Connect_Sql
 {
 public:

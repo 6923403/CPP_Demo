@@ -21,7 +21,7 @@ bool Connect_Sql::connect_mysql(std::string addr, std::string db_name, std::stri
 
     if(mysql == nullptr)
     {
-        //LOG("未连接成功")
+        LOG(ERROR) << "数据库连接失败";
         return false;
     }
 
@@ -127,6 +127,7 @@ bool Connect_Sql::search_data()
                 break;
             case '3':
                 st = "NET_ASYNC_COMPLETE_NO_MORE_RESULTS";
+                LOG(INFO) << st;
                 std::cout << st << std::endl;
         }
         return false;
