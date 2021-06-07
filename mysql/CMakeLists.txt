@@ -5,7 +5,8 @@ set(CMAKE_BUILD_TYPE DEBUG)
 set(CMAKE_CXX_STANDARD 11)
 add_executable(mysql main.cpp
         log/easylogging.cc
-        sql/Connect_Sql.cpp)
+        sql/Connect_Sql.cpp
+        thread_pool/Thread_Pool.hpp)
 
 include_directories("/usr/include/mysql")
 link_directories("usr/lib/x86_64-linux-gnu")
