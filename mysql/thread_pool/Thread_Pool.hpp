@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <queue>
+#include <exception>
 
 #include "../log/easylogging.h"
 
@@ -37,17 +38,21 @@ Thread_Pool<T>::Thread_Pool(int actor, int thread_num, int max_request) : m_acto
 {
     if(m_thread_num <= 0 || m_maxrequest <= 0)
     {
-        //throw std::exception();
         LOG(ERROR) << "thread_num || max_request <= 0";
+        throw std::exception();
     }
 
-    while(!m_threads)
+    for(int i = 0; i < 5; i++)
     {
         m_threads = new pthread_t[m_thread_num];
         if(m_threads)
             break;
         else
             LOG(ERROR) << "thread new failed";
+            if(i == 5)
+            {
+                throw std::exception();
+            }
     }
 
 }
