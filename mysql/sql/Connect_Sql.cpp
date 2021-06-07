@@ -62,7 +62,7 @@ bool Connect_Sql::insert_data(std::map<std::string, std::string> m_user)
 bool Connect_Sql::delete_data(std::string data) {
     char sql_str[512] = {'\0'};
     snprintf(sql_str, sizeof(sql_str), "%s'%s';", "DELETE FROM user WHERE username = ", data.c_str());
-    std::cout << sql_str << std::endl;
+    //std::cout << sql_str << std::endl;
     int flag = mysql_real_query(mysql, sql_str, sizeof(sql_str));
 
     if(flag)
@@ -86,7 +86,7 @@ bool Connect_Sql::show_information(MYSQL_RES *res, MYSQL *mysql)
     un_sqlnum = mysql_num_fields(res);
     if(un_sqlnum == -1)
         return false;
-    std::cout << "sql_num = " << un_sqlnum << std::endl;
+    //std::cout << "sql_num = "d d << un_sqlnum << std::endl;
 
     //unsigned long * mysql_fetch_lengths(MYSQL_RES *result) 列长
     un_sqllen = mysql_fetch_lengths(res);
@@ -128,7 +128,6 @@ bool Connect_Sql::search_data()
             case '3':
                 st = "NET_ASYNC_COMPLETE_NO_MORE_RESULTS";
                 LOG(INFO) << st;
-                std::cout << st << std::endl;
         }
         return false;
     }
