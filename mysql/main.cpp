@@ -2,7 +2,7 @@
 #include <getopt.h>
 
 #include "sql/Connect_Sql.h"
-INITIALIZE_EASYLOGGINGPP
+INITIALIZE_EASYLOGGINGPP //log需要
 
 void usage()
 {
@@ -73,12 +73,10 @@ int main(int argc, char** argv)
     if(sql.connect_mysql(ip_addr, db_name, username, password, port))
     {
         LOG(INFO) << "连接数据库成功";
-        std::cout << "连接数据库" << std::endl;
     }
     else
     {
         LOG(ERROR) << "连接数据库失败";
-        std::cout << "连接数据库出错" << std::endl;
     }
 
     std::map<std::string, std::string> m_user;
@@ -90,12 +88,10 @@ int main(int argc, char** argv)
     if(sql.insert_data(m_user))
     {
         LOG(INFO) << "数据插入完成";
-        std::cout << "数据插入" << std::endl;
     }
     else
     {
         LOG(ERROR) << "数据插入错误";
-        std::cout << __LINE__ << " " << " insert error" << std::endl;
     }
 
     std::string data_username;
@@ -104,13 +100,11 @@ int main(int argc, char** argv)
     if(sql.delete_data(data_username))
     {
         LOG(INFO) << "删除用户: " << data_username << "成功";
-        std::cout << "删除用户: " << data_username << " 成功" << std::endl;
     }
 
     if(!sql.search_data())
     {
         LOG(ERROR) << "查询失败";
-        std::cout << "查询失败" << std::endl;
     }
 
     return 0;
