@@ -12,24 +12,24 @@ public:
         int count = 1; // 用来给矩阵中每一个空格赋值
         int offset = 1; // 每一圈循环，需要控制每一条边遍历的长度
         int i,j;
-        while (loop --) {
+        while (loop--) {
             i = startx;
             j = starty;
             // 下面开始的四个for就是模拟转了一圈
             // 模拟填充上行从左到右(左闭右开)
-            for (j = starty; j < starty + n - offset; j++) {
-                res[startx][j] = count++;
+            for (j = startx; j < startx + n - offset; j++) {
+                res[starty][j] = count++;
             }
             // 模拟填充右列从上到下(左闭右开)
-            for (i = startx; i < startx + n - offset; i++) {
+            for (i = starty; i < starty + n - offset; i++) {
                 res[i][j] = count++;
             }
             // 模拟填充下行从右到左(左闭右开)
-            for (; j > starty; j--) {
+            for (; j > startx; j--) {
                 res[i][j] = count++;
             }
             // 模拟填充左列从下到上(左闭右开)
-            for (; i > startx; i--) {
+            for (; i > starty; i--) {
                 res[i][j] = count++;
             }
             // 第二圈开始的时候，起始位置要各自加1， 例如：第一圈起始位置是(0, 0)，第二圈起始位置是(1, 1)
@@ -50,7 +50,7 @@ public:
 int main(int argc, char **argv)
 {
     Solution a;
-    int n = 3;
+    int n = 4;
     vector<vector<int>> res;
     res = a.generateMatrix(n);
     for(int i = 0; i < n; i++)
