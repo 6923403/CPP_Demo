@@ -33,3 +33,6 @@
 
 # Other
 *.zip
+*.idea
+*.dSYM
+cmake-build-debug
