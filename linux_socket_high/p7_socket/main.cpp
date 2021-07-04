@@ -23,7 +23,7 @@ static const char *status_line[2] = {"200 OK", "500 Internal server error"};
 int main(int argc, char **argv)
 {
     int port = 20999;
-    const char *file_name = "331.txt";
+    const char *file_name = "1.txt";
 
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
