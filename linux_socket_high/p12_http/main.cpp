@@ -1,12 +1,15 @@
 #include <iostream>
+#include <stdlib.h>
 #include <unistd.h>
 #include <cstring>
+#include <errno.h>
+#include <fcntl.h>
 #include <cassert>
-#include <arpa/inet.h>
-#include <netinet/in.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-const int BUFFER_SIZE = 4096;
+#define BUFFER_SIZE 4096
 
 //主状态机
 enum CHECK_STATE
@@ -47,32 +50,34 @@ HTTP_CODE parse_content(char *buffer, int &checked_index, CHECK_STATE &checkstat
 int main(int argc, char **argv)
 {
     int port = 20999;
-    struct sockaddr_in addr;
-    memset(&addr, 0, sizeof(addr));
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = inet_addr(INADDR_ANY);
-    addr.sin_port = htons(port);
 
-    int listenfd = socket(AF_INET, SOCK_STREAM, 0);
-    assert(listenfd > 0);
+    struct sockaddr_in address;
+    bzero(&address, sizeof(address));
+    address.sin_family = AF_INET;
+    address.sin_port = htons(port);
+    address.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    int listenfd = socket(PF_INET, SOCK_STREAM, 0);
+    assert(listenfd >= 0);
+
     int reuse = 1;
     setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 
-    int ret = bind(sockfd, (struct sockaddr*) &addr, sizeof(addr));
-    assert(ret != -1);
-    ret = listen(sockfd, 10);
+    int ret = bind(listenfd, (struct sockaddr*)&address, sizeof(address));
     assert(ret != -1);
 
-    struct sockaddr_in client_addr;
-    socklen_t client_addr_len = sizeof(client_addr);
+    ret = listen(listenfd, 5);
+    assert(ret != -1);
 
-    int fd = accept(listenfd, (struct sockaddr*) &client_addr, &client_addr_len);
-    if(fd < 0)
-    {
-        std::cout << __LINE__ << "  error" << std::endl;
+    struct sockaddr_in client_address;
+    socklen_t client_addrlength = sizeof(client_addrlength);
+
+    int fd = accept(listenfd, (struct sockaddr*)&client_address, &client_addrlength);
+    if (fd < 0) {
+        printf("errno is: %d\n", errno);
+        std::cout << "errno is " << errno << std::endl;
     }
-    else
-    {
+    else {
         char buffer[BUFFER_SIZE];			//读缓冲区
         memset(buffer, '\0', BUFFER_SIZE);
 
@@ -81,61 +86,75 @@ int main(int argc, char **argv)
         int checked_index = 0;				//当前已分析完的字节数
         int start_line = 0;					//buffer中一行的起始位置
 
+        //主状态机的初始状态
         CHECK_STATE checkstate = CHECK_STATE_REQUESTLINE;
-        while(true)
-        {
-            data_read = recv(fd, buffer + read_index, BUFFER_SIZE - read_index, 0);
-            if (data_read == -1)
-            {
-                printf("reading failed\n");
+
+        //循环读取客户端数据并分析
+        while (1) {
+            data_read = recv(fd, buffer+read_index, BUFFER_SIZE-read_index, 0);
+            if (data_read == -1) {
+                std::cout << "data_read error" << std::endl;
                 break;
             }
-            else if (data_read == 0)
-            {
-                printf("remote client has closed the connection\n");
+            else if (data_read == 0) {
+                std::cout << "remote client has closed the connection" << std::endl;
                 break;
             }
+
+            read_index += data_read;
 
             //分析已读取的数据
             HTTP_CODE result = parse_content(buffer, checked_index, checkstate, read_index, start_line);
 
-            read_index += data_read;
+            if (result == NO_REQUEST) {	//不完整请求
+                continue;
+            }
+            else if (result == GET_REQUEST) {	//完整请求
+                send(fd, szret[0], strlen(szret[0]), 0);
+                break;
+            }
+            else {	//其它情况表示发生错误
+                send(fd, szret[1], strlen(szret[1]), 0);
+                break;
+            }
         }
+
+        close(fd);
     }
+
+    close(listenfd);
 
     return 0;
 }
+
 //解析一行内容
 LINE_STATUS parse_line(char *buffer, int &checked_index, int &read_index)
 {
     char temp;
 
-    for(; checked_index < read_index; ++checked_index)
-    {
+    for (; checked_index < read_index; ++checked_index) {
         temp = buffer[checked_index];
-        if(temp == '\r')
-        {
-            if((checked_index + 1) == read_index)
-            {
+        if (temp == '\r') {
+            if ((checked_index + 1) == read_index) {
                 return LINE_OPEN;
             }
-            else if (buffer[checked_index+1] == '\n')
-            {
+            else if (buffer[checked_index+1] == '\n') {
                 buffer[checked_index++] = '\0';
                 buffer[checked_index++] = '\0';
+
                 return LINE_OK;
             }
 
             return LINE_BAD;
         }
-        else if(temp == '\n')
-        {
+        else if (temp == '\n') {
             if (checked_index > 1 && buffer[checked_index-1] == '\r') {
                 buffer[checked_index-1] = '\0';
                 buffer[checked_index++] = '\0';
 
                 return LINE_OK;
             }
+
             return LINE_BAD;
         }
     }
@@ -151,41 +170,39 @@ LINE_STATUS parse_line(char *buffer, int &checked_index, int &read_index)
 */
 HTTP_CODE parse_requestline(char *szTemp, CHECK_STATE &checkstate)
 {
-    char *szurl = strpbrk(szTemp, " \t");
-    if(!szurl)
-    {
+    char *szURL = strpbrk(szTemp, " \t");
+    if (!szURL)
         return BAD_REQUEST;
-    }
 
-    *szurl++ = '\0';
-    char *szMethod = szTemp;
+    *szURL++ = '\0';
 
-    if(strcasecmp(szMethod, "GET") == 0)
-    {
-        std::cout << "The request method is GET\\n" << std::endl;
-    }
+    char *szMethod = szTemp;		//获取方法
 
-    szurl += strspn(szurl, " \t");
-
-    char *szversion += strspn(szversion, " \t");
-
-    if(strcasecmp(szversion, "HTTP/1.1") != 0)
-    {
+    if (strcasecmp(szMethod, "GET") == 0)
+        std::cout << "The request method is GET" << std::endl;
+    else
         return BAD_REQUEST;
-    }
 
-    if(strncasecmp(szurl, "http://", 7) == 0)
-    {
-        szurl += 7;
-        szurl = strchr(szurl, '/');
-    }
-
-    if(!szurl || szurl[0] != '/')
-    {
+    szURL += strspn(szURL, " \t");
+    char *szVersion = strpbrk(szURL, " \t");
+    if (!szVersion)
         return BAD_REQUEST;
+
+    *szVersion++ = '\0';
+    szVersion += strspn(szVersion, " \t");		//获取版本
+
+    if (strcasecmp(szVersion, "HTTP/1.1") != 0)
+        return BAD_REQUEST;
+
+    if (strncasecmp(szURL, "http://", 7) == 0) {	//获取URL
+        szURL += 7;
+        szURL = strchr(szURL, '/');
     }
 
-    std::cout << "The request URL is: " << szurl << std::endl;
+    if (!szURL || szURL[0] != '/')
+        return BAD_REQUEST;
+
+    std::cout << "The request URL is: " << szURL << std::endl;
 
     checkstate = CHECK_STATE_HEADER;
 
@@ -201,10 +218,10 @@ HTTP_CODE parse_headers(char *szTemp)
     else if (strncasecmp(szTemp, "Host:", 5) == 0) {
         szTemp += 5;
         szTemp += strspn(szTemp, " \t");
-        printf("the request host is: %s\n", szTemp);
+        std::cout << "the request host is: " << szTemp << std::endl;
     }
     else {	//其它头部字段不处理
-        printf("I can not handle this header\n");
+        std::cout << "I can not handle this header" << std::endl;
     }
 
     return NO_REQUEST;
@@ -213,29 +230,26 @@ HTTP_CODE parse_headers(char *szTemp)
 //分析HTTP请求
 HTTP_CODE parse_content(char *buffer, int &checked_index, CHECK_STATE &checkstate, int &read_index, int &start_index)
 {
-    LINE_STATUS linestatus = LINE_OK;
-    HTTP_CODE retcode = NO_REQUEST;
+    LINE_STATUS linestatus = LINE_OK;	//记录当前行的读取状态
+    HTTP_CODE retcode = NO_REQUEST;		//记录HTTP请求的处理结果
 
-    while((linestatus = parse_line(buffer, checked_index, read_index)) == LINE_OK)
-    {
-        char *sztemp = buffer + start_index; //start_line是行的起始位置
-        start_index = checked_index;
+    //从buffer中取出完整行
+    while ((linestatus = parse_line(buffer, checked_index, read_index)) == LINE_OK) {
+        char *szTemp = buffer + start_index;	//start_line是行的起始位置
+        start_index = checked_index;				//记录下一行的起始位置
 
-        switch(checkstate)
-        {
-            case CHECK_STATE_REQUESTLINE:
+        switch(checkstate) {
+            case CHECK_STATE_REQUESTLINE:	//分析请求行
             {
-                retcode = parse_requestline(sztemp, checkstate);
-                if(retcode = BAD_REQUEST)
-                {
+                retcode = parse_requestline(szTemp, checkstate);
+                if (retcode == BAD_REQUEST)
                     return BAD_REQUEST;
-                }
 
                 break;
             }
-            case CHECK_STATE_HEADER:
+            case CHECK_STATE_HEADER:			//分析头部字段
             {
-                retcode = parse_headers(sztemp);
+                retcode = parse_headers(szTemp);
                 if (retcode == BAD_REQUEST) {
                     return BAD_REQUEST;
                 }
@@ -248,13 +262,15 @@ HTTP_CODE parse_content(char *buffer, int &checked_index, CHECK_STATE &checkstat
             {
                 return INTERNAL_ERROR;
             }
-        }
 
+        }
     }
+
     if (linestatus == LINE_OPEN)		//不完整行，要继续读取客户端数据才能进一步分析
         return NO_REQUEST;
     else
         return BAD_REQUEST;
+
 
     return BAD_REQUEST;
 }
