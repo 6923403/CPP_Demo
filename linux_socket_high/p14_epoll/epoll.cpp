@@ -95,7 +95,7 @@ void lt(epoll_event *events, int number, int epollfd, int listenfd)
             addfd(epollfd, connfd, false);
         }
         else if (events[i].events & EPOLLIN) {		//只要socket读缓存中还有未读出的数据，就会被触发
-            printf("event trigger once\n");
+            std::cout << "event trigger once" << std::endl;
             memset(buf, '\0', BUFFER_SIZE);
 
             int ret = recv(sockfd, buf, BUFFER_SIZE-1, 0);
@@ -104,10 +104,10 @@ void lt(epoll_event *events, int number, int epollfd, int listenfd)
                 continue;
             }
 
-            printf("get %d bytes of content: %s\n", ret, buf);
+            std::cout << "get: " << ret << " bytes of content: " << buf << std::endl;
         }
         else {
-            printf("something else happened\n");
+            std::cout << "something else happened" << std::endl;
         }
     }
 }
@@ -127,7 +127,7 @@ void et(epoll_event *events, int number, int epollfd, int listenfd)
             addfd(epollfd, connfd, true);
         }
         else if (events[i].events & EPOLLIN) {
-            printf("event trigger once\n");
+            std::cout << "event trigger once" << std::endl;
             int ret = 0;
 
             //因为ET模式不会重复触发，所以我们要循环读取所有数据
@@ -138,7 +138,7 @@ void et(epoll_event *events, int number, int epollfd, int listenfd)
                 if (ret < 0) {
                     //对于非阻塞I/O，下面的条件成立时表示数据已全部读取完毕
                     if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                        printf("read later!\n");
+                        std::cout << "read later!" << std::endl;
                         break;
                     }
 
@@ -149,14 +149,12 @@ void et(epoll_event *events, int number, int epollfd, int listenfd)
                     close(sockfd);
                 }
                 else {
-                    printf("get %d bytes of content: %s\n", ret, buf);
+                    std::cout << "get " ret << " bytes of content: " << buf << std::endl;
                 }
-
             }
-
         }
         else {
-            printf("something else happened\n");
+            std::cout << "something else happened" << std::endl;
         }
     }
 
