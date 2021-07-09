@@ -6,6 +6,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/epoll.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 const int MAX_EVENT_NUMBER = 1024;
 const int BUFFER_SIZE = 10;
@@ -20,7 +22,7 @@ int main(int argc, char **argv)
     int port = 20999;
 
     struct sockaddr_in addr;
-    memset(addr, 0, sizeof(addr));
+    memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_port = htons(port);
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -29,7 +31,7 @@ int main(int argc, char **argv)
     assert(listenfd != -1);
 
     int reuse = 1;
-    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+    setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 
     int ret = bind(listenfd, (struct sockaddr*) &addr, sizeof(addr));
     assert(ret != -1);
@@ -40,16 +42,16 @@ int main(int argc, char **argv)
     int epollfd = epoll_create(5);
     assert(epollfd > 0);
 
-    addfd(epollfd, sockfd, true);
+    addfd(epollfd, listenfd, true);
     while (true) {
         int ret = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, -1);
         if (ret < 0) {
-            std::cout << "epoll failed: " <<  strerror(errno)) << std::endl;
+            std::cout << "epoll failed " << std::endl;
             break;
         }
 
         //lt(events, ret, epollfd, sockfd);		//LT模式
-        et(events, ret, epollfd, sockfd);		//ET模式
+        et(events, ret, epollfd, listenfd);		//ET模式
     }
 
     return 0;
@@ -131,7 +133,7 @@ void et(epoll_event *events, int number, int epollfd, int listenfd)
             int ret = 0;
 
             //因为ET模式不会重复触发，所以我们要循环读取所有数据
-            while (1) {
+            while (true) {
                 memset(buf, '\0', BUFFER_SIZE);
 
                 ret = recv(sockfd, buf, BUFFER_SIZE-1, 0);
@@ -149,7 +151,7 @@ void et(epoll_event *events, int number, int epollfd, int listenfd)
                     close(sockfd);
                 }
                 else {
-                    std::cout << "get " ret << " bytes of content: " << buf << std::endl;
+                    std::cout << "get " << ret << " bytes of content: " << buf << std::endl;
                 }
             }
         }
