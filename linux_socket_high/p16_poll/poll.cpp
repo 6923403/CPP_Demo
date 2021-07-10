@@ -1,23 +1,18 @@
+//服务端
 #include <iostream>
+#include <cstdlib>
 #include <unistd.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/poll.h>
+#include <errno.h>
+#include <cstring>
 #include <fcntl.h>
+#include <poll.h>
+#include <cassert>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <assert.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/mman.h>
-#include <stdarg.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <sys/uio.h>
+#include <signal.h>
+
 
 const int USER_LIMIT = 512;		//最大用户数量
 const int BUFFER_SIZE = 64;		//读缓冲区的大小
