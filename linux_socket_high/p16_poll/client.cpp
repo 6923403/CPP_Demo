@@ -1,9 +1,9 @@
 //客户端
 #include <stdio.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
 #include <errno.h>
-#include <string.h>
+#include <cstring>
 #include <fcntl.h>
 #include <poll.h>
 #include <assert.h>
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 {
 
 
-    const char *ip = "192.168.1.19";
+    const char *ip = "101.132.159.69";
     int port = 20999;
 
     struct sockaddr_in server_address;
