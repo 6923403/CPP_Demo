@@ -42,7 +42,7 @@ int main(int argc, char **argv)
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    std::cout << "tcp" << std::endl;
+    std::cout << "tcp start" << std::endl;
     assert(sockfd != -1);
 
     int reuse = 1;
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
     address.sin_addr.s_addr = htonl(INADDR_ANY);
 
     int udpfd = socket(AF_INET, SOCK_DGRAM, 0);
-    std::cout << "udp" << std::endl;
+    std::cout << "udp start" << std::endl;
     assert(udpfd != -1);
 
     ret = bind(udpfd, (struct sockaddr*) &address, sizeof(address));
