@@ -115,6 +115,7 @@ int main(int argc, char **argv)
                     else if (ret == 0)
                         close(listenfd);
                     else
+                        std::cout << "recv: " << buf << std::endl;
                         send(listenfd, buf, ret, 0);
                 }
             }
