@@ -8,13 +8,15 @@
 #include <sys/epoll.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <sys/types.h>
 
 const int MAX_EVENT_SIZE = 1024;
+static int pipefd[2];
 
 int setnonblocking(int fd)
 {
     int old_option = fcntl(fd, F_GETFL);
-    int net_option = old_option | O_NONBLOCK;
+    int new_option = old_option | O_NONBLOCK;
     fcntl(fd, F_SETFL, new_option);
     return old_option;
 }
@@ -25,6 +27,14 @@ void addfd(int epollfd, int fd)
     event.data.fd = fd;
     event.events = EPOLLIN | EPOLLET;
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
+}
+
+void sig_handler(int sig)
+{
+    int save_errno = errno;
+    int msg = sig;
+    send(pipefd[1], (char*)&msg, 1, 0);		//将信号写入管道，以通知主循环
+    errno = save_errno;
 }
 
 void addsig(int sig)
@@ -134,7 +144,7 @@ int main(int argc, char **argv)
                             }
                             case SIGTERM:
                             {
-                                std::cout << "recv SIGTERM, close server\n");
+                                std::cout << "recv SIGTERM, close server" << std::endl;
                                 stop_server = true;
                                 break;
                             }
@@ -156,7 +166,6 @@ int main(int argc, char **argv)
     close(sockfd);
     close(pipefd[1]);
     close(pipefd[0]);
-
 
     return 0;
 }
