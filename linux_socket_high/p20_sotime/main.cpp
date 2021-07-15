@@ -42,6 +42,7 @@ int connect_timeout(int port, int time)
     return sockfd;
 }
 
+//client
 int main(int argc, char **argv)
 {
     int port = 20999;
