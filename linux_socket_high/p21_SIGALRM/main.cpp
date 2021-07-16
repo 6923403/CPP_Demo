@@ -98,7 +98,7 @@ int main(int argc, char **argv)
     assert(ret != -1);
 
     epoll_event events[MAX_EVENT_NUMBER];
-    int epollfd = epoll_create(5);
+    epollfd = epoll_create(5);
     assert(epollfd != -1);
 
     addfd(epollfd, sockfd);
