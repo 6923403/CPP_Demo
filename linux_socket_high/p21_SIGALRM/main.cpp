@@ -22,7 +22,7 @@ static int pipefd[2];
 static sort_timer_lst timer_lst;
 static int epollfd = 0;
 
-int setnonblocking(int fd)
+int setnonblocking(int fd) //设置非阻塞
 {
     int old_option = fcntl(fd, F_GETFL);
     int new_option = old_option | O_NONBLOCK;
@@ -30,7 +30,7 @@ int setnonblocking(int fd)
 
 }
 
-void addfd(int epollfd, int fd)
+void addfd(int epollfd, int fd) //添加描述符事件
 {
     epoll_event event;
     event.data.fd = fd;
@@ -103,7 +103,8 @@ int main(int argc, char **argv)
 
     addfd(epollfd, sockfd);
 
-    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, pipefd);
+    //socketpair()函数用于创建一对无名的、相互连接的套接子。
+    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, pipefd); //可读 可写
     assert(ret != -1);
 
     setnonblocking(pipefd[1]);
@@ -116,7 +117,7 @@ int main(int argc, char **argv)
     bool stop_server = false;
     client_data *users = new client_data[FD_LIMIT];
     bool timeout = false;
-    alarm(TIMESLOT);
+    alarm(TIMESLOT); //定时
 
     std::cout << "server start" << std::endl;
 
