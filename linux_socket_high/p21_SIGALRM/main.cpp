@@ -27,7 +27,6 @@ int setnonblocking(int fd) //设置非阻塞
     int old_option = fcntl(fd, F_GETFL);
     int new_option = old_option | O_NONBLOCK;
     fcntl(fd, F_GETFL, new_option);
-
 }
 
 void addfd(int epollfd, int fd) //添加描述符事件
