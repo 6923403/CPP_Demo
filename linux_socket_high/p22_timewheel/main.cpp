@@ -82,12 +82,12 @@ int main(int argc, char *argv[])
 
     alarm(1);
 
-    printf("server start...\n");
+    std::cout << "server start" << std::endl;
 
     while (!stop_server) {
         int number = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, -1);
         if (number < 0 && errno != EINTR) {
-            fprintf(stderr, "epoll_wait failed\n");
+            std::cout << "epoll_wait failed" << std::endl;
             break;
         }
 
@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
                     timer->user_data = &users[connfd];
                     timer->cb_func = cb_func;
                     users[connfd].timer = timer;
-                    fprintf(stderr, "client: %d add tw_timer successed\n", connfd);
+                    std::cout << "client: " << connfd << " add tw_timer successed" << std::endl;
                 }
                 else {
-                    fprintf(stderr, "client: %d add tw_timer failed\n", connfd);
+                    std::cout << "client: " << connfd << " add tw_timer failed" << std::endl;
                 }
 
             }
@@ -155,8 +155,7 @@ int main(int argc, char *argv[])
                 memset(users[listenfd].buf, '\0', BUFFER_SIZE);
 
                 ret = recv(listenfd, users[listenfd].buf, BUFFER_SIZE-1, 0);
-                printf("get %d bytes of client data: %s from %d\n",
-                       ret, users[listenfd].buf, listenfd);
+                std::cout << "get:" << ret << " bytes of client data: "<< users[listenfd].buf << " from:" listenfd << std::endl;
 
                 tw_timer *timer = users[listenfd].timer;
 
@@ -174,7 +173,7 @@ int main(int argc, char *argv[])
                 }
                 else {
                     if (timer) {
-                        printf("conntioned..to do adjuest timer\n");
+                        std::cout << "conntioned..to do adjuest timer" << std::endl;
                     }
                 }
             }
@@ -195,7 +194,6 @@ int main(int argc, char *argv[])
     close(pipefd[1]);
     close(pipefd[0]);
     delete[] users;
-
 
     return 0;
 }
@@ -249,5 +247,5 @@ void cb_func(client_data *user_data)
     epoll_ctl(epollfd, EPOLL_CTL_DEL, user_data->sockfd, 0);
     assert(user_data);
     close(user_data->sockfd);
-    printf("close fd %d\n", user_data->sockfd);
+    std::cout << "close fd: " << user_data->sockfd << std::endl;
 }
