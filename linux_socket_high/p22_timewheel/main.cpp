@@ -187,7 +187,6 @@ int main(int argc, char *argv[])
             timer_handler();
             timeout = false;
         }
-
     }
 
     close(sockfd);
