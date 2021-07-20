@@ -10,7 +10,7 @@ Sem::Sem()
 
 Sem::~Sem()
 {
-    sem_destory(&m_sem);
+    sem_destroy(&m_sem);
 }
 
 bool Sem::Sem_wait()
@@ -71,12 +71,12 @@ Cond::~Cond()
 
 bool Cond::Cond_wait()
 {
-    return pthread_cond_wait(&m_cond, NULL) == 0;
+    return pthread_cond_wait(&m_cond) == 0;
 }
 
 bool Cond::Cond_signal()
 {
-    return pthread_cond_signal(&m_cond, NULL) == 0;
+    return pthread_cond_signal(&m_cond) == 0;
 }
 
 bool Cond::Cond_lock()
