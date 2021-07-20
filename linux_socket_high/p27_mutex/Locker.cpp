@@ -81,7 +81,7 @@ bool Cond::Cond_signal()
 
 bool Cond::Cond_lock()
 {
-    return pthread_mutex_init(&m_mutex) == 0;
+    return pthread_mutex_lock(&m_mutex) == 0;
 }
 
 bool Cond::Cond_unlock()
