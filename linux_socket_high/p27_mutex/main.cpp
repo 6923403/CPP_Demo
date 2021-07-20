@@ -13,11 +13,11 @@ void* handler(void *arg)
 {
     int i = 10;
     while (i>0) {
-        sem_lock.wait();
+        m_cond.wait();
 
         n = 1;
-        fprintf(stderr, "other thread %d  n: %d\n", i, n);
-        sem_lock.post();
+        std::cout << "other thread: " << i << " n = " << n << std::endl;
+        m_cond.post();
 
         i--;
     }
@@ -25,10 +25,10 @@ void* handler(void *arg)
 
 void* result(void *arg)
 {
-    cond_lock.lock();
-    cond_lock.wait();
-    fprintf(stderr, "OK...\n");
-    cond_lock.unlock();
+    m_cond.lock();
+    m_cond.wait();
+    std::cout << "OK.." << std::endl;
+    m_cond.unlock();
 }
 
 int main(int argc, char **argv)
