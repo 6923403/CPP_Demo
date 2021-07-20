@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     int i = 10;
     while(i > 0)
     {
-        m_sem.wait();
+        m_sem.Sem_wait();
 
         n = 3;
         std::cout << "thread: " << i << " n = " << n << std::endl;
@@ -48,6 +48,7 @@ int main(int argc, char **argv)
 
         m_sem.Sem_post();
     }
+
 
     void *status;
     pthread_join(id1, &status);
