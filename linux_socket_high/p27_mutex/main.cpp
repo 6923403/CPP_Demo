@@ -13,11 +13,11 @@ void* handler(void *arg)
 {
     int i = 10;
     while (i>0) {
-        m_cond.wait();
+        m_sem.Sem_wait();
 
         n = 1;
         std::cout << "other thread: " << i << " n = " << n << std::endl;
-        m_cond.post();
+        m_sem.Sem_post();
 
         i--;
     }
@@ -25,10 +25,10 @@ void* handler(void *arg)
 
 void* result(void *arg)
 {
-    m_cond.lock();
-    m_cond.wait();
+    m_cond.Cond_lock();
+    m_cond.Cond_wait();
     std::cout << "OK.." << std::endl;
-    m_cond.unlock();
+    m_cond.Cond_unlock();
 }
 
 int main(int argc, char **argv)
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 
     void *status;
     pthread_join(id1, &status);
-    m_cond.signal();
+    m_cond.Cond_signal();
     pthread_join(id2, &status);
 
     return 0;
