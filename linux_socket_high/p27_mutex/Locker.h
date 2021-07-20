@@ -2,6 +2,7 @@
 #define LOCKER_H
 
 #include <pthread.h>
+#include <iostream>
 #include <exception>
 #include <semaphore.h>
 

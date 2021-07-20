@@ -20,12 +20,12 @@ bool Sem::Sem_wait()
 
 bool Sem::Sem_post()
 {
-    reutrn sem_post(&m_sem) == 0;
+    return sem_post(&m_sem) == 0;
 }
 
 Locker::Locker()
 {
-    if(pthread_mutex_init(&m_mutex, NULL) == 0)
+    if(pthread_mutex_init(&m_mutex, NULL) != 0)
     {
         throw std::exception();
     }
@@ -49,12 +49,12 @@ bool Locker::unLock()
 
 Cond::Cond()
 {
-    if(pthread_mutex_init(&m_mutex, NULL) == 0)
+    if(pthread_mutex_init(&m_mutex, NULL) != 0)
     {
         throw std::exception();
     }
 
-    if(pthread_cond_init(&m_cond, NULL) == 0)
+    if(pthread_cond_init(&m_cond, NULL) != 0)
     {
         pthread_cond_destroy(&m_cond);
 
@@ -71,7 +71,7 @@ Cond::~Cond()
 
 bool Cond::Cond_wait()
 {
-    return pthread_cond_wait(&m_cond) == 0;
+    return pthread_cond_wait(&m_cond, &m_mutex) == 0;
 }
 
 bool Cond::Cond_signal()
