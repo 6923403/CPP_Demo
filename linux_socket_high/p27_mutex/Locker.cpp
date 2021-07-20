@@ -78,3 +78,13 @@ bool Cond::Cond_signal()
 {
     return pthread_cond_signal(&m_cond, NULL) == 0;
 }
+
+bool Cond::Cond_lock()
+{
+    return pthread_mutex_init(&m_mutex) == 0;
+}
+
+bool Cond::Cond_unlock()
+{
+    return pthread_mutex_unlock(&m_mutex) == 0;
+}
